@@ -1,0 +1,17 @@
+﻿<Window x:Class="Exercise06.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Exercise06"
+        mc:Ignorable="d"
+        Title="Ex 5.6 DrawStreet" Height="250" Width="430">
+    <Grid>
+        <Button Content="Draw" HorizontalAlignment="Left"
+                Margin="10,10,0,0" VerticalAlignment="Top"
+                Width="75" Name="drawButton" Height="19"/>
+        <Canvas HorizontalAlignment="Left" Height="195"
+                Margin="90,10,0,0" VerticalAlignment="Top" Width="308"
+                Name="paperCanvas" Background="LightGray"/>
+    </Grid>
+</Window>
