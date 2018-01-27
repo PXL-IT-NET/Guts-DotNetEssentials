@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Exercise1
+namespace Exercise01
 {
     /// <summary>
     /// Interaction logic for App.xaml

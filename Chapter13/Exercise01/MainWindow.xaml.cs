@@ -1,7 +1,6 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 
-namespace Exercise1
+namespace Exercise01
 {
     public partial class MainWindow : Window
     {
