@@ -33,13 +33,13 @@ E.g. by using the *GitHub Desktop* tool.
 
 #### Register on [guts-web.appspot.com](https://guts-web.appspot.com)
 To be able to send your tests results to the Guts servers you need to register via [guts-web.appspot.com](https://guts-web.appspot.com/register).
-After registration you will have the credentials you need to succesfully run automates tests for an exercise.
+After registration you will have the credentials you need to succesfully run automated tests for an exercise.
 
 #### Start working on an exercise
 Let's assume you want to make exercise 5 of chapter 5.
 1. Open the solution in the folder "Chapter 5"
 2. Locate the project "Exercise 5" and set it as your startup project
-3. Write te code you need to write
+3. Write the code you need to write
 
 ![alt text][img_startup_project]
 
