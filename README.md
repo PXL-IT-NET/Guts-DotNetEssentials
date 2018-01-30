@@ -60,7 +60,7 @@ If you click on a test you can also read more detailed messages that may help yo
 
 ![alt text][img_test_detail]
 
-Although it is not a garantee, having all tests green is a good indication that you completed the exercise correctly.
+Although it is not a guarantee, having all tests green is a good indication that you completed the exercise correctly.
 
 #### Check your results online (comming soon)
 Test results of all students are sent to the Guts servers.
