@@ -40,6 +40,7 @@ Let's assume you want to make exercise 5 of chapter 5.
 1. Open the solution in the folder "Chapter 5"
 2. Locate the project "Exercise 5" and set it as your startup project
 3. Write the code you need to write
+4. Rebuild your project
 
 ![alt text][img_startup_project]
 
