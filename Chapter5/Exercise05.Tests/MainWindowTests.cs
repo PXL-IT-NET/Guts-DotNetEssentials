@@ -56,8 +56,13 @@ namespace Exercise05.Tests
             _button.FireClickEvent();
 
             var allChildren = _canvas.Children.Cast<object>().ToList();
-            Assert.That(allChildren, Has.Some.TypeOf<Rectangle>().Or.Some.TypeOf<Polygon>().With.Matches((Polygon p) => p.Points.Count == 4), () => "Could not find any rectangles or polygons with 4 points.");
-            Assert.That(allChildren, Has.Some.TypeOf<Polygon>().With.Matches((Polygon p) => p.Points.Count == 3), () => "Could not find any polygons with 3 points.");
+            var polygons = allChildren.OfType<Polygon>().ToList();
+            var rectangles = allChildren.OfType<Rectangle>().ToList();
+
+            Assert.That(rectangles.Count, Is.GreaterThan(0), () => "Could not find any rectangles.");
+            Assert.That(polygons.Count, Is.GreaterThan(0), () => "Could not find any polygons.");
+            Assert.That(polygons, Has.All.With.Matches((Polygon p) => p.Points.Count == 3), () => "Could not find some polygons but they don't all have 3 points.");
+            Assert.That(polygons, Has.All.With.Matches((Polygon p) => p.Stroke != null || p.Fill != null), () => "All polygons should have their 'Stroke' (and / or 'Fill') property set. Otherwise they are invisible.");
         }
 
         private void AssertButtonAndCanvasArePresent()
