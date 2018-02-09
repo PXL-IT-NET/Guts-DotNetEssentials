@@ -60,7 +60,7 @@ namespace Exercise14.Tests
         private void AssertHasConversionMethod()
         {
             Assert.That(_decimalToBinaryMethod, Is.Not.Null,
-                () => "No private method foud that accepts an integer as argument and returns a string.");
+                () => "No private method found that accepts an integer as argument and returns a string.");
         }
 
         private void AssertConvertion(int number, string expected)
