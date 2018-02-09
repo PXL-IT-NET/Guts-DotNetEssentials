@@ -38,7 +38,7 @@ After registration you will have the credentials you need to succesfully run aut
 #### Start working on an exercise
 Let's assume you want to make exercise 5 of chapter 5.
 1. Open the solution in the folder "Chapter 5"
-2. **Build the solution** (Menu: Build -> Build Solution of Ctrl+Shift+B)
+2. **Build the solution** (Menu: Build -> Build Solution or Ctrl+Shift+B)
 3. Locate the project "Exercise 5" and set it as your startup project
 ![alt text][img_startup_project]
 4. Write the code you need to write
