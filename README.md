@@ -40,14 +40,14 @@ Let's assume you want to make exercise 5 of chapter 5.
 1. Open the solution in the folder "Chapter 5"
 2. Locate the project "Exercise 5" and set it as your startup project
 3. Write the code you need to write
-4. Rebuild your project
+4. (Re)build your project
 
 ![alt text][img_startup_project]
 
 #### Run the automated tests
 Let's assume you are working on exercise 5 of chapter 5.
 1. Open the *Test Explorer* window (Menu: Test -> Windows -> Test Explorer)
-2. In the top left corner, right click on the down arrow of the *group by* button and group the automated tests by project.
+2. In the top left corner, right click on the down arrow of the *group by* button and group the automated tests by project. (If you don't see any tests appearing, you probably should (re)build your solution)
 ![alt text][img_group_tests]
 3. Right click on the project that matches your exercise and click on *Run selected tests*
 4. The first time you run a test a popup may appear thats asks you to log in. You should fill in your credentials from [guts-web.appspot.com](https://guts-web.appspot.com).
