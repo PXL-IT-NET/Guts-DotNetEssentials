@@ -62,9 +62,11 @@ If you click on a test you can also read more detailed messages that may help yo
 
 Although it is not a guarantee, having all tests green is a good indication that you completed the exercise correctly.
 
-#### Check your results online (comming soon)
+#### Check your results online
 Test results of all students are sent to the Guts servers.
-Soon you will be able to check your progress and compare with the averages of other students on  [guts-web.appspot.com](https://guts-web.appspot.com).
+You can check your progress and compare with the averages of other students via [guts-web.appspot.com](https://guts-web.appspot.com).
+Login, go to ".NET Essentials" in the navigation bar and select the chapter you want to view.
+![alt text][img_chapter_contents]
 
 [img_book]:Images/book.jpg "Handboek 'Programmeren in C#'"
 [img_projects]:Images/projects.png "Solution for chapter five with its projects"
@@ -73,4 +75,5 @@ Soon you will be able to check your progress and compare with the averages of ot
 [img_group_tests]:Images/group_tests.png "Group tests by project"
 [img_test_detail]:Images/test_detail.png "Details of a test result"
 [img_login_vs]:Images/login_vs.png "Visual studio login"
+[img_chapter_contents]:Images/chaptercontents.png "Chapter contents"
 
