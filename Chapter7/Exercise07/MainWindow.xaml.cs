@@ -1,8 +1,6 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 
-namespace Exercise7
+namespace Exercise07
 {
     public partial class MainWindow : Window
     {

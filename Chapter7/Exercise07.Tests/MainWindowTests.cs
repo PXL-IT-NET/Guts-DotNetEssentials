@@ -6,7 +6,7 @@ using Guts.Client;
 using Guts.Client.TestTools;
 using NUnit.Framework;
 
-namespace Exercise7.Tests
+namespace Exercise07.Tests
 {
     [MonitoredTestFixture("dotNet1", 7, 7)]
     [Apartment(ApartmentState.STA)]

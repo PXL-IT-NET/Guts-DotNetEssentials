@@ -8,8 +8,8 @@
     <ProjectGuid>{7ABA05EF-8D26-476A-911E-D33C57FD1F6A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Exercise7.Tests</RootNamespace>
-    <AssemblyName>Exercise7.Tests</AssemblyName>
+    <RootNamespace>Exercise07.Tests</RootNamespace>
+    <AssemblyName>Exercise07.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -36,11 +36,11 @@
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.4.2.1\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Guts.Client, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Guts.Client.1.0.5\lib\net461\Guts.Client.dll</HintPath>
+    <Reference Include="Guts.Client, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Guts.Client.1.0.7\lib\net461\Guts.Client.dll</HintPath>
     </Reference>
     <Reference Include="Guts.Client.UI, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Guts.Client.1.0.5\lib\net461\Guts.Client.UI.dll</HintPath>
+      <HintPath>..\packages\Guts.Client.1.0.7\lib\net461\Guts.Client.UI.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -70,9 +70,9 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Exercise7\Exercise7.csproj">
+    <ProjectReference Include="..\Exercise07\Exercise07.csproj">
       <Project>{67C64CAC-8638-466E-B866-B6F573694EA8}</Project>
-      <Name>Exercise7</Name>
+      <Name>Exercise07</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
