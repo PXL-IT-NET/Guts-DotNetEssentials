@@ -44,8 +44,8 @@ namespace Exercise05.Tests
             sourceCode = CodeCleaner.StripComments(sourceCode);
 
             Assert.That(sourceCode, Contains.Substring("new Polygon();"), () => "No code found where an instance of the Polygon class is created.");
-            Assert.That(sourceCode, Contains.Substring(".Points.Add("), () => "No code found where points are added to the Polygon instance.");
             Assert.That(sourceCode, Contains.Substring("new Point("), () => "No code found where instances op the Point class are created.");
+            Assert.That(sourceCode, Contains.Substring(".Add("), () => "No code found where points are added to the Polygon instance.");
         }
 
         [MonitoredTest("Should draw triangles and rectangles on the canvas after the draw button is clicked"), Order(3)]
