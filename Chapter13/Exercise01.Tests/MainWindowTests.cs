@@ -1,14 +1,14 @@
-﻿using Guts.Client;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
-using NUnit.Framework;
 using System.Windows.Controls;
-using Guts.Client.TestTools;
+using Guts.Client;
+using Guts.Client.TestTools.WPF;
+using NUnit.Framework;
 
-namespace Exercise1.Tests
+namespace Exercise01.Tests
 {
-    [MonitoredTestFixture(courseCode: "dotNet1",chapter: 13, exercise: 1), Apartment(ApartmentState.STA)] 
-    public class MainWindowUITests
+    [MonitoredTestFixture("dotNet1",13, 1), Apartment(ApartmentState.STA)] 
+    public class MainWindowTests
     {
         private TestWindow<Exercise01.MainWindow> _window;
 

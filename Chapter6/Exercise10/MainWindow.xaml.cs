@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Threading;
+﻿using System.Windows;
 
 namespace Exercise10
 {

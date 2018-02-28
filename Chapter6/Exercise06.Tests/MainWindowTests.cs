@@ -5,6 +5,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using Guts.Client;
 using Guts.Client.TestTools;
+using Guts.Client.TestTools.WPF;
 using NUnit.Framework;
 
 namespace Exercise06.Tests

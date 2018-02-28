@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using Guts.Client;
-using Guts.Client.TestTools;
+using Guts.Client.TestTools.WPF;
 using NUnit.Framework;
 
 namespace Exercise11.Tests

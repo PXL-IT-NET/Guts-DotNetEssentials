@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Shapes;
 using Guts.Client;
 using Guts.Client.TestTools;
+using Guts.Client.TestTools.WPF;
 using NUnit.Framework;
 
 namespace Exercise05.Tests
@@ -33,7 +34,6 @@ namespace Exercise05.Tests
         public void _1_ShouldHaveAnEmptyCanvasAndADrawButton()
         {
             AssertButtonAndCanvasArePresent();
-
             Assert.That(_canvas.Children.Count, Is.EqualTo(0), () => "At the start, the canvas should be empty.");
         }
 

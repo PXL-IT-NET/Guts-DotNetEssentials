@@ -4,9 +4,8 @@ using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 using Guts.Client;
-using Guts.Client.TestTools;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
+using Guts.Client.TestTools.WPF;
 
 namespace Exercise06.Tests
 {

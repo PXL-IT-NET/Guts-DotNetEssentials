@@ -3,7 +3,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Controls;
 using Guts.Client;
-using Guts.Client.TestTools;
+using Guts.Client.TestTools.WPF;
 using NUnit.Framework;
 
 namespace Exercise07.Tests
