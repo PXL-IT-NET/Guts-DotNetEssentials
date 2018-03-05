@@ -43,7 +43,7 @@ namespace Exercise05.Tests
             var sourceCode = Solution.Current.GetFileContent(@"Exercise05\MainWindow.xaml.cs");
             sourceCode = CodeCleaner.StripComments(sourceCode);
 
-            Assert.That(sourceCode, Contains.Substring("new Polygon();"), 
+            Assert.That(sourceCode, Contains.Substring("new Polygon"), 
                 () => "No code found where an instance of the Polygon class is created.");
             Assert.That(sourceCode, Contains.Substring("new Point(").Or.Contains("new System.Windows.Point("), 
                 () => "No code found where instances op the Point class are created.");
