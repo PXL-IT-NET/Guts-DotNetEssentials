@@ -110,10 +110,11 @@ namespace Exercise11.Tests
 
         private void AssertAllControlsArePresent()
         {
-            Assert.That(_labels.Count + _textBlocks.Count, Is.EqualTo(2),
-                () => $"The window should have 2 Label controls. Number of Labels that were found: {_labels.Count}");
+            var textDisplayControlCount = _labels.Count + _textBlocks.Count;
+            Assert.That(textDisplayControlCount, Is.EqualTo(2),
+                () => $"The window should have exactly 2 controls to display text (Label or TextBlock). Number of Labels that were found: {_labels.Count}. Number of TextBlocks that were found: {_textBlocks.Count}");
             Assert.That(_buttons.Count, Is.EqualTo(2),
-                () => $"The window should have 2 Button controls. Number of Buttons that were found: {_buttons.Count}");
+                () => $"The window should have exactly 2 Button controls. Number of Buttons that were found: {_buttons.Count}");
         }
 
         private void AssertRandomGeneratorsArePresent()
