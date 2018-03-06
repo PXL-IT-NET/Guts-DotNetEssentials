@@ -37,7 +37,8 @@ namespace Exercise07.Tests
 
             _clearButton = _window.GetContentControlByPartialContentText<Button>("clear");
 
-            _displayTextBlock = _window.GetUIElements<TextBlock>().FirstOrDefault();
+            _displayTextBlock = _window.GetUIElements<TextBlock>()
+                .FirstOrDefault(textBlock => !string.IsNullOrEmpty(textBlock.Name)); //filter on name property because the buttons internally also contain TextBlocks
         }
 
         [OneTimeTearDown]

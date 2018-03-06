@@ -57,13 +57,13 @@ namespace Exercise11.Tests
             AssertAllControlsArePresent();
             AssertRandomGeneratorsArePresent();
 
-            var oldLabelContents = _labels.Select(l => (string) l.Content).Concat(_textBlocks.Select(tb => tb.Text))
+            var oldLabelContents = _labels.Select(l => Convert.ToString(l.Content)).Concat(_textBlocks.Select(tb => tb.Text))
                 .ToList();
 
             _buttons.ElementAt(0).FireClickEvent();
             _buttons.ElementAt(1).FireClickEvent();
 
-            var newLabelContents = _labels.Select(l => (string)l.Content).Concat(_textBlocks.Select(tb => tb.Text))
+            var newLabelContents = _labels.Select(l => Convert.ToString(l.Content)).Concat(_textBlocks.Select(tb => tb.Text))
                 .ToList();
 
             var firstLabelContent = newLabelContents.ElementAt(0);
