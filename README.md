@@ -37,7 +37,8 @@ After registration you will have the credentials you need to succesfully run aut
 
 #### Start working on an exercise
 Let's assume you want to make exercise 5 of chapter 5.
-1. Open the solution in the folder "Chapter 5"
+1. Open the solution in the folder "Chapter 5". You can do this by doubleclicking on the **.sln** file or by opening visual studio, clicking on *File -> Open -> Project/Solution...* and selecting the **.sln** file.
+![alt text][img_open_solution]
 2. **Build the solution** (Menu: Build -> Build Solution or Ctrl+Shift+B)
 3. Locate the project "Exercise 5" and set it as your startup project
 ![alt text][img_startup_project]
@@ -71,6 +72,7 @@ Login, go to ".NET Essentials" in the navigation bar and select the chapter you 
 [img_book]:Images/book.jpg "Handboek 'Programmeren in C#'"
 [img_projects]:Images/projects.png "Solution for chapter five with its projects"
 [img_download]:Images/download.png "Download repository"
+[img_open_solution]:Images/open_solution.png "Open solution"
 [img_startup_project]:Images/startup_project.png "Choose startup project"
 [img_group_tests]:Images/group_tests.png "Group tests by project"
 [img_test_detail]:Images/test_detail.png "Details of a test result"
