@@ -1,0 +1,19 @@
+﻿<Window x:Class="Exercise07.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Exercise07"
+        mc:Ignorable="d"
+        Title="Lookup months" Height="100" Width="360">
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="25,25,0,0" Text="Month" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="20" Margin="80,25,0,0" VerticalAlignment="Top" Width="40"
+                 Name="monthNumberTextBox"/>
+        <Button Content="is" HorizontalAlignment="Left" Margin="145,25,0,0" VerticalAlignment="Top" Width="40" Height="20"
+                Name="lookupButton" />
+        <TextBox HorizontalAlignment="Left" Height="20"
+                 Margin="203,24,0,0" VerticalAlignment="Top" Width="120"
+                 Name="monthNameTextBox"/>
+    </Grid>
+</Window>

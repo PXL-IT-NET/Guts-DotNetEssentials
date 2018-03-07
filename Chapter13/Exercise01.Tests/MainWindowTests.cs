@@ -10,12 +10,12 @@ namespace Exercise01.Tests
     [MonitoredTestFixture("dotNet1",13, 1), Apartment(ApartmentState.STA)] 
     public class MainWindowTests
     {
-        private TestWindow<Exercise01.MainWindow> _window;
+        private TestWindow<MainWindow> _window;
 
         [SetUp]
         public void Setup()
         {
-            _window = new TestWindow<Exercise01.MainWindow>();
+            _window = new TestWindow<MainWindow>();
         }
 
         [TearDown]
