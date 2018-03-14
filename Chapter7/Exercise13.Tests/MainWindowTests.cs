@@ -81,7 +81,7 @@ namespace Exercise13.Tests
         public void _4_ShouldHaveTotalControls()
         {
             Assert.That(_totalLabel, Is.Not.Null, () => "Could not find a Label control with content 'Totaal:'");
-            Assert.That(_btwTextBox, Is.Not.Null, () => "Could not find a TextBox control that has the text 'tot' in its name. Consider using 'totalTextBox' as value for the 'Name' property");
+            Assert.That(_totalTextBox, Is.Not.Null, () => "Could not find a TextBox control that has the text 'tot' in its name. Consider using 'totalTextBox' as value for the 'Name' property");
         }
 
         [MonitoredTest("Should have a button"), Order(5)]

@@ -67,7 +67,7 @@ namespace Exercise07.Tests
         }
 
         [MonitoredTest("Should display numbers when clicked"), Order(2)]
-        public void _2_ShouldDisplayNubmersWhenClicked()
+        public void _2_ShouldDisplayNumbersWhenClicked()
         {
             Assert.That(_displayTextBlock.Text, Is.EqualTo("0"), () => "At startup the display text should be equal to 0");
 
