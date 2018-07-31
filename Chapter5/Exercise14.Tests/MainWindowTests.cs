@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using Guts.Client;
+using Guts.Client.Classic;
 using NUnit.Framework;
 
 namespace Exercise14.Tests

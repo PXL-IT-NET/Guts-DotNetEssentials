@@ -2,8 +2,8 @@
 using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Guts.Client;
-using Guts.Client.TestTools.WPF;
+using Guts.Client.Classic;
+using Guts.Client.Classic.TestTools.WPF;
 using NUnit.Framework;
 
 namespace Exercise09.Tests
