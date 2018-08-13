@@ -2,9 +2,9 @@
 using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Shapes;
-using Guts.Client;
-using Guts.Client.TestTools;
-using Guts.Client.TestTools.WPF;
+using Guts.Client.Classic;
+using Guts.Client.Classic.TestTools.WPF;
+using Guts.Client.Shared.TestTools;
 using NUnit.Framework;
 
 namespace Exercise05.Tests

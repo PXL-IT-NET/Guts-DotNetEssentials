@@ -16,8 +16,17 @@ The matching test projects contain **automated tests** that can be run to check 
 ## Getting Started
 First you need to clone or download the files in this repository on your local machine.
 You have 2 options:
-1. Download a zipped copy of the repository
-2. Clone the repository
+1. Clone the repository using git (recommended because with git it is easier to deal with changes. Also see the [FAQ](/FAQ.md))
+2. Download a zipped copy of the repository
+
+#### Clone the repository
+If you are familiar with *Git* you can clone this repository to your local machine.
+Click on "Clone or download" at the top right of this page.
+Click on "Open in Desktop" if you use the *GitHub Desktop* tool or copy the web URL and clone using the command line or your favorite git tool.
+
+![alt text][img_clone]
+
+Working with git is the recommended way because it makes is very easy to get bugfixes on the tests without loosing any of your work. Also see the [FAQ](/FAQ.md).
 
 #### Download a zipped coppy of the repository
 Click on "Clone or download" at the top right of this page.
@@ -26,10 +35,6 @@ Click on "Download ZIP"
 ![alt text][img_download]
 
 Unzip de files on your local machine and you are ready to go.
-
-#### Clone the repository
-If you are familiar with *Git* you can also choose to clone the repository to your local machine.
-E.g. by using the *GitHub Desktop* tool.
 
 #### Register on [guts-web.appspot.com](https://guts-web.appspot.com)
 To be able to send your tests results to the Guts servers you need to register via [guts-web.appspot.com](https://guts-web.appspot.com/register).
@@ -69,9 +74,13 @@ You can check your progress and compare with the averages of other students via 
 Login, go to ".NET Essentials" in the navigation bar and select the chapter you want to view.
 ![alt text][img_chapter_contents]
 
+## Questions?
+Maybe the [FAQ](/FAQ.md) page already has the answer...
+
 [img_book]:Images/book.jpg "Handboek 'Programmeren in C#'"
 [img_projects]:Images/projects.png "Solution for chapter five with its projects"
 [img_download]:Images/download.png "Download repository"
+[img_clone]:Images/clone.png "Clone repository"
 [img_open_solution]:Images/open_solution.png "Open solution"
 [img_startup_project]:Images/startup_project.png "Choose startup project"
 [img_group_tests]:Images/group_tests.png "Group tests by project"

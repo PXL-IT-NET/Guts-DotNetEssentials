@@ -3,9 +3,10 @@ using System.Reflection;
 using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Shapes;
-using Guts.Client;
+using Guts.Client.Classic;
+using Guts.Client.Classic.TestTools.WPF;
 using NUnit.Framework;
-using Guts.Client.TestTools.WPF;
+
 
 namespace Exercise06.Tests
 {

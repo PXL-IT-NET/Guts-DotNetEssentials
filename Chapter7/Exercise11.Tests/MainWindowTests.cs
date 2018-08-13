@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows.Controls;
-using Guts.Client;
-using Guts.Client.TestTools.WPF;
+using Guts.Client.Classic;
+using Guts.Client.Classic.TestTools.WPF;
 using NUnit.Framework;
 
 namespace Exercise11.Tests

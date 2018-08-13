@@ -1,11 +1,11 @@
-﻿using Guts.Client;
-using Guts.Client.TestTools;
-using Guts.Client.TestTools.WPF;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Linq;
 using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Shapes;
+using Guts.Client.Classic;
+using Guts.Client.Classic.TestTools.WPF;
+using Guts.Client.Shared.TestTools;
 
 namespace Exercise04.Tests
 {
