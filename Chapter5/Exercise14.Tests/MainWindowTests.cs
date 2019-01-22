@@ -3,11 +3,12 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Guts.Client.Classic;
+using Guts.Client.Shared;
 using NUnit.Framework;
 
 namespace Exercise14.Tests
 {
-    [MonitoredTestFixture("dotNet1", 5, 14), Apartment(ApartmentState.STA)]
+    [ExerciseTestFixture("dotNet1", "H05", "14", @"Exercise14\MainWindow.xaml.cs"), Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {
         private MainWindow _window;

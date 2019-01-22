@@ -18,7 +18,7 @@ To do this, follow these steps:
 * Reapply your stashed changes: **git stash apply**
 
 ### method 2: download a new version of the code
-Most of the times it is only the MainWindow that has been changed. You can download the start code again and then copy the MainWindow files (.xaml and .cs) into your solution.
+Most of the times it is only the MainWindow that has been changed. You can download the start code again and than copy the MainWindow files (.xaml and .cs) into your solution.
 
 To do this, follow these steps:
 * Download the repository again as zip. Unzip the file in a different folder then the folder you are currently working in

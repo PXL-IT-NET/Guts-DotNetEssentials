@@ -5,9 +5,6 @@ using System.Windows.Shapes;
 
 namespace Exercise05
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -53,11 +50,13 @@ namespace Exercise05
                                    double yPos,
                                    double size)
         {
-            Rectangle rectangle = new Rectangle();
-            rectangle.Width = size;
-            rectangle.Height = size;
-            rectangle.Margin = new Thickness(xPos, yPos, 0, 0);
-            rectangle.Stroke = brushToUse;
+            Rectangle rectangle = new Rectangle
+            {
+                Width = size,
+                Height = size,
+                Margin = new Thickness(xPos, yPos, 0, 0),
+                Stroke = brushToUse
+            };
             drawingArea.Children.Add(rectangle);
         }
     }
