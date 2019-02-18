@@ -5,11 +5,12 @@ using System.Windows.Controls;
 using System.Windows.Shapes;
 using Guts.Client.Classic;
 using Guts.Client.Classic.TestTools.WPF;
+using Guts.Client.Shared;
 using Guts.Client.Shared.TestTools;
 
 namespace Exercise04.Tests
 {
-    [MonitoredTestFixture("dotNet1", 8, 4), Apartment(ApartmentState.STA)]
+    [ExerciseTestFixture("dotNet1", "H08", "Exercise04", @"Exercise04\MainWindow.xaml;Exercise04\MainWindow.xaml.cs"), Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {
         private TestWindow<MainWindow> _testWindow;
@@ -34,8 +35,16 @@ namespace Exercise04.Tests
             _testWindow?.Dispose();
         }
 
-        [MonitoredTest("Should have a private method DrawRectangle"), Order(1)]
-        public void _1_ShouldHaveAPrivateMethodDrawRectangle()
+        [MonitoredTest("Should have a canvas"), Order(1)]
+        public void _1_ShouldHaveACanvas()
+        {
+            Assert.That(_canvas, Is.Not.Null,
+                () => "Could not find a Canvas in the window that is accessible in the code behind. " +
+                      "Make sure a Canvas is present in the XAML and that is has a Name.");
+        }
+
+        [MonitoredTest("Should have a private method DrawRectangle"), Order(2)]
+        public void _2_ShouldHaveAPrivateMethodDrawRectangle()
         {
             bool hasDrawRectangeleMethod  =_testWindow.Window.HasPrivateMethod(method =>
                 method.Name.ToLower().Contains("drawrectangle") && method.ReturnType == typeof(void));
@@ -44,17 +53,16 @@ namespace Exercise04.Tests
                 () => "Could not find a method 'DrawRectangle' with return type 'void'.");
         }
 
-        [MonitoredTest("Should make use of the Rectangle class"), Order(2)]
-        public void _2_ShouldMakeUseOfRectangleClass()
+        [MonitoredTest("Should make use of the Rectangle class"), Order(3)]
+        public void _3_ShouldMakeUseOfRectangleClass()
         {
             Assert.That(_mainWindowSourceCode, Contains.Substring("new Rectangle();"),
                 () => "No code found where an instance of the Rectangle class is created.");
         }
 
-        [MonitoredTest("Should set properties of the Rectangle class instance"), Order(3)]
-        public void _3_ShouldSetPropertiesOfRectangleClassInstance()
+        [MonitoredTest("Should set properties of the Rectangle class instance"), Order(4)]
+        public void _4_ShouldSetPropertiesOfRectangleClassInstance()
         {
-            // rectangle weglaten
             Assert.That(_mainWindowSourceCode, Contains.Substring("rectangle.Width = "),
                 () => "No code found where the Width property of the rectangle is set.");
             Assert.That(_mainWindowSourceCode, Contains.Substring("rectangle.Height = "),
@@ -65,9 +73,10 @@ namespace Exercise04.Tests
                 () => "No code found where the Stroke property of the rectangle is set.");
         }
         
-        [MonitoredTest("Should create a staircase with Rectangles at startup"), Order(4)]
-        public void _4_ShouldCreateStaircase()
+        [MonitoredTest("Should create a staircase with Rectangles at startup"), Order(5)]
+        public void _5_ShouldCreateStaircase()
         {
+            _1_ShouldHaveACanvas();
             var rectangles = _canvas.FindVisualChildren<Rectangle>().ToList();
             var rectanglesGroupedByX = rectangles.GroupBy(rectangle => rectangle.Margin.Left).ToList();
             var rectanglesGroupedByY = rectangles.GroupBy(rectangle => rectangle.Margin.Top).ToList();

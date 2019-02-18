@@ -4,10 +4,12 @@ using System.Threading;
 using System.Windows.Controls;
 using Guts.Client.Classic;
 using Guts.Client.Classic.TestTools.WPF;
+using Guts.Client.Shared;
 
 namespace Exercise07.Tests
 {
-    [MonitoredTestFixture("dotNet1", 8, 7), Apartment(ApartmentState.STA)]
+    [ExerciseTestFixture("dotNet1", "H08", "Exercise07", @"Exercise07\MainWindow.xaml;Exercise07\MainWindow.xaml.cs"), 
+     Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {
         private TestWindow<MainWindow> _testWindow;
@@ -63,7 +65,7 @@ namespace Exercise07.Tests
             Assert.That(_button, Is.Not.Null,
                 () => "Could not find a Button control with the text 'Teken'.");
             Assert.That(_textBlock, Is.Not.Null,
-                () => "Could not find a TextBlock control.");
+                () => "Could not find a TextBlock control to display the results.");
         }
     }
 }

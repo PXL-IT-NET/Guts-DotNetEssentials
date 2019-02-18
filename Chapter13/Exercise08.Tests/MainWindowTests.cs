@@ -8,12 +8,14 @@ using System.Windows;
 using System.Windows.Controls;
 using Guts.Client.Classic;
 using Guts.Client.Classic.TestTools.WPF;
+using Guts.Client.Shared;
 using Guts.Client.Shared.TestTools;
 using NUnit.Framework;
 
 namespace Exercise08.Tests
 {
-    [MonitoredTestFixture("dotNet1", 13, 8), Apartment(ApartmentState.STA)]
+    [ExerciseTestFixture("dotNet1", "H13", "Exercise08", @"Exercise07\MainWindow.xaml;Exercise07\MainWindow.xaml.cs"), 
+     Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {
         private TypeInfo _personTypeInfo;
@@ -80,8 +82,6 @@ namespace Exercise08.Tests
             Assert.That(listOfPersons.Count, Is.GreaterThanOrEqualTo(2), () => "The list of persons should hold at least 2 persons");
         }
 
-
-
         [MonitoredTest("Should have a ListBox"), Order(4)]
         public void _4_ShouldHaveAListBox()
         {
@@ -98,8 +98,6 @@ namespace Exercise08.Tests
             Assert.That(_theListBox.Items.Count, Is.EqualTo(listOfPersons.Count), () => "ListBox should have as many items as there are persons");
             var listboxItems = _theListBox.Items.OfType<ListBoxItem>().ToList();
             Assert.That(_theListBox.Items.Count, Is.EqualTo(listboxItems.Count), () => "All items in the ListBox should be of type 'ListBoxItem'");
-
-            // button.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
         }
 
         [MonitoredTest("Should open a Person detail window on double click"), Order(6)]

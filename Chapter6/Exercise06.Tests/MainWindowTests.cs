@@ -5,12 +5,14 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using Guts.Client.Classic;
 using Guts.Client.Classic.TestTools.WPF;
+using Guts.Client.Shared;
 using Guts.Client.Shared.TestTools;
 using NUnit.Framework;
 
 namespace Exercise06.Tests
 {
-    [MonitoredTestFixture("dotNet1", 6, 6), Apartment(ApartmentState.STA)]
+    [ExerciseTestFixture("dotNet1", "H06", "Exercise06", @"Exercise06\MainWindow.xaml;Exercise06\MainWindow.xaml.cs"), 
+     Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {
         private Rectangle _minutesRectangle;

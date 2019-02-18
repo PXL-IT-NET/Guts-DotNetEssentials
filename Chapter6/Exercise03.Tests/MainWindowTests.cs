@@ -3,11 +3,13 @@ using System.Threading;
 using System.Windows.Controls;
 using Guts.Client.Classic;
 using Guts.Client.Classic.TestTools.WPF;
+using Guts.Client.Shared;
 using NUnit.Framework;
 
 namespace Exercise03.Tests
 {
-    [MonitoredTestFixture("dotNet1", 6, 3), Apartment(ApartmentState.STA)]
+    [ExerciseTestFixture("dotNet1", "H06", "Exercise03", @"Exercise03\MainWindow.xaml;Exercise03\MainWindow.xaml.cs"), 
+     Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {
         private const string RandomTextBoxName = "randomTextBox";

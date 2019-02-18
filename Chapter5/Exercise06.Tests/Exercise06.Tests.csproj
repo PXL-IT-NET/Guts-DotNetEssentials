@@ -34,11 +34,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Guts.Client.Classic, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Guts.Client.2.0.0\lib\net461\Guts.Client.Classic.dll</HintPath>
+    <Reference Include="Guts.Client.Classic, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Guts.Client.2.0.1\lib\net461\Guts.Client.Classic.dll</HintPath>
     </Reference>
     <Reference Include="Guts.Client.Classic.UI, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Guts.Client.2.0.0\lib\net461\Guts.Client.Classic.UI.dll</HintPath>
+      <HintPath>..\packages\Guts.Client.2.0.1\lib\net461\Guts.Client.Classic.UI.dll</HintPath>
     </Reference>
     <Reference Include="Guts.Client.Shared, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Guts.Client.Shared.2.0.0\lib\netstandard2.0\Guts.Client.Shared.dll</HintPath>

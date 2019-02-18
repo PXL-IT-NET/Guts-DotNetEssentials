@@ -3,12 +3,13 @@ using System.Threading;
 using System.Windows.Controls;
 using Guts.Client.Classic;
 using Guts.Client.Classic.TestTools.WPF;
+using Guts.Client.Shared;
 using Guts.Client.Shared.TestTools;
 using NUnit.Framework;
 
 namespace Exercise14.Tests
 {
-    [MonitoredTestFixture("dotNet1", 7, 14)]
+    [ExerciseTestFixture("dotNet1", "H07", "Exercise14", @"Exercise14\MainWindow.xaml;Exercise14\MainWindow.xaml.cs")]
     [Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {
