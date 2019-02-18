@@ -15,34 +15,43 @@ The matching test projects contain **automated tests** that can be run to check 
 
 ## Getting Started
 First you need to clone or download the files in this repository on your local machine.
-You have 2 options:
-1. Clone the repository using git (recommended because with git it is easier to deal with changes. Also see the [FAQ](/FAQ.md))
-2. Download a zipped copy of the repository
+You will use the Visual Studio **git** functionalities to accomplish this.
+
+#### Connect to GitHub
+
+- Go to the *Team Explorer* window (*View -> Team Explorer*)
+- Click on the *Manage Connections* button (The green power plug)
+- Under *Hosted Service Providers* click on the GitHub *Connect* link
+- Fill in your GitHub credentials
+- Click on *Sign in*
+
+![alt text][img_github_connect]
 
 #### Clone the repository
-If you are familiar with *Git* you can clone this repository to your local machine.
-Click on "Clone or download" at the top right of this page.
-Click on "Open in Desktop" if you use the *GitHub Desktop* tool or copy the web URL and clone using the command line or your favorite git tool.
 
+Now you are ready to make a local copy of the files in this repository (clone).
+
+- Click on the *Clone or Download* button in the upper left corner of this webpage
+- Copy the url of this repository
+![alt text][img_clone_url]
+- Go to the *Team Explorer* window in Visual Studio and click on the *Clone*
+- Click on the *Url* tab
+- Paste the url you copied earlier
+- Choose a local folder where the files will be cloned to
+- Click on *Clone*
 ![alt text][img_clone]
 
-Working with git is the recommended way because it makes is very easy to get bugfixes on the tests without loosing any of your work. Also see the [FAQ](/FAQ.md).
+Now you have a local copy of the online repository in which you can complete your exercises.
+You can double click on one of the solution files to load the exercises of a chapter.
+![alt text][img_cloned_repo_overview]
 
-#### Download a zipped coppy of the repository
-Click on "Clone or download" at the top right of this page.
-Click on "Download ZIP"
-
-![alt text][img_download]
-
-Unzip de files on your local machine and you are ready to go.
-
-#### Register on [guts-web.appspot.com](https://guts-web.appspot.com)
-To be able to send your tests results to the Guts servers you need to register via [guts-web.appspot.com](https://guts-web.appspot.com/register).
+#### Register on [guts-web.pxl.be](https://guts-web.pxl.be)
+To be able to send your tests results to the Guts servers you need to register via [guts-web.pxl.be](https://guts-web.pxl.be/register).
 After registration you will have the credentials you need to succesfully run automated tests for an exercise.
 
 #### Start working on an exercise
 Let's assume you want to make exercise 5 of chapter 5.
-1. Open the solution in the folder "Chapter 5". You can do this by doubleclicking on the **.sln** file or by opening visual studio, clicking on *File -> Open -> Project/Solution...* and selecting the **.sln** file.
+1. Open the solution in the folder "Chapter 5". You can do this by doubleclicking on the **.sln** file or by opening visual studio, clicking on *File -> Open -> Project/Solution...* and selecting the **.sln** file. Alternatively you can double click on the solution in the *Team Explorer* window.
 ![alt text][img_open_solution]
 2. **Build the solution** (Menu: Build -> Build Solution or Ctrl+Shift+B)
 3. Locate the project "Exercise 5" and set it as your startup project
@@ -70,21 +79,37 @@ Although it is not a guarantee, having all tests green is a good indication that
 
 #### Check your results online
 Test results of all students are sent to the Guts servers.
-You can check your progress and compare with the averages of other students via [guts-web.appspot.com](https://guts-web.appspot.com).
+You can check your progress and compare with the averages of other students via [guts-web.pxl.be](https://guts-web.pxl.be).
 Login, go to ".NET Essentials" in the navigation bar and select the chapter you want to view.
 ![alt text][img_chapter_contents]
 
-## Questions?
-Maybe the [FAQ](/FAQ.md) page already has the answer...
+#### Save (commit) your work
+It could happen that the code in the online repository changes and that you need to pull (download) a new version of the start code in your local repository. 
+The online repository does not contain your solutions. Pulling a new version of the code could result in you losing your work.
+
+To avoid this you should regularly commit (save) your work in your local git database. If you have commited your work an you pull a new version, git will be able to automatically merge your work with the online changes. 
+It is recommended to **do a git commit every time you complete an exercise**.
+
+- Go to *Team Explorer*
+- Go to *Changes*
+![alt text][img_team_explorer_goto_changes]
+- In the *Changes* screen you get an overview of the changes you made locally. Fill in a commit message (describing what you did) and click on the *Commit All* button. Your changes are now saved in your local git database.
+![alt text][img_team_explorer_changes]
+- By clicking on the home icon you go back to the main view for this local repository
 
 [img_book]:Images/book.jpg "Handboek 'Programmeren in C#'"
 [img_projects]:Images/projects.png "Solution for chapter five with its projects"
-[img_download]:Images/download.png "Download repository"
+[img_github_connect]:Images/github_connect.png "Connect to GitHub"
+[img_clone_url]:Images/clone_url.png "Copy repository url"
 [img_clone]:Images/clone.png "Clone repository"
+[img_cloned_repo_overview]:Images/cloned_repo_overview.png "Cloned repository overview"
 [img_open_solution]:Images/open_solution.png "Open solution"
 [img_startup_project]:Images/startup_project.png "Choose startup project"
 [img_group_tests]:Images/group_tests.png "Group tests by project"
 [img_test_detail]:Images/test_detail.png "Details of a test result"
 [img_login_vs]:Images/login_vs.png "Visual studio login"
 [img_chapter_contents]:Images/chaptercontents.png "Chapter contents"
+[img_team_explorer_goto_changes]:Images/team_explorer_goto_changes.png "Team Explorer - go to Changes"
+[img_team_explorer_changes]:Images/team_explorer_changes.png "Team Explorer - Changes"
+
 
