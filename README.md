@@ -14,12 +14,12 @@ The WPF solutions are empty and waiting for you to complete them.
 The matching test projects contain **automated tests** that can be run to check if your solution is correct.
 
 ## Getting Started
-First you need to clone or download the files in this repository on your local machine.
+First you need to clone the files in this repository on your local machine.
 You will use the Visual Studio **git** functionalities to accomplish this.
 
 #### Connect to GitHub
 
-- Go to the *Team Explorer* window (*View -> Team Explorer*)
+- Go to the *Team Explorer* window in Visual Studio (*View -> Team Explorer*)
 - Click on the *Manage Connections* button (The green power plug)
 - Under *Hosted Service Providers* click on the GitHub *Connect* link
 - Fill in your GitHub credentials
@@ -34,7 +34,7 @@ Now you are ready to make a local copy of the files in this repository (clone).
 - Click on the *Clone or Download* button in the upper left corner of this webpage
 - Copy the url of this repository
 ![alt text][img_clone_url]
-- Go to the *Team Explorer* window in Visual Studio and click on the *Clone*
+- Go to the *Team Explorer* window in Visual Studio and click on the *Clone* link
 - Click on the *Url* tab
 - Paste the url you copied earlier
 - Choose a local folder where the files will be cloned to
@@ -64,7 +64,7 @@ Let's assume you are working on exercise 5 of chapter 5.
 2. In the top left corner, right click on the down arrow of the *group by* button and group the automated tests by project. (If you don't see any tests appearing, you probably should (re)build your solution)
 ![alt text][img_group_tests]
 3. Right click on the project that matches your exercise and click on *Run selected tests*
-4. The first time you run a test a popup may appear thats asks you to log in. You should fill in your credentials from [guts-web.appspot.com](https://guts-web.appspot.com).
+4. The first time you run a test a popup may appear thats asks you to log in. You should fill in your credentials from [guts-web.pxl.be](https://guts-web.pxl.be).
 ![alt text][img_login_vs]
 
 #### Inspect the test results
