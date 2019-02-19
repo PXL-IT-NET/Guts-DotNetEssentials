@@ -17,6 +17,14 @@ The matching test projects contain **automated tests** that can be run to check 
 First you need to clone the files in this repository on your local machine.
 You will use the Visual Studio **git** functionalities to accomplish this.
 
+#### Install GitHub extension for Visual Studio
+
+- Click on the windows button, type "Visual Studio Installer" and start the program.
+- Click on "Modify"
+- Go to the "Individual components" tab and check "GitHub extension for Visual Studio"
+- Click on "Modify"
+![alt text][img_github_extension]
+
 #### Connect to GitHub
 
 - Go to the *Team Explorer* window in Visual Studio (*View -> Team Explorer*)
@@ -67,6 +75,10 @@ Let's assume you are working on exercise 5 of chapter 5.
 4. The first time you run a test a popup may appear thats asks you to log in. You should fill in your credentials from [guts-web.pxl.be](https://guts-web.pxl.be).
 ![alt text][img_login_vs]
 
+**Troubleshoot:** 
+The first time it can happen that you see the tests in the *Test Explorer* but if you run the tests, nothing happens. 
+Try to clean your solution (**Build -> Clean Solution**) and then to rebuild your solution (**Build -> Rebuild solution**).
+
 #### Inspect the test results
 Tests that pass will be green. Tests that don't pass will be red. 
 
@@ -97,7 +109,17 @@ It is recommended to **do a git commit every time you complete an exercise**.
 ![alt text][img_team_explorer_changes]
 - By clicking on the home icon you go back to the main view for this local repository
 
+#### Get a new version of the start code
+It could happen that the lectors fix bugs in the automated tests of the startcode or add new exercises and/or tests. 
+Follow the steps below to get the new version of the code:
+
+- Commit your work locally (see previous section)
+- Go to *Team Explorer - Home*
+- Click on *Sync*
+- Under *Incoming Commits*, click on *Pull*. This will merge your saved commit with the online commit in your local repository.
+
 [img_book]:Images/book.jpg "Handboek 'Programmeren in C#'"
+[img_github_extension]:Images/install_github_extension.png "Install the GitHub extension in Visual Studio"
 [img_projects]:Images/projects.png "Solution for chapter five with its projects"
 [img_github_connect]:Images/github_connect.png "Connect to GitHub"
 [img_clone_url]:Images/clone_url.png "Copy repository url"
