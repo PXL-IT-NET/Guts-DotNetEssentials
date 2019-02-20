@@ -23,37 +23,13 @@ namespace Exercise05
         }
 
         private void DrawTriangle2(Canvas drawingArea,
-                                 SolidColorBrush brushToUse,
-                                 double topX,
-                                 double topY,
-                                 double width,
-                                 double height)
+                                   SolidColorBrush brushToUse,
+                                   double xPlace,
+                                   double yPlace,
+                                   double width,
+                                   double height)
         {
-            double rightCornerX, rightCornerY;
-            rightCornerX = topX + width;
-            rightCornerY = topY + height;
-
-            DrawPolygon(drawingArea, brushToUse,
-                         topX, topY,
-                         topX, rightCornerY,
-                         rightCornerX, rightCornerY);
-        }
-
-        private void DrawPolygon(Canvas drawingArea,
-                                  SolidColorBrush brushToUse,
-                                  double X1, double Y1,
-                                  double X2, double Y2,
-                                  double X3, double Y3)
-        {
-            Polygon poly = new Polygon
-            {
-                Stroke = brushToUse,
-                StrokeThickness = 1
-            };
-            poly.Points.Add(new Point(X1, Y1));
-            poly.Points.Add(new Point(X2, Y2));
-            poly.Points.Add(new Point(X3, Y3));
-            drawingArea.Children.Add(poly);
+            //TODO
         }
 
 
