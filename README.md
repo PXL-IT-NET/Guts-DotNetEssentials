@@ -39,18 +39,22 @@ You will use the Visual Studio **git** functionalities to accomplish this.
 
 Now you are ready to make a local copy of the files in this repository (clone).
 
-- Click on the *Clone or Download* button in the upper left corner of this webpage
+- Click on the *Clone or Download* button in the upper right corner of this webpage
 - Copy the url of this repository
+
 ![alt text][img_clone_url]
+
 - Go to the *Team Explorer* window in Visual Studio and click on the *Clone* link
 - Click on the *Url* tab
 - Paste the url you copied earlier
 - Choose a local folder where the files will be cloned to
 - Click on *Clone*
+
 ![alt text][img_clone]
 
 Now you have a local copy of the online repository in which you can complete your exercises.
 You can double click on one of the solution files to load the exercises of a chapter.
+
 ![alt text][img_cloned_repo_overview]
 
 #### Register on [guts-web.pxl.be](https://guts-web.pxl.be)
@@ -60,19 +64,26 @@ After registration you will have the credentials you need to succesfully run aut
 #### Start working on an exercise
 Let's assume you want to make exercise 5 of chapter 5.
 1. Open the solution in the folder "Chapter 5". You can do this by doubleclicking on the **.sln** file or by opening visual studio, clicking on *File -> Open -> Project/Solution...* and selecting the **.sln** file. Alternatively you can double click on the solution in the *Team Explorer* window.
+
 ![alt text][img_open_solution]
+
 2. **Build the solution** (Menu: Build -> Build Solution or Ctrl+Shift+B)
 3. Locate the project "Exercise 5" and set it as your startup project
+
 ![alt text][img_startup_project]
+
 4. Write the code you need to write
 
 #### Run the automated tests
 Let's assume you are working on exercise 5 of chapter 5.
 1. Open the *Test Explorer* window (Menu: Test -> Windows -> Test Explorer)
 2. In the top left corner, right click on the down arrow of the *group by* button and group the automated tests by project. (If you don't see any tests appearing, you probably should (re)build your solution)
+
 ![alt text][img_group_tests]
+
 3. Right click on the project that matches your exercise and click on *Run selected tests*
 4. The first time you run a test a popup may appear thats asks you to log in. You should fill in your credentials from [guts-web.pxl.be](https://guts-web.pxl.be).
+
 ![alt text][img_login_vs]
 
 **Troubleshoot:** 
@@ -93,6 +104,7 @@ Although it is not a guarantee, having all tests green is a good indication that
 Test results of all students are sent to the Guts servers.
 You can check your progress and compare with the averages of other students via [guts-web.pxl.be](https://guts-web.pxl.be).
 Login, go to ".NET Essentials" in the navigation bar and select the chapter you want to view.
+
 ![alt text][img_chapter_contents]
 
 #### Save (commit) your work
@@ -104,9 +116,13 @@ It is recommended to **do a git commit every time you complete an exercise**.
 
 - Go to *Team Explorer*
 - Go to *Changes*
+
 ![alt text][img_team_explorer_goto_changes]
+
 - In the *Changes* screen you get an overview of the changes you made locally. Fill in a commit message (describing what you did) and click on the *Commit All* button. Your changes are now saved in your local git database.
+
 ![alt text][img_team_explorer_changes]
+
 - By clicking on the home icon you go back to the main view for this local repository
 
 #### Get a new version of the start code
