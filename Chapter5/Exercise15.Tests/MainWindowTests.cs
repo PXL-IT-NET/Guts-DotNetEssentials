@@ -52,7 +52,7 @@ namespace Exercise15.Tests
                 () => $"Conversion method should be called: {_methodName}");
         }
 
-        [MonitoredTest("Should have one int parameters passed by value and three int parameters passed by ref"), Order(3)]
+        [MonitoredTest("Should have one int parameter passed by value and three int parameters passed by ref"), Order(3)]
         public void _3_ShouldHaveCorrectNumberOfParametersWithPassingConventions()
         {
             AssertHasConversionMethod();
