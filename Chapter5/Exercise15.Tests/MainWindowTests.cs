@@ -13,6 +13,7 @@ namespace Exercise15.Tests
     {
         private MainWindow _window;
         private MethodInfo _convertSecondsToHoursMinutesSecondsMethod;
+        private readonly string _methodName = "ConvertSecondsToHoursMinutesSeconds";
 
         [SetUp]
         public void Setup()
@@ -47,8 +48,36 @@ namespace Exercise15.Tests
             AssertHasConversionMethod();
         }
 
-        [MonitoredTest("Should correctly convert seconds to hours, minutes and seconds"), Order(2)]
-        public void _2_ShouldCorrectlyConvertSecondsToHoursMinutesSeconds()
+        [MonitoredTest("Should have a separate method called ConvertSecondsToHoursMinutesSeconds"), Order(2)]
+        public void _2_ShouldHaveMethodCalledConvertSecondsToHoursMinutesSeconds()
+        {
+            AssertHasConversionMethod();
+
+            Assert.That(_convertSecondsToHoursMinutesSecondsMethod.Name, Is.EqualTo(_methodName),
+                () => $"Conversion method should be called: {_methodName}");
+        }
+
+        [MonitoredTest("Should have one int parameters passed by value and three int parameters passed by ref"), Order(3)]
+        public void _3_ShouldHaveCorrectNumberOfParametersWithPassingConventions()
+        {
+            AssertHasConversionMethod();
+
+            var parameters = _convertSecondsToHoursMinutesSecondsMethod.GetParameters();
+            bool predicate = parameters[0].ParameterType == typeof(int) &&
+                       parameters[1].ParameterType.Name == "Int32&" && parameters[1].IsOut &&
+                       parameters[2].ParameterType.Name == "Int32&" && parameters[2].IsOut &&
+                       parameters[3].ParameterType.Name == "Int32&" && parameters[3].IsOut;
+
+            Assert.That(predicate, Is.True,
+                () => $"{_convertSecondsToHoursMinutesSecondsMethod.Name} should have one int parameter " +
+                       " passed by value and three int parameters passed by reference for returning conversion results");
+
+            Assert.That(_convertSecondsToHoursMinutesSecondsMethod.ReturnType, Is.EqualTo(typeof(void)),
+                () => $"{_convertSecondsToHoursMinutesSecondsMethod.Name} should return void");
+        }
+
+        [MonitoredTest("Should correctly convert seconds to hours, minutes and seconds"), Order(4)]
+        public void _4_ShouldCorrectlyConvertSecondsToHoursMinutesSeconds()
         {
             AssertHasConversionMethod();
 
