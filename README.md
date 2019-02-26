@@ -23,6 +23,7 @@ You will use the Visual Studio **git** functionalities to accomplish this.
 - Click on "Modify"
 - Go to the "Individual components" tab and check "GitHub extension for Visual Studio"
 - Click on "Modify"
+
 ![alt text][img_github_extension]
 
 #### Connect to GitHub
