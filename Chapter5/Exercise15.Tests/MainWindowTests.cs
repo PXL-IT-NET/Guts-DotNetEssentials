@@ -27,12 +27,7 @@ namespace Exercise15.Tests
             {
                 var parameters = m.GetParameters();
                 if (parameters.Length != 4) return false;
-                bool predicate = parameters[0].ParameterType == typeof(int) &&
-                       parameters[1].ParameterType.Name == "Int32&" && parameters[1].IsOut &&
-                       parameters[2].ParameterType.Name == "Int32&" && parameters[2].IsOut &&
-                       parameters[3].ParameterType.Name == "Int32&" && parameters[3].IsOut &&
-                       m.ReturnType == typeof(void);
-                return predicate;
+                return true;
             });
         }
 
