@@ -23,7 +23,8 @@ namespace Exercise15.Tests
             var windowType = typeof(MainWindow);
             _convertSecondsToHoursMinutesSecondsMethod = windowType.GetMethods(BindingFlags.NonPublic |
                                                                                BindingFlags.Public |
-                                                                               BindingFlags.Instance).FirstOrDefault(m =>
+                                                                               BindingFlags.Instance | 
+                                                                               BindingFlags.DeclaredOnly).FirstOrDefault(m =>
             {
                 var parameters = m.GetParameters();
                 if (parameters.Length != 4) return false;
