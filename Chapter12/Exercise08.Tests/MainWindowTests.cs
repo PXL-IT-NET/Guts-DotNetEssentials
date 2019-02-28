@@ -39,7 +39,8 @@ namespace Exercise08.Tests
             var windowType = typeof(MainWindow);
             _maxFunction = windowType.GetMethods(BindingFlags.NonPublic |
                                                  BindingFlags.Public |
-                                                 BindingFlags.Instance).FirstOrDefault(m =>
+                                                 BindingFlags.Instance |
+                                                 BindingFlags.DeclaredOnly).FirstOrDefault(m =>
             {
                 var parameters = m.GetParameters();
                 if (parameters.Length != 3) return false;
@@ -124,11 +125,12 @@ namespace Exercise08.Tests
             _calculateButton.FireClickEvent();
 
             Assert.That(_errorTextBlock.Text, Is.EqualTo(string.Empty),
-                () => "Sides that form a triangle should not give an error message");
+                () => $"Sides that form a triangle ({sideA}, {sideB}, {sideC}) should not give an error message");
 
             double area = double.Parse(_areaTextBlock.Text);
             Assert.That(area, Is.EqualTo(expected),
-                () => "Sides that form a triangle should produce an area rounded to 3 decimal digits");
+                () => $"Sides that form a triangle ({sideA}, {sideB}, {sideC}) should produce an area rounded to 3 decimal digits.\n" +
+                      $"Expected area was {expected:F3}, but actual was ${_areaTextBlock.Text}");
         }
 
         private void AssertErrorMessageWithIllegalSides(string sideA, string sideB, string sideC)
@@ -140,10 +142,11 @@ namespace Exercise08.Tests
             _calculateButton.FireClickEvent();
 
             Assert.That(_errorTextBlock.Text, Is.Not.EqualTo(string.Empty),
-                () => "Sides that don't form a triangle should give an error message");
+                () => $"Sides that don't form a triangle ({sideA}, {sideB}, {sideC}) should give an error message");
 
             Assert.That(_areaTextBlock.Text, Is.EqualTo(string.Empty),
-                () => "Sides that don't form a triangle should not produce an area");
+                () => $"Sides that don't form a triangle ({sideA}, {sideB}, {sideC}) should not produce an area.\n" +
+                      $"Actual area was {_areaTextBlock.Text}");
         }
 
         private void AssertHasTextBoxes()
@@ -157,8 +160,10 @@ namespace Exercise08.Tests
         {
             object[] parameters = new object[] { a, b, c };
             object result = _maxFunction.Invoke(_mainWindow.Window, parameters);
-            Assert.That(result, Is.Not.Null);
-            Assert.That((int)result, Is.EqualTo(expected));
+            Assert.That(result, Is.Not.Null, 
+                () => $"Invoking {_maxFunctionName}({a},{b},{c}) gives {result} but expected {expected}");
+            Assert.That((int)result, Is.EqualTo(expected),
+                () => $"Invoking {_maxFunctionName}({a},{b},{c}) gives {result} but expected {expected}");
         }
 
         private void AssertHasMaxFunction()
