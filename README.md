@@ -87,9 +87,18 @@ Let's assume you are working on exercise 5 of chapter 5.
 
 ![alt text][img_login_vs]
 
-**Troubleshoot:** 
+###### FAQ 
+**Why won't my tests run?**
+
 The first time it can happen that you see the tests in the *Test Explorer* but if you run the tests, nothing happens. 
 Try to clean your solution (**Build -> Clean Solution**) and then to rebuild your solution (**Build -> Rebuild solution**).
+
+**Why can't I see my testresults on the Guts website? Locally all my tests are green.**
+
+After the tests are runned, the testrunner will try to send your results to the server. In the *Output Window* you can see a log of the steps that are taken. 
+If anything goes wrong, you should be able to find more info in the *Output Window*.
+
+The test results will only be send to the server when you run all te tests of an exercise at once. If you run the tests one by one the results will not be sent to the servers.
 
 #### Inspect the test results
 Tests that pass will be green. Tests that don't pass will be red. 
