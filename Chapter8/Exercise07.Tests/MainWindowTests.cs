@@ -24,7 +24,7 @@ namespace Exercise07.Tests
             _testWindow = new TestWindow<MainWindow>();
             _textBox = _testWindow.GetUIElements<TextBox>().FirstOrDefault();
             _button = _testWindow.GetContentControlByPartialContentText<Button>("Teken");
-            _textBlock = _testWindow.GetUIElements<TextBlock>().FirstOrDefault();
+            _textBlock = _testWindow.GetUIElements<TextBlock>().FirstOrDefault(tb => tb.Parent is Grid);
         }
 
         [TearDown]
@@ -65,7 +65,7 @@ namespace Exercise07.Tests
             Assert.That(_button, Is.Not.Null,
                 () => "Could not find a Button control with the text 'Teken'.");
             Assert.That(_textBlock, Is.Not.Null,
-                () => "Could not find a TextBlock control to display the results.");
+                () => "Could not find a TextBlock control in the 'Grid' to display the results.");
         }
     }
 }
