@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace Exercise13.Tests
 {
-    [ExerciseTestFixture("dotNet1", "H07", "H13", @"Exercise13\MainWindow.xaml;Exercise13\MainWindow.xaml.cs")]
+    [ExerciseTestFixture("dotNet1", "H07", "Exercise13", @"Exercise13\MainWindow.xaml;Exercise13\MainWindow.xaml.cs")]
     [Apartment(ApartmentState.STA)]
     [SetCulture("nl-BE")]
     public class MainWindowTests
