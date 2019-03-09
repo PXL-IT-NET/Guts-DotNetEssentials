@@ -17,7 +17,8 @@ namespace ExerciseBeetle.Tests
     public class BeetleTests
     {
         private object _beetleObject = null;
-        private readonly string _beetleType = "ExerciseBeetle.Beetle";
+        private Type _beetleType = null;
+        private readonly string _beetleTypeName = "ExerciseBeetle.Beetle";
         private readonly string _beetleAssembly = "ExerciseBeetle";
         private readonly int _beetleSize = 10;
         private readonly int _beetleX = 40;
@@ -35,8 +36,8 @@ namespace ExerciseBeetle.Tests
             };
             
             object[] parameters = new object[] { _testCanvas, _beetleSize, _beetleX, _beetleY };
-            Type type = Type.GetType($"{_beetleType}, {_beetleAssembly}");
-            _beetleObject = Activator.CreateInstance(type, parameters);
+            _beetleType = Type.GetType($"{_beetleTypeName}, {_beetleAssembly}");
+            _beetleObject = Activator.CreateInstance(_beetleType, parameters);
         }
 
         [TearDown]
@@ -46,7 +47,7 @@ namespace ExerciseBeetle.Tests
         [MonitoredTest("Beetle - There should be a class named Beetle"), Order(1)]
         public void _1_ShouldHaveAClassNamedBeetle()
         {
-            Assert.That(_beetleObject, Is.Not.Null, $"Could not create an instance of class {_beetleType}");
+            Assert.That(_beetleType, Is.Not.Null, $"There should be a class named {_beetleTypeName}");
         }
 
         [MonitoredTest("Beetle - Beetle class should have all required properties")]
@@ -59,10 +60,26 @@ namespace ExerciseBeetle.Tests
             for (int i = 0; i < expectedPropertyNames.Length; i++)
             {
                 AssertProperty(properties, expectedPropertyNames[i], expectedPropertyTypes[i],
-                           $"{_beetleType} should have a property named ${expectedPropertyNames[i]} of type ${expectedPropertyTypes[i]}.");
+                           $"{_beetleTypeName} should have a property named ${expectedPropertyNames[i]} of type ${expectedPropertyTypes[i]}.");
             }
 
         }
+
+        [MonitoredTest("Beetle - Beetle class should have a parameterized constructor")]
+        public void _3_ShouldHaveParameterizedConstructor()
+        {
+            var constructor = GetConstructor();
+            Assert.That(constructor, Is.Not.Null,
+                    () => $"{_beetleTypeName} should have a constructor with parameters (Canvas canvas, int x, int y, int size)");
+        }
+
+        [MonitoredTest("Beetle - Should create a valid Beetle when invoking constructor")]
+        public void _4_ShouldCreateValidBeetleWhenInvokingContructor()
+        {
+            Assert.That(_beetleObject, Is.Not.Null, $"Could not create an instance of class {_beetleTypeName}");
+            // Todo: create another Beetle instance and check property values
+        }
+
 
         private void AssertProperty(PropertyInfo[] properties, string expectedPropertyName,
                                     Type expectedPropertyType, string message)
@@ -70,6 +87,17 @@ namespace ExerciseBeetle.Tests
             var property = properties.FirstOrDefault(p => p.Name == expectedPropertyName
                                                      && p.PropertyType == expectedPropertyType);
             Assert.That(property, Is.Not.Null, () => message);
+        }
+
+        private ConstructorInfo GetConstructor()
+        {
+            return _beetleObject.GetType().GetConstructor(new Type[]
+                                {
+                                    typeof(Canvas),
+                                    typeof(int),
+                                    typeof(int),
+                                    typeof(int)
+                                });
         }
     }
 }

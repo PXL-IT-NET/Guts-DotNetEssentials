@@ -11,6 +11,7 @@ namespace ExerciseBeetle
         private Canvas _canvas;
         private int _size;
         private Ellipse _body;
+
         public double Speed { get; set; }
         public int X { get; set; }
         public int Y { get; set; }

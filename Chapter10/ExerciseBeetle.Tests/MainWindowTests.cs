@@ -25,8 +25,8 @@ namespace ExerciseBeetle.Tests
         public void TearDown()
         { }
 
-        [MonitoredTest("Should have a private member of class Beetle"), Order(1)]
-        public void _1_ShouldHaveAPrivateBeetleMember()
+        [MonitoredTest("MainWindow - Should have a private member of class Beetle"), Order(1)]
+        public void _99_ShouldHaveAPrivateBeetleMember()
         {
             Assert.Fail();
         }
