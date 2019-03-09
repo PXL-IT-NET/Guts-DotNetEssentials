@@ -4,6 +4,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,9 +24,7 @@ namespace ExerciseBeetle.Tests
         private readonly int _beetleY = 35;
 
         private Canvas _testCanvas;
-        // Todo
-        // - test all members of Beetle
-
+       
         [SetUp]
         public void Setup()
         {
@@ -48,6 +47,29 @@ namespace ExerciseBeetle.Tests
         public void _1_ShouldHaveAClassNamedBeetle()
         {
             Assert.That(_beetleObject, Is.Not.Null, $"Could not create an instance of class {_beetleType}");
+        }
+
+        [MonitoredTest("Beetle - Beetle class should have all required properties")]
+        public void _2_ShouldHaveAllProperties()
+        {
+            var properties = _beetleObject.GetType().GetProperties();
+            string[] expectedPropertyNames = { "Speed", "X", "Y", "Size", "Right", "Up", "IsVisible" };
+            Type[] expectedPropertyTypes = {typeof(double), typeof(int), typeof(int), typeof(int),
+                                            typeof(bool), typeof(bool), typeof(bool)};
+            for (int i = 0; i < expectedPropertyNames.Length; i++)
+            {
+                AssertProperty(properties, expectedPropertyNames[i], expectedPropertyTypes[i],
+                           $"{_beetleType} should have a property named ${expectedPropertyNames[i]} of type ${expectedPropertyTypes[i]}.");
+            }
+
+        }
+
+        private void AssertProperty(PropertyInfo[] properties, string expectedPropertyName,
+                                    Type expectedPropertyType, string message)
+        {
+            var property = properties.FirstOrDefault(p => p.Name == expectedPropertyName
+                                                     && p.PropertyType == expectedPropertyType);
+            Assert.That(property, Is.Not.Null, () => message);
         }
     }
 }
