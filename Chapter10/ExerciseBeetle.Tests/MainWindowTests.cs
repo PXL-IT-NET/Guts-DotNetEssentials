@@ -8,9 +8,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ExerciseBeetle.Tests
+namespace BeetleGame.Tests
 {
-    [ExerciseTestFixture("dotNet1", "H10", "ExerciseBeetle", @"ExerciseBeetle\MainWindow.xaml;ExerciseBeetle\MainWindow.xaml.cs"),
+    [ExerciseTestFixture("dotNet1", "H10", "BeetleGame", @"BeetleGame\MainWindow.xaml;BeetleGame\MainWindow.xaml.cs"),
      Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {

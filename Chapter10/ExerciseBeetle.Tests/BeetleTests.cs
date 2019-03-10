@@ -11,16 +11,16 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 
-namespace ExerciseBeetle.Tests
+namespace BeetleGame.Tests
 {
-    [ExerciseTestFixture("dotNet1", "H10", "ExerciseBeetle", @"ExerciseBeetle\Beetle.cs"),
+    [ExerciseTestFixture("dotNet1", "H10", "BeetleGame", @"BeetleGame\Beetle.cs"),
      Apartment(ApartmentState.STA)]
     public class BeetleTests
     {
         private object _beetleObject = null;
         
-        private const string _beetleTypeName = "ExerciseBeetle.Beetle";
-        private const string _beetleAssembly = "ExerciseBeetle";
+        private const string _beetleTypeName = "BeetleGame.Beetle";
+        private const string _beetleAssembly = "BeetleGame";
         private readonly Type _beetleType = Type.GetType($"{_beetleTypeName}, {_beetleAssembly}");
         private int _beetleSize;
         private int _beetleX;

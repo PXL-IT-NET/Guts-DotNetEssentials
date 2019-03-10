@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0AE70788-8488-4EA7-AB8C-0E5B4E48E701}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>ExerciseBeetle</RootNamespace>
-    <AssemblyName>ExerciseBeetle</AssemblyName>
+    <RootNamespace>BeetleGame</RootNamespace>
+    <AssemblyName>BeetleGame</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
