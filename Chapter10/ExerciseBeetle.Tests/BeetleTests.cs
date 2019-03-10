@@ -25,6 +25,7 @@ namespace BeetleGame.Tests
         private int _beetleSize;
         private int _beetleX;
         private int _beetleY;
+        private double _beetleSpeed;
 
         private Canvas _testCanvas;
        
@@ -39,6 +40,7 @@ namespace BeetleGame.Tests
             _beetleSize = 10;
             _beetleX = 40;
             _beetleY = 35;
+            _beetleSpeed = 0.0;
             _beetleObject = CreateBeetle(_testCanvas, _beetleX, _beetleY, _beetleSize);
         }
 
@@ -84,6 +86,7 @@ namespace BeetleGame.Tests
             AssertPropertyValue(_beetleObject, "Size", _beetleSize, $"Beetle object property Size should have value {_beetleSize}");
             AssertPropertyValue(_beetleObject, "Up", true, $"Beetle object property Up should have value {true}");
             AssertPropertyValue(_beetleObject, "Right", true, $"Beetle object property Right should have value {true}");
+            AssertPropertyValue(_beetleObject, "Speed", _beetleSpeed, $"Beetle object property Size should have value {_beetleSpeed}");
         }
 
         [MonitoredTest("Beetle - Should create a Beetle object with ellipse on its canvas"), Order(5)]
