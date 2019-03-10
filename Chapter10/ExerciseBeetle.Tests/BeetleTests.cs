@@ -18,12 +18,13 @@ namespace ExerciseBeetle.Tests
     public class BeetleTests
     {
         private object _beetleObject = null;
-        private Type _beetleType = null;
-        private readonly string _beetleTypeName = "ExerciseBeetle.Beetle";
-        private readonly string _beetleAssembly = "ExerciseBeetle";
-        private readonly int _beetleSize = 10;
-        private readonly int _beetleX = 40;
-        private readonly int _beetleY = 35;
+        
+        private const string _beetleTypeName = "ExerciseBeetle.Beetle";
+        private const string _beetleAssembly = "ExerciseBeetle";
+        private readonly Type _beetleType = Type.GetType($"{_beetleTypeName}, {_beetleAssembly}");
+        private int _beetleSize;
+        private int _beetleX;
+        private int _beetleY;
 
         private Canvas _testCanvas;
        
@@ -35,10 +36,10 @@ namespace ExerciseBeetle.Tests
                 Width = 536, // mimic the same size as in the starter file
                 Height = 356
             };
-            
-            object[] parameters = new object[] { _testCanvas, _beetleX, _beetleY, _beetleSize };
-            _beetleType = Type.GetType($"{_beetleTypeName}, {_beetleAssembly}");
-            _beetleObject = Activator.CreateInstance(_beetleType, parameters);
+            _beetleSize = 10;
+            _beetleX = 40;
+            _beetleY = 35;
+            _beetleObject = CreateBeetle(_testCanvas, _beetleX, _beetleY, _beetleSize);
         }
 
         [TearDown]
@@ -99,6 +100,24 @@ namespace ExerciseBeetle.Tests
             var beetleMargin = beetleEllipse.Margin;
             Assert.That(beetleMargin.Left, Is.EqualTo(_beetleX - (_beetleSize / 2)), $"X-Coordinate of ellipse on canvas should be {_beetleX - (_beetleSize / 2)}");
             Assert.That(beetleMargin.Top, Is.EqualTo(_beetleY - (_beetleSize / 2)), $"Y-Coordinate of ellipse on canvas should be {_beetleY - (_beetleSize / 2)}");
+        }
+
+        [MonitoredTest("Beetle - Should move up without hitting border")]
+        public void _6_ShouldMoveUpWithoutHittingBorder()
+        {
+            InvokeChangePosition(_beetleObject);
+
+        }
+
+        private void InvokeChangePosition(object beetleObject)
+        {
+            throw new NotImplementedException();
+        }
+
+        private object CreateBeetle(Canvas canvas, int x, int y, int size)
+        {
+            object[] parameters = new object[] { _testCanvas, _beetleX, _beetleY, _beetleSize };
+            return Activator.CreateInstance(_beetleType, parameters);
         }
 
         private void AssertProperty(PropertyInfo[] properties, string expectedPropertyName,
