@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Shapes;
 
 namespace ExerciseBeetle.Tests
 {
@@ -35,7 +36,7 @@ namespace ExerciseBeetle.Tests
                 Height = 356
             };
             
-            object[] parameters = new object[] { _testCanvas, _beetleSize, _beetleX, _beetleY };
+            object[] parameters = new object[] { _testCanvas, _beetleX, _beetleY, _beetleSize };
             _beetleType = Type.GetType($"{_beetleTypeName}, {_beetleAssembly}");
             _beetleObject = Activator.CreateInstance(_beetleType, parameters);
         }
@@ -77,9 +78,28 @@ namespace ExerciseBeetle.Tests
         public void _4_ShouldCreateValidBeetleWhenInvokingContructor()
         {
             Assert.That(_beetleObject, Is.Not.Null, $"Could not create an instance of class {_beetleTypeName}");
-            // Todo: create another Beetle instance and check property values
+            AssertPropertyValue(_beetleObject, "X", _beetleX, $"Beetle object property X should have value {_beetleX}");
+            AssertPropertyValue(_beetleObject, "Y", _beetleY, $"Beetle object property Y should have value {_beetleY}");
+            AssertPropertyValue(_beetleObject, "Size", _beetleSize, $"Beetle object property Size should have value {_beetleSize}");
+            AssertPropertyValue(_beetleObject, "Up", true, $"Beetle object property Up should have value {true}");
+            AssertPropertyValue(_beetleObject, "Right", true, $"Beetle object property Right should have value {true}");
         }
 
+        [MonitoredTest("Beetle - Should create a Beetle object with ellipse on its canvas"), Order(5)]
+        public void _5_ShouldCreateABeetleWithAnEllipseOnItsCanvas()
+        {
+            Assert.That(_beetleObject, Is.Not.Null, $"Could not create an instance of class {_beetleTypeName}");
+            Assert.That(_testCanvas.Children.Count, Is.GreaterThan(0), $"Beetle should have a Canvas member with an ellipse");
+            Assert.That(_testCanvas.Children[0], Is.TypeOf(typeof(Ellipse)), $"Beetle should have a Canvas member with an ellipse");
+
+            // Check correct size and location of ellipse
+            var beetleEllipse = (Ellipse)_testCanvas.Children[0];
+            Assert.That(beetleEllipse.Width, Is.EqualTo(_beetleSize), $"Ellipse on canvas should have Width ({_beetleSize})");
+            Assert.That(beetleEllipse.Height, Is.EqualTo(_beetleSize), $"Ellipse on canvas should have Height ({_beetleSize})");
+            var beetleMargin = beetleEllipse.Margin;
+            Assert.That(beetleMargin.Left, Is.EqualTo(_beetleX - (_beetleSize / 2)), $"X-Coordinate of ellipse on canvas should be {_beetleX - (_beetleSize / 2)}");
+            Assert.That(beetleMargin.Top, Is.EqualTo(_beetleY - (_beetleSize / 2)), $"Y-Coordinate of ellipse on canvas should be {_beetleY - (_beetleSize / 2)}");
+        }
 
         private void AssertProperty(PropertyInfo[] properties, string expectedPropertyName,
                                     Type expectedPropertyType, string message)
@@ -87,6 +107,12 @@ namespace ExerciseBeetle.Tests
             var property = properties.FirstOrDefault(p => p.Name == expectedPropertyName
                                                      && p.PropertyType == expectedPropertyType);
             Assert.That(property, Is.Not.Null, () => message);
+        }
+
+        private void AssertPropertyValue(object obj, string propertyName, object expectedValue, string message)
+        {
+            var property = obj.GetType().GetProperty(propertyName);
+            Assert.That(property.GetValue(obj), Is.EqualTo(expectedValue));
         }
 
         private ConstructorInfo GetConstructor()
