@@ -50,8 +50,16 @@ namespace ExerciseBeetle.Tests
             Assert.That(_beetleType, Is.Not.Null, $"There should be a class named {_beetleTypeName}");
         }
 
-        [MonitoredTest("Beetle - Beetle class should have all required properties")]
-        public void _2_ShouldHaveAllProperties()
+        [MonitoredTest("Beetle - Beetle class should have a parameterized constructor"), Order(2)]
+        public void _2_ShouldHaveParameterizedConstructor()
+        {
+            var constructor = GetConstructor();
+            Assert.That(constructor, Is.Not.Null,
+                    () => $"{_beetleTypeName} should have a constructor with parameters (Canvas canvas, int x, int y, int size)");
+        }
+
+        [MonitoredTest("Beetle - Beetle class should have all required properties"), Order(3)]
+        public void _3_ShouldHaveAllProperties()
         {
             var properties = _beetleObject.GetType().GetProperties();
             string[] expectedPropertyNames = { "Speed", "X", "Y", "Size", "Right", "Up", "IsVisible" };
@@ -65,15 +73,7 @@ namespace ExerciseBeetle.Tests
 
         }
 
-        [MonitoredTest("Beetle - Beetle class should have a parameterized constructor")]
-        public void _3_ShouldHaveParameterizedConstructor()
-        {
-            var constructor = GetConstructor();
-            Assert.That(constructor, Is.Not.Null,
-                    () => $"{_beetleTypeName} should have a constructor with parameters (Canvas canvas, int x, int y, int size)");
-        }
-
-        [MonitoredTest("Beetle - Should create a valid Beetle when invoking constructor")]
+        [MonitoredTest("Beetle - Should create a valid Beetle when invoking constructor"), Order(4)]
         public void _4_ShouldCreateValidBeetleWhenInvokingContructor()
         {
             Assert.That(_beetleObject, Is.Not.Null, $"Could not create an instance of class {_beetleTypeName}");
