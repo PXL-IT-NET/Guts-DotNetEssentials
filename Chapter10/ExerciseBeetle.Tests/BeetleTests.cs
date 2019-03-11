@@ -81,12 +81,12 @@ namespace BeetleGame.Tests
         public void _4_ShouldCreateValidBeetleWhenInvokingContructor()
         {
             Assert.That(_beetleObject, Is.Not.Null, $"Could not create an instance of class {_beetleTypeName}");
-            AssertPropertyValue(_beetleObject, "X", _beetleX, $"Beetle object property X should have value {_beetleX}");
-            AssertPropertyValue(_beetleObject, "Y", _beetleY, $"Beetle object property Y should have value {_beetleY}");
-            AssertPropertyValue(_beetleObject, "Size", _beetleSize, $"Beetle object property Size should have value {_beetleSize}");
-            AssertPropertyValue(_beetleObject, "Up", true, $"Beetle object property Up should have value {true}");
-            AssertPropertyValue(_beetleObject, "Right", true, $"Beetle object property Right should have value {true}");
-            AssertPropertyValue(_beetleObject, "Speed", _beetleSpeed, $"Beetle object property Size should have value {_beetleSpeed}");
+            AssertPropertyValue(_beetleObject, "X", _beetleX);
+            AssertPropertyValue(_beetleObject, "Y", _beetleY);
+            AssertPropertyValue(_beetleObject, "Size", _beetleSize);
+            AssertPropertyValue(_beetleObject, "Up", true);
+            AssertPropertyValue(_beetleObject, "Right", true);
+            AssertPropertyValue(_beetleObject, "Speed", _beetleSpeed);
         }
 
         [MonitoredTest("Beetle - Should create a Beetle object with ellipse on its canvas"), Order(5)]
@@ -105,16 +105,22 @@ namespace BeetleGame.Tests
             Assert.That(beetleMargin.Top, Is.EqualTo(_beetleY - (_beetleSize / 2)), $"Y-Coordinate of ellipse on canvas should be {_beetleY - (_beetleSize / 2)}");
         }
 
-        [MonitoredTest("Beetle - Should move up without hitting border")]
-        public void _6_ShouldMoveUpWithoutHittingBorder()
+        [MonitoredTest("Beetle - Should move up and right without hitting border")]
+        public void _6_ShouldMoveUpAndRightWithoutHittingBorder()
         {
             InvokeChangePosition(_beetleObject);
-
+            // verify the beetle went in up and right direction
+            AssertPropertyValue(_beetleObject, "X", _beetleX + 1);
+            AssertPropertyValue(_beetleObject, "Y", _beetleY - 1);
         }
 
         private void InvokeChangePosition(object beetleObject)
         {
-            throw new NotImplementedException();
+            var methodName = "ChangePosition";
+            var type = _beetleObject.GetType();
+            var method = type.GetRuntimeMethod(methodName, new Type[] { });
+            Assert.That(method, Is.Not.Null, $"Should have method {methodName} without arguments and void return type");
+            method.Invoke(beetleObject, new object[] { });
         }
 
         private object CreateBeetle(Canvas canvas, int x, int y, int size)
@@ -131,10 +137,11 @@ namespace BeetleGame.Tests
             Assert.That(property, Is.Not.Null, () => message);
         }
 
-        private void AssertPropertyValue(object obj, string propertyName, object expectedValue, string message)
+        private void AssertPropertyValue(object obj, string propertyName, object expectedValue)
         {
             var property = obj.GetType().GetProperty(propertyName);
-            Assert.That(property.GetValue(obj), Is.EqualTo(expectedValue));
+            Assert.That(property.GetValue(obj), Is.EqualTo(expectedValue), 
+                $"Beetle property {propertyName} has value ({property.GetValue(obj)}) but expected ({expectedValue})");
         }
 
         private ConstructorInfo GetConstructor()
