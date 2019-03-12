@@ -56,20 +56,20 @@ namespace Exercise04.Tests
         [MonitoredTest("Should make use of the Rectangle class"), Order(3)]
         public void _3_ShouldMakeUseOfRectangleClass()
         {
-            Assert.That(_mainWindowSourceCode, Contains.Substring("new Rectangle();"),
+            Assert.That(_mainWindowSourceCode, Contains.Substring("new Rectangle"),
                 () => "No code found where an instance of the Rectangle class is created.");
         }
 
         [MonitoredTest("Should set properties of the Rectangle class instance"), Order(4)]
         public void _4_ShouldSetPropertiesOfRectangleClassInstance()
         {
-            Assert.That(_mainWindowSourceCode, Contains.Substring("rectangle.Width = "),
+            Assert.That(_mainWindowSourceCode, Contains.Substring("Width ="),
                 () => "No code found where the Width property of the rectangle is set.");
-            Assert.That(_mainWindowSourceCode, Contains.Substring("rectangle.Height = "),
+            Assert.That(_mainWindowSourceCode, Contains.Substring("Height ="),
                 () => "No code found where the Height property of the rectangle is set.");
-            Assert.That(_mainWindowSourceCode, Contains.Substring("rectangle.Margin = "),
+            Assert.That(_mainWindowSourceCode, Contains.Substring("Margin ="),
                 () => "No code found where the Margin property of the rectangle is set.");
-            Assert.That(_mainWindowSourceCode, Contains.Substring("rectangle.Stroke = "),
+            Assert.That(_mainWindowSourceCode, Contains.Substring("Stroke ="),
                 () => "No code found where the Stroke property of the rectangle is set.");
         }
         
