@@ -1,12 +1,15 @@
-﻿using System;
+﻿using Guts.Client.Classic;
+using Guts.Client.Classic.TestTools.WPF;
+using Guts.Client.Shared;
+using Guts.Client.Shared.TestTools;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows.Controls;
-using Guts.Client.Classic;
-using Guts.Client.Classic.TestTools.WPF;
-using Guts.Client.Shared;
-using NUnit.Framework;
 
 namespace Exercise11.Tests
 {
@@ -20,7 +23,6 @@ namespace Exercise11.Tests
         private IList<Label> _labels;
         private IList<Random> _randomFields;
         private IList<TextBlock> _textBlocks;
-
 
         [SetUp]
         public void SetUp()
@@ -44,7 +46,6 @@ namespace Exercise11.Tests
         {
             AssertAllControlsArePresent();
         }
-
 
         [MonitoredTest("Should have 2 fields of type Random"), Order(2)]
         public void _2_ShouldHave2FieldsOfTypeRandom()
@@ -70,15 +71,15 @@ namespace Exercise11.Tests
             var firstLabelContent = newLabelContents.ElementAt(0);
             var secondLabelContent = newLabelContents.ElementAt(1);
 
-            Assert.That(oldLabelContents, Has.All.Matches((string oldLabelContent) => oldLabelContent != firstLabelContent), 
+            Assert.That(oldLabelContents, Has.All.Matches((string oldLabelContent) => oldLabelContent != firstLabelContent),
                 () => "The content of the first label did not change after a click on the first button");
-            Assert.That(oldLabelContents, Has.All.Matches((string oldLabelContent) => oldLabelContent != secondLabelContent), 
+            Assert.That(oldLabelContents, Has.All.Matches((string oldLabelContent) => oldLabelContent != secondLabelContent),
                 () => "The content of the second label did not change after a click on the second button");
 
             int randomNumber;
-            Assert.That(int.TryParse(firstLabelContent, out randomNumber), Is.True, 
+            Assert.That(int.TryParse(firstLabelContent, out randomNumber), Is.True,
                 () => $"The contents of the first label should be a number but was '{firstLabelContent}'");
-            Assert.That(int.TryParse(secondLabelContent, out randomNumber), Is.True, 
+            Assert.That(int.TryParse(secondLabelContent, out randomNumber), Is.True,
                 () => $"The contents of the second label should be a number but was '{secondLabelContent}'");
         }
 
@@ -106,7 +107,9 @@ namespace Exercise11.Tests
             var firstLabelContent = newLabelContents.ElementAt(0);
             var secondLabelContent = newLabelContents.ElementAt(1);
 
-            Assert.That(firstLabelContent, Is.Not.EqualTo(secondLabelContent));
+            Assert.That(firstLabelContent, Is.Not.EqualTo(secondLabelContent), () => "Make sure the random generators use different seeds. Otherwise they will use the same sequence of numbers.");
+
+            AssertUsesDifferentRandomInEachHandler();
         }
 
         private void AssertAllControlsArePresent()
@@ -125,6 +128,45 @@ namespace Exercise11.Tests
                     $"The window should have 2 fields of type Random. Number of fields that were found: {_randomFields.Count}");
         }
 
+        private void AssertUsesDifferentRandomInEachHandler()
+        {
+            var code = Solution.Current.GetFileContent(@"Exercise11\MainWindow.xaml.cs");
+            var syntaxtTree = CSharpSyntaxTree.ParseText(code);
+            var root = syntaxtTree.GetRoot();
+            var clickHandlers = root
+                .DescendantNodes()
+                .OfType<MethodDeclarationSyntax>()
+                .Where(md => md.ParameterList.Parameters.Any(p => p.Type.ToString() == "RoutedEventArgs"))
+                .ToList();
 
+            Assert.That(clickHandlers.Count, Is.EqualTo(2),
+                () =>
+                    "There should be 2 methods with a 'RoutedEventArgs' " +
+                    "parameter that handle the click events of the 2 buttons.");
+
+            var randomIdentifierUsedInFirstHandler = GetRandomIdentifierUsedInMethod(clickHandlers.First());
+            Assert.That(randomIdentifierUsedInFirstHandler, Is.Not.Empty,
+                () => "Cannot find the usage of method 'Next' in the first click event handler.");
+
+            var randomIdentifierUsedInSecondHandler = GetRandomIdentifierUsedInMethod(clickHandlers.ElementAt(1));
+            Assert.That(randomIdentifierUsedInSecondHandler, Is.Not.Empty,
+                () => "Cannot find the usage of method 'Next' in the second click event handler.");
+
+            Assert.That(randomIdentifierUsedInFirstHandler, Is.Not.EqualTo(randomIdentifierUsedInSecondHandler),
+                () =>
+                    "The same instance of 'Random' is used in both click event handlers. " +
+                    "Use a different instance in each handler.");
+        }
+
+        private string GetRandomIdentifierUsedInMethod(MethodDeclarationSyntax method)
+        {
+            var memberAccesses = method.DescendantNodes().OfType<MemberAccessExpressionSyntax>().Where(ma => ma.Name.ToString() == "Next").ToList();
+            if (memberAccesses.Any())
+            {
+                return memberAccesses.First().Expression.ToString();
+            }
+
+            return string.Empty;
+        }
     }
 }
