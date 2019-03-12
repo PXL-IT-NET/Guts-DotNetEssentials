@@ -94,7 +94,7 @@ namespace BeetleGame.Tests
         {
             Assert.That(_beetleObject, Is.Not.Null, $"Could not create an instance of class {_beetleTypeName}");
             Assert.That(_testCanvas.Children.Count, Is.GreaterThan(0), $"Beetle should have a Canvas member with an ellipse");
-            Assert.That(_testCanvas.Children[0], Is.TypeOf(typeof(Ellipse)), $"Beetle should have a Canvas member with an ellipse");
+            Assert.That(_testCanvas.Children[0], Is.TypeOf<Ellipse>(), $"Beetle should have a Canvas member with an ellipse");
 
             // Check correct size and location of ellipse
             var beetleEllipse = (Ellipse)_testCanvas.Children[0];
@@ -108,10 +108,67 @@ namespace BeetleGame.Tests
         [MonitoredTest("Beetle - Should move up and right without hitting border")]
         public void _6_ShouldMoveUpAndRightWithoutHittingBorder()
         {
+            SetPropertyValue(_beetleObject, "Right", true);
+            SetPropertyValue(_beetleObject, "Up", true);
             InvokeChangePosition(_beetleObject);
             // verify the beetle went in up and right direction
             AssertPropertyValue(_beetleObject, "X", _beetleX + 1);
             AssertPropertyValue(_beetleObject, "Y", _beetleY - 1);
+            AssertEllipsePosition(_beetleX + 1, _beetleY - 1);
+        }
+
+        [MonitoredTest("Beetle - Should move up and left without hitting border")]
+        public void _7_ShouldMoveUpAndLeftWithoutHittingBorder()
+        {
+            SetPropertyValue(_beetleObject, "Right", false);
+            SetPropertyValue(_beetleObject, "Up", true);
+            InvokeChangePosition(_beetleObject);
+            // verify the beetle went in up and right direction
+            AssertPropertyValue(_beetleObject, "X", _beetleX - 1);
+            AssertPropertyValue(_beetleObject, "Y", _beetleY - 1);
+            AssertEllipsePosition(_beetleX - 1, _beetleY - 1);
+        }
+
+        [MonitoredTest("Beetle - Should move down and right without hitting border")]
+        public void _8_ShouldMoveDownAndLeftWithoutHittingBorder()
+        {
+            SetPropertyValue(_beetleObject, "Right", false);
+            SetPropertyValue(_beetleObject, "Up", false);
+            InvokeChangePosition(_beetleObject);
+            // verify the beetle went in up and right direction
+            AssertPropertyValue(_beetleObject, "X", _beetleX - 1);
+            AssertPropertyValue(_beetleObject, "Y", _beetleY + 1);
+            AssertEllipsePosition(_beetleX - 1, _beetleY + 1);
+        }
+
+        [MonitoredTest("Beetle - Should move up and left without hitting border")]
+        public void _9_ShouldMoveDownAndRightWithoutHittingBorder()
+        {
+            SetPropertyValue(_beetleObject, "Right", true);
+            SetPropertyValue(_beetleObject, "Up", false);
+            InvokeChangePosition(_beetleObject);
+            // verify the beetle went in up and right direction
+            AssertPropertyValue(_beetleObject, "X", _beetleX + 1);
+            AssertPropertyValue(_beetleObject, "Y", _beetleY + 1);
+            AssertEllipsePosition(_beetleX + 1, _beetleY + 1);
+        }
+
+        private void AssertEllipsePosition(int expectedX, int expectedY)
+        {
+            Assert.That(_testCanvas.Children.Count, Is.EqualTo(1), $"Canvas for Beetle should have 1 ellipse, but found ({_testCanvas.Children.Count})");
+            var beetleShape = _testCanvas.Children[0];
+            Assert.That(beetleShape, Is.TypeOf<Ellipse>(), $"Shape on canvas should be an ellipse, but found {beetleShape.GetType()}");
+            var beetleEllipse = (Ellipse)beetleShape;
+            var centerX = beetleEllipse.Margin.Left + (beetleEllipse.Width / 2);
+            var centerY = beetleEllipse.Margin.Top + (beetleEllipse.Height / 2);
+            Assert.That(centerX, Is.EqualTo(expectedX), $"Center X position of ellipse should be ({expectedX}, but found ({centerX})");
+            Assert.That(centerY, Is.EqualTo(expectedY), $"Center Y position of ellipse should be ({expectedY}, but found ({centerY})");
+        }
+
+        private void SetPropertyValue(object obj, string propertyName, object newValue)
+        {
+            var property = obj.GetType().GetProperty(propertyName);
+            property.SetValue(obj, newValue);
         }
 
         private void InvokeChangePosition(object beetleObject)
