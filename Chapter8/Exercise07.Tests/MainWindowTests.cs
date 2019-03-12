@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using System.Linq;
 using System.Threading;
 using System.Windows.Controls;
@@ -8,7 +9,7 @@ using Guts.Client.Shared;
 
 namespace Exercise07.Tests
 {
-    [ExerciseTestFixture("dotNet1", "H08", "Exercise07", @"Exercise07\MainWindow.xaml;Exercise07\MainWindow.xaml.cs"), 
+    [ExerciseTestFixture("dotNet1", "H08", "Exercise07", @"Exercise07\MainWindow.xaml;Exercise07\MainWindow.xaml.cs"),
      Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {
@@ -54,8 +55,25 @@ namespace Exercise07.Tests
 
             _button.FireClickEvent();
 
-            Assert.That(_textBlock.Text, Is.EqualTo(expectedResult),
-                () => $"For the number '{multiplicationNumber}', the expected result is '{expectedResult}' but was '{_textBlock.Text}'.");
+            var expectedLines = expectedResult.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            var actualLines = _textBlock.Text.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
+            Assert.That(expectedLines.Length, Is.EqualTo(actualLines.Length),
+                () =>
+                    $"For the number {multiplicationNumber} there should be {expectedLines.Length} lines in the 'TextBox' " +
+                    $"but was {actualLines.Length}.");
+
+
+            for (var index = 0; index < expectedLines.Length; index++)
+            {
+                var expectedLine = expectedLines[index].Trim();
+                var actualLine = actualLines[index].Trim();
+
+                var lineNumber = index + 1;
+                Assert.That(actualLine, Is.EqualTo(expectedLine),
+                    () =>
+                        $"For the number '{multiplicationNumber}', the line {lineNumber} should be '{expectedLine}' but was '{actualLine}'.");
+            }
         }
 
         private void ValidateControls()
