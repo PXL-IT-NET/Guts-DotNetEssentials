@@ -28,14 +28,16 @@ namespace BeetleGame.Tests
         private double _beetleSpeed;
 
         private Canvas _testCanvas;
-       
+        private const int TestCanvasWidth = 536; // mimic the same width as in the starter file
+        private const int TestCanvasHeight = 356; // mimic the same height as in the starter file
+
         [SetUp]
         public void Setup()
         {
             _testCanvas = new Canvas
             {
-                Width = 536, // mimic the same size as in the starter file
-                Height = 356
+                Width = TestCanvasWidth,
+                Height = TestCanvasHeight
             };
             _beetleSize = 10;
             _beetleX = 40;
@@ -151,6 +153,62 @@ namespace BeetleGame.Tests
             AssertPropertyValue(_beetleObject, "X", _beetleX + 1);
             AssertPropertyValue(_beetleObject, "Y", _beetleY + 1);
             AssertEllipsePosition(_beetleX + 1, _beetleY + 1);
+        }
+
+        [MonitoredTest("Beetle - Should turn down when hitting the upper bound of canvas")]
+        public void _10_ShouldTurnDownWhenHittingUpperBoundOfCanvas()
+        {
+            _beetleY = _beetleSize / 2 + 1; // 1 pixel from top of canvas
+            SetPropertyValue(_beetleObject, "Y", _beetleY);
+            SetPropertyValue(_beetleObject, "Right", true);
+            SetPropertyValue(_beetleObject, "Up", true);      
+            InvokeChangePosition(_beetleObject);
+            AssertPropertyValue(_beetleObject, "X", _beetleX + 1); // should go right
+            AssertPropertyValue(_beetleObject, "Y", _beetleY - 1); // should go up
+            AssertPropertyValue(_beetleObject, "Up", false); // should turn
+            AssertPropertyValue(_beetleObject, "Right", true);
+        }
+        
+        [MonitoredTest("Beetle - Should turn up when hitting the lower bound of canvas")]
+        public void _11_ShouldTurnUpWhenHittingLowerBoundOfCanvas()
+        {
+            _beetleY = TestCanvasHeight - (_beetleSize / 2) - 1; // 1 pixel from bottom of canvas
+            SetPropertyValue(_beetleObject, "Y", _beetleY);
+            SetPropertyValue(_beetleObject, "Right", true);
+            SetPropertyValue(_beetleObject, "Up", false);
+            InvokeChangePosition(_beetleObject);
+            AssertPropertyValue(_beetleObject, "X", _beetleX + 1); // should go right
+            AssertPropertyValue(_beetleObject, "Y", _beetleY + 1); // should go down
+            AssertPropertyValue(_beetleObject, "Up", true); // should turn
+            AssertPropertyValue(_beetleObject, "Right", true);
+        }
+
+        [MonitoredTest("Beetle - Should turn left when hitting right side of canvas")]
+        public void _12_ShouldTurnLeftWhenHittingRightSideOfCanvas()
+        {
+            _beetleX = TestCanvasWidth - (_beetleSize / 2) - 1; // 1 pixel from right side
+            SetPropertyValue(_beetleObject, "X", _beetleX);
+            SetPropertyValue(_beetleObject, "Right", true);
+            SetPropertyValue(_beetleObject, "Up", false);
+            InvokeChangePosition(_beetleObject);
+            AssertPropertyValue(_beetleObject, "X", _beetleX + 1); // should go right
+            AssertPropertyValue(_beetleObject, "Y", _beetleY + 1); // should go down
+            AssertPropertyValue(_beetleObject, "Right", false);
+            AssertPropertyValue(_beetleObject, "Up", false);
+        }
+
+        [MonitoredTest("Beetle - Should turn right when hitting left side of canvas")]
+        public void _13_ShouldTurnRightWhenHittingLeftSideOfCanvas()
+        {
+            _beetleX = (_beetleSize / 2) + 1; // 1 pixel from left side
+            SetPropertyValue(_beetleObject, "X", _beetleX);
+            SetPropertyValue(_beetleObject, "Right", false);
+            SetPropertyValue(_beetleObject, "Up", false);
+            InvokeChangePosition(_beetleObject);
+            AssertPropertyValue(_beetleObject, "X", _beetleX - 1); // should go left
+            AssertPropertyValue(_beetleObject, "Y", _beetleY + 1); // should go down
+            AssertPropertyValue(_beetleObject, "Right", true);
+            AssertPropertyValue(_beetleObject, "Up", false);
         }
 
         private void AssertEllipsePosition(int expectedX, int expectedY)
