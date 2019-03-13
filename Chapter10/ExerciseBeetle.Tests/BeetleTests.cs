@@ -51,13 +51,13 @@ namespace BeetleGame.Tests
         { }
 
         [MonitoredTest("Beetle - There should be a class named Beetle"), Order(1)]
-        public void _1_ShouldHaveAClassNamedBeetle()
+        public void _01_ShouldHaveAClassNamedBeetle()
         {
             Assert.That(_beetleType, Is.Not.Null, $"There should be a class named {_beetleTypeName}");
         }
 
         [MonitoredTest("Beetle - Beetle class should have a parameterized constructor"), Order(2)]
-        public void _2_ShouldHaveParameterizedConstructor()
+        public void _02_ShouldHaveParameterizedConstructor()
         {
             var constructor = GetConstructor();
             Assert.That(constructor, Is.Not.Null,
@@ -65,7 +65,7 @@ namespace BeetleGame.Tests
         }
 
         [MonitoredTest("Beetle - Beetle class should have all required properties"), Order(3)]
-        public void _3_ShouldHaveAllProperties()
+        public void _03_ShouldHaveAllProperties()
         {
             var properties = _beetleObject.GetType().GetProperties();
             string[] expectedPropertyNames = { "Speed", "X", "Y", "Size", "Right", "Up", "IsVisible" };
@@ -80,7 +80,7 @@ namespace BeetleGame.Tests
         }
 
         [MonitoredTest("Beetle - Should create a valid Beetle when invoking constructor"), Order(4)]
-        public void _4_ShouldCreateValidBeetleWhenInvokingContructor()
+        public void _04_ShouldCreateValidBeetleWhenInvokingContructor()
         {
             Assert.That(_beetleObject, Is.Not.Null, $"Could not create an instance of class {_beetleTypeName}");
             AssertPropertyValue(_beetleObject, "X", _beetleX);
@@ -92,7 +92,7 @@ namespace BeetleGame.Tests
         }
 
         [MonitoredTest("Beetle - Should create a Beetle object with ellipse on its canvas"), Order(5)]
-        public void _5_ShouldCreateABeetleWithAnEllipseOnItsCanvas()
+        public void _05_ShouldCreateABeetleWithAnEllipseOnItsCanvas()
         {
             Assert.That(_beetleObject, Is.Not.Null, $"Could not create an instance of class {_beetleTypeName}");
             Assert.That(_testCanvas.Children.Count, Is.GreaterThan(0), $"Beetle should have a Canvas member with an ellipse");
@@ -107,8 +107,8 @@ namespace BeetleGame.Tests
             Assert.That(beetleMargin.Top, Is.EqualTo(_beetleY - (_beetleSize / 2)), $"Y-Coordinate of ellipse on canvas should be {_beetleY - (_beetleSize / 2)}");
         }
 
-        [MonitoredTest("Beetle - Should move up and right without hitting border")]
-        public void _6_ShouldMoveUpAndRightWithoutHittingBorder()
+        [MonitoredTest("Beetle - Should move up and right without hitting border"), Order(6)]
+        public void _06_ShouldMoveUpAndRightWithoutHittingBorder()
         {
             SetPropertyValue(_beetleObject, "Right", true);
             SetPropertyValue(_beetleObject, "Up", true);
@@ -119,8 +119,8 @@ namespace BeetleGame.Tests
             AssertEllipsePosition(_beetleX + 1, _beetleY - 1);
         }
 
-        [MonitoredTest("Beetle - Should move up and left without hitting border")]
-        public void _7_ShouldMoveUpAndLeftWithoutHittingBorder()
+        [MonitoredTest("Beetle - Should move up and left without hitting border"), Order(7)]
+        public void _07_ShouldMoveUpAndLeftWithoutHittingBorder()
         {
             SetPropertyValue(_beetleObject, "Right", false);
             SetPropertyValue(_beetleObject, "Up", true);
@@ -131,8 +131,8 @@ namespace BeetleGame.Tests
             AssertEllipsePosition(_beetleX - 1, _beetleY - 1);
         }
 
-        [MonitoredTest("Beetle - Should move down and right without hitting border")]
-        public void _8_ShouldMoveDownAndLeftWithoutHittingBorder()
+        [MonitoredTest("Beetle - Should move down and right without hitting border"), Order(8)]
+        public void _08_ShouldMoveDownAndLeftWithoutHittingBorder()
         {
             SetPropertyValue(_beetleObject, "Right", false);
             SetPropertyValue(_beetleObject, "Up", false);
@@ -143,8 +143,8 @@ namespace BeetleGame.Tests
             AssertEllipsePosition(_beetleX - 1, _beetleY + 1);
         }
 
-        [MonitoredTest("Beetle - Should move up and left without hitting border")]
-        public void _9_ShouldMoveDownAndRightWithoutHittingBorder()
+        [MonitoredTest("Beetle - Should move up and left without hitting border"), Order(9)]
+        public void _09_ShouldMoveDownAndRightWithoutHittingBorder()
         {
             SetPropertyValue(_beetleObject, "Right", true);
             SetPropertyValue(_beetleObject, "Up", false);
@@ -155,7 +155,7 @@ namespace BeetleGame.Tests
             AssertEllipsePosition(_beetleX + 1, _beetleY + 1);
         }
 
-        [MonitoredTest("Beetle - Should turn down when hitting the upper bound of canvas")]
+        [MonitoredTest("Beetle - Should turn down when hitting the upper bound of canvas"), Order(10)]
         public void _10_ShouldTurnDownWhenHittingUpperBoundOfCanvas()
         {
             _beetleY = _beetleSize / 2 + 1; // 1 pixel from top of canvas
@@ -169,7 +169,7 @@ namespace BeetleGame.Tests
             AssertPropertyValue(_beetleObject, "Right", true);
         }
         
-        [MonitoredTest("Beetle - Should turn up when hitting the lower bound of canvas")]
+        [MonitoredTest("Beetle - Should turn up when hitting the lower bound of canvas"), Order(11)]
         public void _11_ShouldTurnUpWhenHittingLowerBoundOfCanvas()
         {
             _beetleY = TestCanvasHeight - (_beetleSize / 2) - 1; // 1 pixel from bottom of canvas
@@ -183,7 +183,7 @@ namespace BeetleGame.Tests
             AssertPropertyValue(_beetleObject, "Right", true);
         }
 
-        [MonitoredTest("Beetle - Should turn left when hitting right side of canvas")]
+        [MonitoredTest("Beetle - Should turn left when hitting right side of canvas"), Order(12)]
         public void _12_ShouldTurnLeftWhenHittingRightSideOfCanvas()
         {
             _beetleX = TestCanvasWidth - (_beetleSize / 2) - 1; // 1 pixel from right side
@@ -197,7 +197,7 @@ namespace BeetleGame.Tests
             AssertPropertyValue(_beetleObject, "Up", false);
         }
 
-        [MonitoredTest("Beetle - Should turn right when hitting left side of canvas")]
+        [MonitoredTest("Beetle - Should turn right when hitting left side of canvas"), Order(13)]
         public void _13_ShouldTurnRightWhenHittingLeftSideOfCanvas()
         {
             _beetleX = (_beetleSize / 2) + 1; // 1 pixel from left side
