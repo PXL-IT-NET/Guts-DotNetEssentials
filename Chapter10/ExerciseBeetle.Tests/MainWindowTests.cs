@@ -1,4 +1,5 @@
 ﻿using Guts.Client.Classic;
+using Guts.Client.Classic.TestTools.WPF;
 using Guts.Client.Shared;
 using Guts.Client.Shared.TestTools;
 using NUnit.Framework;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace BeetleGame.Tests
@@ -16,22 +18,29 @@ namespace BeetleGame.Tests
      Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {
-        private MainWindow _window;
+        private TestWindow<MainWindow> _testWindow;
         private Beetle _beetleObject;
         private DispatcherTimer _timerObject;
+        private Slider _speedSlider;
+        private Slider _sizeSlider;
+
 
         [SetUp]
         public void Setup()
         {
-            _window = new MainWindow();
-            _beetleObject = ObjectExtensions.GetPrivateFieldValue<Beetle>(_window);
-            _timerObject = ObjectExtensions.GetPrivateFieldValue<DispatcherTimer>(_window);
+            _testWindow = new TestWindow<MainWindow>();
+            _beetleObject = _testWindow.GetPrivateField<Beetle>();
+            _timerObject = _testWindow.GetPrivateField<DispatcherTimer>();
+            _speedSlider = _testWindow.GetUIElements<Slider>().FirstOrDefault(
+                (slider) => slider.Name.ToUpper().Contains("SPEED"));
+            _sizeSlider = _testWindow.GetUIElements<Slider>().FirstOrDefault(
+                (slider) => slider.Name.ToUpper().Contains("SIZE"));
         }
 
         [TearDown]
         public void TearDown()
         {
-            _window?.Close();
+            _testWindow?.Dispose();
         }
 
         [MonitoredTest("MainWindow - Should have a private member of class Beetle"), Order(1)]
@@ -44,6 +53,18 @@ namespace BeetleGame.Tests
         public void _M02_ShouldHaveAPrivateDispatcherTimerMember()
         {
             Assert.That(_timerObject, Is.Not.Null, "Mainwindow should have a private member variable of class DispatcherTimer");
+        }
+
+        [MonitoredTest("MainWindow - Should have a slider for controlling Speed"), Order(3)]
+        public void _M03_ShouldHaveSliderForSpeed()
+        {
+            Assert.That(_speedSlider, Is.Not.Null, "Mainwindow should have a Slider for speed (speedSlider)");
+        }
+
+        [MonitoredTest("MainWindow - Should have a slider for controlling Size"), Order(4)]
+        public void _M04_ShouldHaveSliderForSize()
+        {
+            Assert.That(_sizeSlider, Is.Not.Null, "Mainwindow should have a Slider for size (sizeSlider)");
         }
 
 
