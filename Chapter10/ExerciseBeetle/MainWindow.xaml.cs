@@ -18,15 +18,14 @@ namespace BeetleGame
         private DateTime _startTime;
 
 
+
         public MainWindow()
         {
             InitializeComponent();
-            timer = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromMilliseconds(10)
-            };
+            timer = new DispatcherTimer(); ;
             timer.Tick += Timer_Tick;
             InitializeBeetle();
+            timer.Interval = TimeSpan.FromMilliseconds(100 / speedSlider.Value * sizeSlider.Value / 10);
             speedSlider.ValueChanged += SpeedSlider_ValueChanged;
             sizeSlider.ValueChanged += SizeSlider_ValueChanged;
         }
@@ -35,12 +34,16 @@ namespace BeetleGame
         {
             speedLabel.Content = $"{speedSlider.Value:0.0}";
             _beetle.Speed = speedSlider.Value;
+            timer.Interval = TimeSpan.FromMilliseconds(100 / speedSlider.Value * sizeSlider.Value / 10);
         }
 
         private void SizeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             sizeLabel.Content = Convert.ToInt32(sizeSlider.Value);
             _beetle.Size = Convert.ToInt32(sizeSlider.Value);
+            timer.Interval = TimeSpan.FromMilliseconds(100 / speedSlider.Value * sizeSlider.Value / 10);
+            // indien 0.10 per stap => tik per 1/10 seconde voor de kleinste kever
+            // aan 1 cm/seconde voortbeweegt.
 
         }
 

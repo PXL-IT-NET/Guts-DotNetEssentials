@@ -6,12 +6,11 @@ using System.Windows.Shapes;
 
 namespace BeetleGame
 {
-    class Beetle
+    public class Beetle
     {
         private Canvas _canvas;
         private int _size;
         private Ellipse _body;
-
         public double Speed { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
@@ -79,24 +78,27 @@ namespace BeetleGame
 
         public void ChangePosition()
         {
-            if (Right)
+            if (Speed != 0)
             {
-                X = X + 1;
+                if (Right)
+                {
+                    X = X + 1;
+                }
+                else
+                {
+                    X = X - 1;
+                }
+                if (Up)
+                {
+                    Y = Y - 1;
+                }
+                else
+                {
+                    Y = Y + 1;
+                }
+                _body.Margin = new Thickness(X - Size / 2, Y - Size / 2, 0, 0);
+                ChangeDirection();
             }
-            else
-            {
-                X = X - 1;
-            }
-            if (Up)
-            {
-                Y = Y - 1;
-            }
-            else
-            {
-                Y = Y + 1;
-            }
-            _body.Margin = new Thickness(X - Size / 2, Y - Size / 2, 0, 0);
-            ChangeDirection();
         }
 
         private void ChangeDirection()
