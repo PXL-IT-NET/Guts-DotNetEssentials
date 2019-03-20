@@ -119,6 +119,43 @@ namespace BeetleGame.Tests
             Assert.That(_startButton.Content, Is.EqualTo("Start"), @"After clicking the Stop-button, the content text should change to <Start>");
         }
 
+        [MonitoredTest("MainWindow - Hitting Start Button should disable sliders, stop enables them"), Order(8)]
+        public void _M08_ShouldDisableSlidersWhenHittingStartAndBack()
+        {
+            _startButton.FireClickEvent();
+            Assert.That(_sizeSlider.IsEnabled, Is.False, "Slider for size should be disabled when hitting <Start>");
+            Assert.That(_speedSlider.IsEnabled, Is.False, "Slider for speed should be disabled when hitting <Start>");
+            _startButton.FireClickEvent();
+            Assert.That(_sizeSlider.IsEnabled, Is.True, "Slider for size should be enabled again when hitting <Stop>");
+            Assert.That(_speedSlider.IsEnabled, Is.True, "Slider for speed should be enabled again when hitting <Stop>");
+        }
 
+        [MonitoredTest("MainWindow - Hitting Left Button should set property on Beetle object"), Order(9)]
+        public void _M09_ShouldSetBeetleRightPropertyToFalseWhenHittingLeftButton()
+        {
+            _leftButton.FireClickEvent();
+            Assert.That(_beetleObject.Right, Is.False, "Hitting the <Left> button should change Right property on Beetle to false");
+        }
+
+        [MonitoredTest("MainWindow - Hitting Right Button should set property on Beetle object"), Order(10)]
+        public void _M10_ShouldSetBeetleRightPropertyToTrueWhenHittingRightButton()
+        {
+            _rightButton.FireClickEvent();
+            Assert.That(_beetleObject.Right, Is.True, "Hitting the <Right> button should change Right property on Beetle to true");
+        }
+
+        [MonitoredTest("MainWindow - Hitting Up Button should set property on Beetle object"), Order(11)]
+        public void _M11_ShouldSetBeetleUpPropertyToTrueWhenHittingUpButton()
+        {
+            _upButton.FireClickEvent();
+            Assert.That(_beetleObject.Up, Is.True, "Hitting the <Up> button should change Up property on Beetle to true");
+        }
+
+        [MonitoredTest("MainWindow - Hitting Down Button should set property on Beetle object"), Order(12)]
+        public void _M12_ShouldSetBeetleUpPropertyToFalseWhenHittingDownButton()
+        {
+            _downButton.FireClickEvent();
+            Assert.That(_beetleObject.Up, Is.False, "Hitting the <Down> button should change Up property on Beetle to false");
+        }
     }
 }
