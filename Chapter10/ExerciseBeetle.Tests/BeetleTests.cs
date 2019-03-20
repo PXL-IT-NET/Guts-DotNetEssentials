@@ -42,8 +42,9 @@ namespace BeetleGame.Tests
             _beetleSize = 10;
             _beetleX = 40;
             _beetleY = 35;
-            _beetleSpeed = 0.0;
+            _beetleSpeed = 0.5;
             _beetleObject = CreateBeetle(_testCanvas, _beetleX, _beetleY, _beetleSize);
+            SetPropertyValue(_beetleObject, "Speed", _beetleSpeed);
         }
 
         [TearDown]
@@ -209,6 +210,16 @@ namespace BeetleGame.Tests
             AssertPropertyValue(_beetleObject, "Y", _beetleY + 1); // should go down
             AssertPropertyValue(_beetleObject, "Right", true);
             AssertPropertyValue(_beetleObject, "Up", false);
+        }
+
+        [MonitoredTest("Beetle - a beetle with Speed zero should not move"), Order(14)]
+        public void _14_ShouldNotMoveWhenSpeedIsZero()
+        {
+            _beetleSpeed = 0;
+            SetPropertyValue(_beetleObject, "Speed", _beetleSpeed);
+            InvokeChangePosition(_beetleObject);
+            AssertPropertyValue(_beetleObject, "X", _beetleX); // should not move
+            AssertPropertyValue(_beetleObject, "Y", _beetleY); // should not move
         }
 
         private void AssertEllipsePosition(int expectedX, int expectedY)
