@@ -18,7 +18,7 @@
         <Slider HorizontalAlignment="Left" Margin="162,146,0,0" 
                 VerticalAlignment="Top" Width="285" Name ="sizeSlider"
                  Minimum="10" Maximum="20" TickFrequency="2" IsSnapToTickEnabled="True" />
-        <Label Content="2" HorizontalAlignment="Left" 
+        <Label Content="10" HorizontalAlignment="Left" 
                Name="sizeLabel" Margin="470,138,0,0" VerticalAlignment="Top"/>
         <Canvas HorizontalAlignment="Left" Height="356" 
                 Name ="paperCanvas" Background ="LightGray" Margin="47,218,0,0" VerticalAlignment="Top" Width="536"/>
