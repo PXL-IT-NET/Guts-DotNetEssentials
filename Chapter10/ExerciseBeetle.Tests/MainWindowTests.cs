@@ -2,7 +2,6 @@
 using Guts.Client.Classic.TestTools.WPF;
 using Guts.Client.Shared;
 using Guts.Client.Shared.TestTools;
-using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -21,7 +20,6 @@ namespace BeetleGame.Tests
     {
         private TestWindow<MainWindow> _testWindow;
         private Beetle _beetleObject;
-        private Mock<Beetle> _beetleMock;
         private DispatcherTimer _dispatcherTimer;
         private EventHandler _tickEventHandler;
         private Slider _speedSlider;
@@ -39,13 +37,6 @@ namespace BeetleGame.Tests
             _paperCanvas = _testWindow.GetPrivateField<Canvas>(field => field.Name.Contains("Canvas"));
             _beetleObject = _testWindow.Window.GetPrivateFieldValueByName<Beetle>("_beetle");
             _hasInvokedChangePosition = false;
-            _beetleMock = new Mock<Beetle>(new object[]
-                { 
-                    _paperCanvas,
-                    50, 50, 10
-                });
-            _beetleMock.Setup(beetle => beetle.ChangePosition())
-                       .Callback(() => { _hasInvokedChangePosition = true; });
             _dispatcherTimer = _testWindow.GetPrivateField<DispatcherTimer>();
             _tickEventHandler = _dispatcherTimer?.GetPrivateFieldValueByName<EventHandler>(nameof(DispatcherTimer.Tick));
             _speedSlider = _testWindow.GetUIElements<Slider>().FirstOrDefault(
@@ -226,7 +217,7 @@ namespace BeetleGame.Tests
         public void _M17_ShouldMoveBeetleAfterEveryTick()
         {
             // replace real Beetle with Mock
-            SetPrivateField(_testWindow.Window, "_beetle", _beetleMock.Object);
+            //SetPrivateField(_testWindow.Window, "_beetle", _beetleMock.Object);
 
             InvokeTickEvent();
 
