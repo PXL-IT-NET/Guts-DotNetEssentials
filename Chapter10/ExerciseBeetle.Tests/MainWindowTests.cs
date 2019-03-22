@@ -2,6 +2,7 @@
 using Guts.Client.Classic.TestTools.WPF;
 using Guts.Client.Shared;
 using Guts.Client.Shared.TestTools;
+using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -20,19 +21,33 @@ namespace BeetleGame.Tests
     {
         private TestWindow<MainWindow> _testWindow;
         private Beetle _beetleObject;
-        private DispatcherTimer _timerObject;
+        private Mock<Beetle> _beetleMock;
+        private DispatcherTimer _dispatcherTimer;
+        private EventHandler _tickEventHandler;
         private Slider _speedSlider;
         private Slider _sizeSlider;
         private Button _startButton, _resetButton;
         private Button _leftButton, _downButton, _upButton, _rightButton;
+        private Canvas _paperCanvas;
+        private bool _hasInvokedChangePosition;
 
 
         [SetUp]
         public void Setup()
         {
             _testWindow = new TestWindow<MainWindow>();
-            _beetleObject = _testWindow.GetPrivateField<Beetle>();
-            _timerObject = _testWindow.GetPrivateField<DispatcherTimer>();
+            _paperCanvas = _testWindow.GetPrivateField<Canvas>(field => field.Name.Contains("Canvas"));
+            _beetleObject = _testWindow.Window.GetPrivateFieldValueByName<Beetle>("_beetle");
+            _hasInvokedChangePosition = false;
+            _beetleMock = new Mock<Beetle>(new object[]
+                { 
+                    _paperCanvas,
+                    50, 50, 10
+                });
+            _beetleMock.Setup(beetle => beetle.ChangePosition())
+                       .Callback(() => { _hasInvokedChangePosition = true; });
+            _dispatcherTimer = _testWindow.GetPrivateField<DispatcherTimer>();
+            _tickEventHandler = _dispatcherTimer?.GetPrivateFieldValueByName<EventHandler>(nameof(DispatcherTimer.Tick));
             _speedSlider = _testWindow.GetUIElements<Slider>().FirstOrDefault(
                 (slider) => slider.Name.ToUpper().Contains("SPEED"));
             _sizeSlider = _testWindow.GetUIElements<Slider>().FirstOrDefault(
@@ -54,13 +69,17 @@ namespace BeetleGame.Tests
         [MonitoredTest("MainWindow - Should have a private member of class Beetle"), Order(1)]
         public void _M01_ShouldHaveAPrivateBeetleMember()
         {
-            Assert.That(_beetleObject, Is.Not.Null, "Mainwindow should have a private member variable of class Beetle");
+            Assert.That(_beetleObject, Is.Not.Null, "Mainwindow should have a private member variable of class Beetle named _beetle");
+            Assert.That(_beetleObject, Is.TypeOf<Beetle>(), "Mainwindow should have a private member variable of class Beetle");
         }
 
-        [MonitoredTest("MainWindow - Should have a private member of class DispatcherTimer"), Order(2)]
+        [MonitoredTest("MainWindow - Should have a private member of class DispatcherTimer and a method that handles its ticks"), Order(2)]
         public void _M02_ShouldHaveAPrivateDispatcherTimerMember()
         {
-            Assert.That(_timerObject, Is.Not.Null, "Mainwindow should have a private member variable of class DispatcherTimer");
+            AssertHasDispatcherTimer();
+            Assert.That(_tickEventHandler, Is.Not.Null, "No event handler set for the Tick event of the DispatcherTimer");
+            var invocationList = _tickEventHandler.GetInvocationList();
+            Assert.That(invocationList.Length, Is.GreaterThan(0), () => "No event handler set for the Tick event of the DispatcherTimer");
         }
 
         [MonitoredTest("MainWindow - Should have a slider for controlling Speed"), Order(3)]
@@ -156,6 +175,105 @@ namespace BeetleGame.Tests
         {
             _downButton.FireClickEvent();
             Assert.That(_beetleObject.Up, Is.False, "Hitting the <Down> button should change Up property on Beetle to false");
+        }
+
+        [MonitoredTest("MainWindow - Hitting Down Button should set property on Beetle object"), Order(13)]
+        public void _M13_ShouldResetTheScreenWhenHittingResetButton()
+        {
+            _resetButton.FireClickEvent();
+            Assert.That(_speedSlider.Value, Is.EqualTo(_speedSlider.Minimum),
+                "Hitting the <Reset> button should set the speed slider value to its minimum");
+            Assert.That(_sizeSlider.Value, Is.EqualTo(_sizeSlider.Minimum), 
+                "Hitting the <Reset> button should set the size slider value to its minimum");   
+        }
+
+        // TODO: ook labels moeten veranderen als de sliders veranderen!
+
+        [MonitoredTest("MainWindow - timer interval in msec should be set with respect to beetle size and speed"), Order(14)]
+        public void _M14_ShouldHaveTimerIntervalWithRespectToBeetleSizeAndSpeed()
+        {
+            AssertHasDispatcherTimer();
+            AssertDispatcherTimerIntervalWithRespectToBeetleSizeAndSpeed();
+        }
+
+        [MonitoredTest("MainWindow - Changing size slider should set property on Beetle object and interval on timer"), Order(15)]
+        public void _M15_ShouldChangeTimerIntervalAndSizePropertyWhenChangingSliderValue()
+        {
+            AssertHasDispatcherTimer();
+            AssertDispatcherTimerIntervalWithRespectToBeetleSizeAndSpeed();
+            Assert.That(_beetleObject.Size, Is.EqualTo(_sizeSlider.Value),
+                $"Beetle object size expected to be the same as slider value ({_sizeSlider.Value}) but was ({_beetleObject.Size})");
+            _sizeSlider.Value = 14;
+            AssertDispatcherTimerIntervalWithRespectToBeetleSizeAndSpeed();
+            Assert.That(_beetleObject.Size, Is.EqualTo(_sizeSlider.Value),
+                $"Beetle object size expected to be the same as slider value ({_sizeSlider.Value}) but was ({_beetleObject.Size})");
+        }
+
+        [MonitoredTest("MainWindow - Changing speed slider should set property on Beetle object and interval on timer"), Order(16)]
+        public void _M16_ShouldChangeTimerIntervalAndSpeedPropertyWhenChangingSliderValue()
+        {
+            AssertHasDispatcherTimer();
+            AssertDispatcherTimerIntervalWithRespectToBeetleSizeAndSpeed();
+            Assert.That(_beetleObject.Speed, Is.EqualTo(_speedSlider.Value),
+                $"Beetle object speed expected to be the same as slider value ({_speedSlider.Value}) but was ({_beetleObject.Speed})");
+            _speedSlider.Value = 5.5;
+            AssertDispatcherTimerIntervalWithRespectToBeetleSizeAndSpeed();
+            Assert.That(_beetleObject.Speed, Is.EqualTo(_speedSlider.Value),
+                $"Beetle object size expected to be the same as slider value ({_speedSlider.Value}) but was ({_beetleObject.Speed})");
+        }
+
+        [MonitoredTest("MainWindow - Should move the beetle after every Tick"), Order(17)]
+        public void _M17_ShouldMoveBeetleAfterEveryTick()
+        {
+            // replace real Beetle with Mock
+            SetPrivateField(_testWindow.Window, "_beetle", _beetleMock.Object);
+
+            InvokeTickEvent();
+
+            // Does not work because ChangePosition is not virtual and Beetle does not
+            // implement an interface that we can use to mock.
+            // _beetleMock.Verify(beetle => beetle.ChangePosition(),
+            //     "Tick event handler should invoke ChangePosition on Beetle object");
+
+            Assert.That(_hasInvokedChangePosition, Is.True, "Tick event handler should invoke ChangePosition on Beetle object");
+        }
+
+        private void AssertHasDispatcherTimer()
+        {
+            Assert.That(_dispatcherTimer, Is.Not.Null, "Mainwindow should have a private member variable of class DispatcherTimer");
+        }
+
+        private void AssertDispatcherTimerIntervalWithRespectToBeetleSizeAndSpeed()
+        {
+            // smallest beetle (10 pixels) moves 0.1 cm per step
+            // a beetle (12 pixels) moves 0.12 cm per step
+            // ...
+            // largest beetle (20 pixel) moves 0.2cm per step
+            // a tick for the smalles beetle: 1/10 sec interval => moves 1 cm / sec
+            // a tick for the largest beetle: 1/20 sec interval => movies 2 cm / sec
+            TimeSpan expectedInterval = TimeSpan.FromMilliseconds(100 / _speedSlider.Value * _sizeSlider.Value / 10);
+            Assert.That(_dispatcherTimer.Interval, Is.EqualTo(expectedInterval), 
+                "Timer Interval should be set to 100 / speedSlider.Value * sizeSlider.Value / 10 (in msec)");
+        }
+
+        private void SetPrivateField(Object targetObject, string fieldName, object newValue)
+        {
+            var field = targetObject.GetType().GetField(fieldName, System.Reflection.BindingFlags.NonPublic
+    |                       System.Reflection.BindingFlags.Instance);
+            field.SetValue(targetObject, newValue);
+        }
+
+        private void InvokeTickEvent()
+        {
+            if (_tickEventHandler == null) return;
+
+            var invocationList = _tickEventHandler.GetInvocationList();
+            Assert.That(invocationList.Length, Is.GreaterThan(0));
+
+            foreach (var handlerDelegate in invocationList)
+            {
+                handlerDelegate.Method.Invoke(handlerDelegate.Target, new Object[] {_dispatcherTimer, EventArgs.Empty});
+            }
         }
     }
 }
