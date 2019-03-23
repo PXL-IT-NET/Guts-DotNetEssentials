@@ -2,6 +2,8 @@
 using Guts.Client.Classic.TestTools.WPF;
 using Guts.Client.Shared;
 using Guts.Client.Shared.TestTools;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -29,8 +31,6 @@ namespace BeetleGame.Tests
         private Button _startButton, _resetButton;
         private Button _leftButton, _downButton, _upButton, _rightButton;
         private Canvas _paperCanvas;
-        private bool _hasInvokedChangePosition;
-
 
         [SetUp]
         public void Setup()
@@ -38,7 +38,6 @@ namespace BeetleGame.Tests
             _testWindow = new TestWindow<MainWindow>();
             _paperCanvas = _testWindow.GetPrivateField<Canvas>(field => field.Name.Contains("Canvas"));
             _beetleObject = _testWindow.Window.GetPrivateFieldValueByName<Beetle>("_beetle");
-            _hasInvokedChangePosition = false;
             _dispatcherTimer = _testWindow.GetPrivateField<DispatcherTimer>();
             _tickEventHandler = _dispatcherTimer?.GetPrivateFieldValueByName<EventHandler>(nameof(DispatcherTimer.Tick));
             _speedSlider = _testWindow.GetUIElements<Slider>().FirstOrDefault(
@@ -231,20 +230,26 @@ namespace BeetleGame.Tests
         [MonitoredTest("MainWindow - Should move the beetle after every Tick"), Order(18)]
         public void _M18_ShouldMoveBeetleAfterEveryTick()
         {
-            var code = Solution.Current.GetFileContent(@"BeetleGame\Beetle.cs");
+            var code = Solution.Current.GetFileContent(@"BeetleGame\MainWindow.xaml.cs");
             Assert.That(code, Is.Not.Null);
 
-            // replace real Beetle with Mock
-            //SetPrivateField(_testWindow.Window, "_beetle", _beetleMock.Object);
+            var syntaxTree = CSharpSyntaxTree.ParseText(code);
+            var root = syntaxTree.GetRoot();
+            var method = root
+                .DescendantNodes()
+                .OfType<MethodDeclarationSyntax>()
+                .FirstOrDefault(md => md.Identifier.ValueText.Contains("Tick"));
+            Assert.That(method, Is.Not.Null,
+                "Could not find the 'Tick' event handler. You have to create a DispatcherTimer object with a handler method for the Tick event.");
 
-            //InvokeTickEvent();
-
-            // Does not work because ChangePosition is not virtual and Beetle does not
-            // implement an interface that we can use to mock.
-            // _beetleMock.Verify(beetle => beetle.ChangePosition(),
-            //     "Tick event handler should invoke ChangePosition on Beetle object");
-
-            // Assert.That(_hasInvokedChangePosition, Is.True, "Tick event handler should invoke ChangePosition on Beetle object");
+            var statements = method.Body.Statements;
+            bool changePositionCallFound = false;
+            foreach (var statement in statements)
+            {
+                changePositionCallFound = statement.ToString().Contains("ChangePosition()");
+            }
+            Assert.That(changePositionCallFound, Is.True,
+                "Tick event handler does not call the ChangePosition method on Beetle.");
         }
 
         private void AssertHasDispatcherTimer()

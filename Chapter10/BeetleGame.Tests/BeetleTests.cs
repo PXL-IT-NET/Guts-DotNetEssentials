@@ -113,7 +113,7 @@ namespace BeetleGame.Tests
         {
             SetPropertyValue(_beetleObject, "Right", true);
             SetPropertyValue(_beetleObject, "Up", true);
-            InvokeChangePosition(_beetleObject);
+            AssertAndInvokeChangePositionMethod(_beetleObject);
             // verify the beetle went in up and right direction
             AssertPropertyValue(_beetleObject, "X", _beetleX + 1);
             AssertPropertyValue(_beetleObject, "Y", _beetleY - 1);
@@ -125,7 +125,7 @@ namespace BeetleGame.Tests
         {
             SetPropertyValue(_beetleObject, "Right", false);
             SetPropertyValue(_beetleObject, "Up", true);
-            InvokeChangePosition(_beetleObject);
+            AssertAndInvokeChangePositionMethod(_beetleObject);
             // verify the beetle went in up and right direction
             AssertPropertyValue(_beetleObject, "X", _beetleX - 1);
             AssertPropertyValue(_beetleObject, "Y", _beetleY - 1);
@@ -137,7 +137,7 @@ namespace BeetleGame.Tests
         {
             SetPropertyValue(_beetleObject, "Right", false);
             SetPropertyValue(_beetleObject, "Up", false);
-            InvokeChangePosition(_beetleObject);
+            AssertAndInvokeChangePositionMethod(_beetleObject);
             // verify the beetle went in up and right direction
             AssertPropertyValue(_beetleObject, "X", _beetleX - 1);
             AssertPropertyValue(_beetleObject, "Y", _beetleY + 1);
@@ -149,7 +149,7 @@ namespace BeetleGame.Tests
         {
             SetPropertyValue(_beetleObject, "Right", true);
             SetPropertyValue(_beetleObject, "Up", false);
-            InvokeChangePosition(_beetleObject);
+            AssertAndInvokeChangePositionMethod(_beetleObject);
             // verify the beetle went in up and right direction
             AssertPropertyValue(_beetleObject, "X", _beetleX + 1);
             AssertPropertyValue(_beetleObject, "Y", _beetleY + 1);
@@ -163,7 +163,7 @@ namespace BeetleGame.Tests
             SetPropertyValue(_beetleObject, "Y", _beetleY);
             SetPropertyValue(_beetleObject, "Right", true);
             SetPropertyValue(_beetleObject, "Up", true);      
-            InvokeChangePosition(_beetleObject);
+            AssertAndInvokeChangePositionMethod(_beetleObject);
             AssertPropertyValue(_beetleObject, "X", _beetleX + 1); // should go right
             AssertPropertyValue(_beetleObject, "Y", _beetleY - 1); // should go up
             AssertPropertyValue(_beetleObject, "Up", false); // should turn
@@ -177,7 +177,7 @@ namespace BeetleGame.Tests
             SetPropertyValue(_beetleObject, "Y", _beetleY);
             SetPropertyValue(_beetleObject, "Right", true);
             SetPropertyValue(_beetleObject, "Up", false);
-            InvokeChangePosition(_beetleObject);
+            AssertAndInvokeChangePositionMethod(_beetleObject);
             AssertPropertyValue(_beetleObject, "X", _beetleX + 1); // should go right
             AssertPropertyValue(_beetleObject, "Y", _beetleY + 1); // should go down
             AssertPropertyValue(_beetleObject, "Up", true); // should turn
@@ -191,7 +191,7 @@ namespace BeetleGame.Tests
             SetPropertyValue(_beetleObject, "X", _beetleX);
             SetPropertyValue(_beetleObject, "Right", true);
             SetPropertyValue(_beetleObject, "Up", false);
-            InvokeChangePosition(_beetleObject);
+            AssertAndInvokeChangePositionMethod(_beetleObject);
             AssertPropertyValue(_beetleObject, "X", _beetleX + 1); // should go right
             AssertPropertyValue(_beetleObject, "Y", _beetleY + 1); // should go down
             AssertPropertyValue(_beetleObject, "Right", false);
@@ -205,7 +205,7 @@ namespace BeetleGame.Tests
             SetPropertyValue(_beetleObject, "X", _beetleX);
             SetPropertyValue(_beetleObject, "Right", false);
             SetPropertyValue(_beetleObject, "Up", false);
-            InvokeChangePosition(_beetleObject);
+            AssertAndInvokeChangePositionMethod(_beetleObject);
             AssertPropertyValue(_beetleObject, "X", _beetleX - 1); // should go left
             AssertPropertyValue(_beetleObject, "Y", _beetleY + 1); // should go down
             AssertPropertyValue(_beetleObject, "Right", true);
@@ -217,7 +217,7 @@ namespace BeetleGame.Tests
         {
             _beetleSpeed = 0;
             SetPropertyValue(_beetleObject, "Speed", _beetleSpeed);
-            InvokeChangePosition(_beetleObject);
+            AssertAndInvokeChangePositionMethod(_beetleObject);
             AssertPropertyValue(_beetleObject, "X", _beetleX); // should not move
             AssertPropertyValue(_beetleObject, "Y", _beetleY); // should not move
         }
@@ -240,12 +240,18 @@ namespace BeetleGame.Tests
             property.SetValue(obj, newValue);
         }
 
-        private void InvokeChangePosition(object beetleObject)
+        private MethodInfo AssertChangePositionMethod(object beetleObject)
         {
             var methodName = "ChangePosition";
             var type = _beetleObject.GetType();
             var method = type.GetRuntimeMethod(methodName, new Type[] { });
-            Assert.That(method, Is.Not.Null, $"Should have method {methodName} without arguments and void return type");
+            Assert.That(method, Is.Not.Null, $"Should have method {methodName} without arguments and void return type for updating the Beetle position");
+            return method;
+        }
+
+        private void AssertAndInvokeChangePositionMethod(object beetleObject)
+        {
+            var method = AssertChangePositionMethod(beetleObject);
             method.Invoke(beetleObject, new object[] { });
         }
 
