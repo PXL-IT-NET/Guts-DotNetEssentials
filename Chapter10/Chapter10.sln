@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.28307.421
+VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeetleGame", "ExerciseBeetle\BeetleGame.csproj", "{0AE70788-8488-4EA7-AB8C-0E5B4E48E701}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeetleGame", "BeetleGame\BeetleGame.csproj", "{0AE70788-8488-4EA7-AB8C-0E5B4E48E701}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeetleGame.Tests", "ExerciseBeetle.Tests\BeetleGame.Tests.csproj", "{B4CF338A-1A9E-45A5-BA07-7F46CF819324}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeetleGame.Tests", "BeetleGame.Tests\BeetleGame.Tests.csproj", "{B4CF338A-1A9E-45A5-BA07-7F46CF819324}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +26,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {4089E52F-EB0B-4BE0-A548-5EE03FA99E1D}
+		SolutionGuid = {07C3F790-0D6F-4EBF-A2BD-C3A6713DDF4A}
 	EndGlobalSection
 EndGlobal

@@ -81,7 +81,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ExerciseBeetle\BeetleGame.csproj">
+    <ProjectReference Include="..\BeetleGame\BeetleGame.csproj">
       <Project>{0ae70788-8488-4ea7-ab8c-0e5b4e48e701}</Project>
       <Name>BeetleGame</Name>
     </ProjectReference>
