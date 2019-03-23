@@ -222,6 +222,20 @@ namespace BeetleGame.Tests
             AssertPropertyValue(_beetleObject, "Y", _beetleY); // should not move
         }
 
+        [MonitoredTest("Beetle - Should compute distance based on current Speed"), Order(15)]
+        public void _15_ShouldComputeDistanceBasedOnCurrentSpeed()
+        {
+            var computeDistanceMethod = AssertComputeDistanceMethod(_beetleObject);
+            var startTime = DateTime.Now;
+            var endTime = startTime + TimeSpan.FromSeconds(12);
+            var elapsedTime = endTime - startTime;
+            double expectedDistance = elapsedTime.Seconds * _beetleSpeed / 100;
+            double actualDistance = Convert.ToDouble(computeDistanceMethod.Invoke(_beetleObject, new object[] { startTime, endTime}));
+            Assert.That(actualDistance, Is.EqualTo(expectedDistance),
+                $"computed distance is expected to be ({expectedDistance}) but was ({actualDistance}). " + 
+                $"Beetle speed ({_beetleSpeed}), elapsed time in sec ({elapsedTime.Seconds})");
+        }
+
         private void AssertEllipsePosition(int expectedX, int expectedY)
         {
             Assert.That(_testCanvas.Children.Count, Is.EqualTo(1), $"Canvas for Beetle should have 1 ellipse, but found ({_testCanvas.Children.Count})");
@@ -238,6 +252,16 @@ namespace BeetleGame.Tests
         {
             var property = obj.GetType().GetProperty(propertyName);
             property.SetValue(obj, newValue);
+        }
+
+        private MethodInfo AssertComputeDistanceMethod(object beetleObject)
+        {
+            var methodName = "ComputeDistance";
+            var type = _beetleObject.GetType();
+            var method = type.GetRuntimeMethod(methodName, new Type[] {typeof(DateTime), typeof(DateTime) });
+            Assert.That(method, Is.Not.Null, $"Should have method {methodName} with 2 DateTime arguments and double return type " + 
+                " for calculating the Beetle distance based on current Speed");
+            return method;
         }
 
         private MethodInfo AssertChangePositionMethod(object beetleObject)
