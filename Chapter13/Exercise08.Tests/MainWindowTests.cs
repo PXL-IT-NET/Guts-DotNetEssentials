@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Exercise08.Tests
 {
-    [ExerciseTestFixture("dotNet1", "H13", "Exercise08", @"Exercise07\MainWindow.xaml;Exercise07\MainWindow.xaml.cs"), 
+    [ExerciseTestFixture("dotNet1", "H13", "Exercise08", @"Exercise08\MainWindow.xaml;Exercise08\MainWindow.xaml.cs"), 
      Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {
@@ -96,10 +96,9 @@ namespace Exercise08.Tests
 
             Assert.That(_theListBox.Items, Is.Not.Null, () => "Items property of the ListBox is null.");
             Assert.That(_theListBox.Items.Count, Is.EqualTo(listOfPersons.Count), () => "ListBox should have as many items as there are persons");
-            var listboxItems = _theListBox.Items.OfType<ListBoxItem>().ToList();
-            Assert.That(_theListBox.Items.Count, Is.EqualTo(listboxItems.Count), () => "All items in the ListBox should be of type 'ListBoxItem'");
         }
 
+        //TODO: expect a click on a 'Details' button instead of a double click (see book)
         [MonitoredTest("Should open a Person detail window on double click"), Order(6)]
         public void _6_ShouldOpenAPersonDetailWindowOnDoubleClick()
         {
@@ -173,9 +172,8 @@ namespace Exercise08.Tests
 
         private void AssertHasPersonClass()
         {
-            Assert.That(_personTypeInfo, Is.Not.Null, () => "No class named 'Person' or 'Persoon' can be found");
+            Assert.That(_personTypeInfo, Is.Not.Null, () => "No class named 'Person' can be found");
             Assert.That(_personTypeInfo.IsPublic, Is.True, () => "The person class is not public");
         }
-
     }
 }

@@ -17,6 +17,7 @@ namespace Exercise07.Tests
         private TextBox _monthNumberTextBox;
         private TextBox _monthNameTextBox;
         private Button _lookupButton;
+        private IList<string> _listOfMonths;
 
         [SetUp]
         public void Setup()
@@ -26,6 +27,8 @@ namespace Exercise07.Tests
             _monthNumberTextBox = allTextBoxes.FirstOrDefault(textBox => textBox.Name == "monthNumberTextBox");
             _monthNameTextBox = allTextBoxes.FirstOrDefault(textBox => textBox.Name == "monthNameTextBox");
             _lookupButton = _window.GetPrivateField<Button>(field => field.Name == "lookupButton");
+
+            _listOfMonths = _window.GetPrivateField<List<string>>() ?? _window.GetPrivateField<IList<string>>();
         }
 
         [TearDown]
@@ -50,15 +53,17 @@ namespace Exercise07.Tests
         [MonitoredTest("Should use a generic List"), Order(3)]
         public void _3_ShouldUseAGenericList()
         {
-            var listOfMonths = _window.GetPrivateField<List<string>>();
-
-            Assert.That(listOfMonths, Is.Not.Null, 
+            Assert.That(_listOfMonths, Is.Not.Null, 
                 () => "Cannot find a declaration of a field (instance variable) in the class that is a generic list that can contain names of months.");
+
+            Assert.That(_listOfMonths.Count, Is.EqualTo(12),
+                () => "The generic list should contain 12 items (after construction of the 'MainWindow')");
         }
 
         [MonitoredTest("Should lookup months correctly"), Order(4)]
         public void _4_ShouldLookUpMonthsCorrectly()
         {
+            AssertHasAllControls();
             AssertMonthLookup(1, "January", "Januari");
             AssertMonthLookup(2, "February", "Februari");
             AssertMonthLookup(3, "March", "Maart");
