@@ -21,7 +21,7 @@ namespace BeetleGame.Tests
     public class MainWindowTests
     {
         private TestWindow<MainWindow> _testWindow;
-        private Beetle _beetleObject;
+        private object _beetleObject;
         private DispatcherTimer _dispatcherTimer;
         private EventHandler _tickEventHandler;
         private Slider _speedSlider;
@@ -66,7 +66,7 @@ namespace BeetleGame.Tests
         public void _M01_ShouldHaveAPrivateBeetleMember()
         {
             Assert.That(_beetleObject, Is.Not.Null, "Mainwindow should have a private member variable of class Beetle named _beetle");
-            Assert.That(_beetleObject, Is.TypeOf<Beetle>(), "Mainwindow should have a private member variable of class Beetle");
+            Assert.That(_beetleObject, Is.TypeOf(BeetleHelper.BeetleType), "Mainwindow should have a private member variable of class Beetle");
         }
 
         [MonitoredTest("MainWindow - Should have a private member of class DispatcherTimer and a method that handles its ticks"), Order(2)]
@@ -156,28 +156,28 @@ namespace BeetleGame.Tests
         public void _M10_ShouldSetBeetleRightPropertyToFalseWhenHittingLeftButton()
         {
             _leftButton.FireClickEvent();
-            Assert.That(_beetleObject.Right, Is.False, "Hitting the <Left> button should change Right property on Beetle to false");
+            Assert.That(BeetleHelper.GetRightProperty(_beetleObject), Is.False, "Hitting the <Left> button should change Right property on Beetle to false");
         }
 
         [MonitoredTest("MainWindow - Hitting Right Button should set property on Beetle object"), Order(11)]
         public void _M11_ShouldSetBeetleRightPropertyToTrueWhenHittingRightButton()
         {
             _rightButton.FireClickEvent();
-            Assert.That(_beetleObject.Right, Is.True, "Hitting the <Right> button should change Right property on Beetle to true");
+            Assert.That(BeetleHelper.GetRightProperty(_beetleObject), Is.True, "Hitting the <Right> button should change Right property on Beetle to true");
         }
 
         [MonitoredTest("MainWindow - Hitting Up Button should set property on Beetle object"), Order(12)]
         public void _M12_ShouldSetBeetleUpPropertyToTrueWhenHittingUpButton()
         {
             _upButton.FireClickEvent();
-            Assert.That(_beetleObject.Up, Is.True, "Hitting the <Up> button should change Up property on Beetle to true");
+            Assert.That(BeetleHelper.GetUpProperty(_beetleObject), Is.True, "Hitting the <Up> button should change Up property on Beetle to true");
         }
 
         [MonitoredTest("MainWindow - Hitting Down Button should set property on Beetle object"), Order(13)]
         public void _M13_ShouldSetBeetleUpPropertyToFalseWhenHittingDownButton()
         {
             _downButton.FireClickEvent();
-            Assert.That(_beetleObject.Up, Is.False, "Hitting the <Down> button should change Up property on Beetle to false");
+            Assert.That(BeetleHelper.GetUpProperty(_beetleObject), Is.False, "Hitting the <Down> button should change Up property on Beetle to false");
         }
 
         [MonitoredTest("MainWindow - Hitting Down Button should set property on Beetle object"), Order(14)]
@@ -202,12 +202,12 @@ namespace BeetleGame.Tests
         {
             AssertHasDispatcherTimer();
             AssertDispatcherTimerIntervalWithRespectToBeetleSizeAndSpeed();
-            Assert.That(_beetleObject.Size, Is.EqualTo(_sizeSlider.Value),
-                $"Beetle object size expected to be the same as slider value ({_sizeSlider.Value}) but was ({_beetleObject.Size})");
+            Assert.That(BeetleHelper.GetSizeProperty(_beetleObject), Is.EqualTo(_sizeSlider.Value),
+                $"Beetle object size expected to be the same as slider value ({_sizeSlider.Value}) but was ({BeetleHelper.GetSizeProperty(_beetleObject)})");
             _sizeSlider.Value = 14;
             AssertDispatcherTimerIntervalWithRespectToBeetleSizeAndSpeed();
-            Assert.That(_beetleObject.Size, Is.EqualTo(_sizeSlider.Value),
-                $"Beetle object size expected to be the same as slider value ({_sizeSlider.Value}) but was ({_beetleObject.Size})");
+            Assert.That(BeetleHelper.GetSizeProperty(_beetleObject), Is.EqualTo(_sizeSlider.Value),
+                $"Beetle object size expected to be the same as slider value ({_sizeSlider.Value}) but was ({BeetleHelper.GetSizeProperty(_beetleObject)})");
             Assert.That(Convert.ToDouble(_sizeLabel.Content), Is.EqualTo(_sizeSlider.Value),
                 $"Label for size expected to be the same as slider value ({_sizeSlider.Value}) but was ({_sizeLabel.Content})");
         }
@@ -217,12 +217,12 @@ namespace BeetleGame.Tests
         {
             AssertHasDispatcherTimer();
             AssertDispatcherTimerIntervalWithRespectToBeetleSizeAndSpeed();
-            Assert.That(_beetleObject.Speed, Is.EqualTo(_speedSlider.Value),
-                $"Beetle object speed expected to be the same as slider value ({_speedSlider.Value}) but was ({_beetleObject.Speed})");
+            Assert.That(BeetleHelper.GetSpeedProperty(_beetleObject), Is.EqualTo(_speedSlider.Value),
+                $"Beetle object speed expected to be the same as slider value ({_speedSlider.Value}) but was ({BeetleHelper.GetSpeedProperty(_beetleObject)})");
             _speedSlider.Value = 5.5;
             AssertDispatcherTimerIntervalWithRespectToBeetleSizeAndSpeed();
-            Assert.That(_beetleObject.Speed, Is.EqualTo(_speedSlider.Value),
-                $"Beetle object size expected to be the same as slider value ({_speedSlider.Value}) but was ({_beetleObject.Speed})");
+            Assert.That(BeetleHelper.GetSpeedProperty(_beetleObject), Is.EqualTo(_speedSlider.Value),
+                $"Beetle object size expected to be the same as slider value ({_speedSlider.Value}) but was ({BeetleHelper.GetSpeedProperty(_beetleObject)})");
             Assert.That(Convert.ToDouble(_speedLabel.Content), Is.EqualTo(_speedSlider.Value),
                $"Label for speed expected to be the same as slider value ({_speedSlider.Value}) but was ({_speedLabel.Content})");
         }

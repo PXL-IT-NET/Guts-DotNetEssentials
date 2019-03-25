@@ -19,9 +19,6 @@ namespace BeetleGame.Tests
     {
         private object _beetleObject = null;
         
-        private const string _beetleTypeName = "BeetleGame.Beetle";
-        private const string _beetleAssembly = "BeetleGame";
-        private readonly Type _beetleType = Type.GetType($"{_beetleTypeName}, {_beetleAssembly}");
         private int _beetleSize;
         private int _beetleX;
         private int _beetleY;
@@ -43,8 +40,8 @@ namespace BeetleGame.Tests
             _beetleX = 40;
             _beetleY = 35;
             _beetleSpeed = 0.5;
-            _beetleObject = CreateBeetle(_testCanvas, _beetleX, _beetleY, _beetleSize);
-            SetPropertyValue(_beetleObject, "Speed", _beetleSpeed);
+            _beetleObject = BeetleHelper.CreateBeetle(_testCanvas, _beetleX, _beetleY, _beetleSize);
+            BeetleHelper.SetSpeedPropertyValue(_beetleObject, _beetleSpeed);
         }
 
         [TearDown]
@@ -54,7 +51,7 @@ namespace BeetleGame.Tests
         [MonitoredTest("Beetle - There should be a class named Beetle"), Order(1)]
         public void _01_ShouldHaveAClassNamedBeetle()
         {
-            Assert.That(_beetleType, Is.Not.Null, $"There should be a class named {_beetleTypeName}");
+            Assert.That(BeetleHelper.BeetleTypeName, Is.Not.Null, $"There should be a class named {BeetleHelper.BeetleTypeName}");
         }
 
         [MonitoredTest("Beetle - Beetle class should have a parameterized constructor"), Order(2)]
@@ -62,20 +59,29 @@ namespace BeetleGame.Tests
         {
             var constructor = GetConstructor();
             Assert.That(constructor, Is.Not.Null,
-                    () => $"{_beetleTypeName} should have a constructor with parameters (Canvas canvas, int x, int y, int size)");
+                    () => $"{BeetleHelper.BeetleTypeName} should have a constructor with parameters (Canvas canvas, int x, int y, int size)");
         }
 
         [MonitoredTest("Beetle - Beetle class should have all required properties"), Order(3)]
         public void _03_ShouldHaveAllProperties()
         {
             var properties = _beetleObject.GetType().GetProperties();
-            string[] expectedPropertyNames = { "Speed", "X", "Y", "Size", "Right", "Up", "IsVisible" };
+            string[] expectedPropertyNames =
+                { 
+                    BeetleHelper.SpeedProperty,
+                    BeetleHelper.XProperty,
+                    BeetleHelper.YProperty,
+                    BeetleHelper.SizeProperty,
+                    BeetleHelper.RightProperty,
+                    BeetleHelper.UpProperty,
+                    BeetleHelper.VisibleProperty
+                };
             Type[] expectedPropertyTypes = {typeof(double), typeof(int), typeof(int), typeof(int),
                                             typeof(bool), typeof(bool), typeof(bool)};
             for (int i = 0; i < expectedPropertyNames.Length; i++)
             {
                 AssertProperty(properties, expectedPropertyNames[i], expectedPropertyTypes[i],
-                           $"{_beetleTypeName} should have a property named ${expectedPropertyNames[i]} of type ${expectedPropertyTypes[i]}.");
+                           $"{BeetleHelper.BeetleTypeName} should have a property named ${expectedPropertyNames[i]} of type ${expectedPropertyTypes[i]}.");
             }
 
         }
@@ -83,7 +89,7 @@ namespace BeetleGame.Tests
         [MonitoredTest("Beetle - Should create a valid Beetle when invoking constructor"), Order(4)]
         public void _04_ShouldCreateValidBeetleWhenInvokingContructor()
         {
-            Assert.That(_beetleObject, Is.Not.Null, $"Could not create an instance of class {_beetleTypeName}");
+            Assert.That(_beetleObject, Is.Not.Null, $"Could not create an instance of class {BeetleHelper.BeetleTypeName}");
             AssertPropertyValue(_beetleObject, "X", _beetleX);
             AssertPropertyValue(_beetleObject, "Y", _beetleY);
             AssertPropertyValue(_beetleObject, "Size", _beetleSize);
@@ -95,7 +101,7 @@ namespace BeetleGame.Tests
         [MonitoredTest("Beetle - Should create a Beetle object with ellipse on its canvas"), Order(5)]
         public void _05_ShouldCreateABeetleWithAnEllipseOnItsCanvas()
         {
-            Assert.That(_beetleObject, Is.Not.Null, $"Could not create an instance of class {_beetleTypeName}");
+            Assert.That(_beetleObject, Is.Not.Null, $"Could not create an instance of class {BeetleHelper.BeetleTypeName}");
             Assert.That(_testCanvas.Children.Count, Is.GreaterThan(0), $"Beetle should have a Canvas member with an ellipse");
             Assert.That(_testCanvas.Children[0], Is.TypeOf<Ellipse>(), $"Beetle should have a Canvas member with an ellipse");
 
@@ -111,8 +117,8 @@ namespace BeetleGame.Tests
         [MonitoredTest("Beetle - Should move up and right without hitting border"), Order(6)]
         public void _06_ShouldMoveUpAndRightWithoutHittingBorder()
         {
-            SetPropertyValue(_beetleObject, "Right", true);
-            SetPropertyValue(_beetleObject, "Up", true);
+            BeetleHelper.SetRightProperty(_beetleObject, true);
+            BeetleHelper.SetUpProperty(_beetleObject, true);
             AssertAndInvokeChangePositionMethod(_beetleObject);
             // verify the beetle went in up and right direction
             AssertPropertyValue(_beetleObject, "X", _beetleX + 1);
@@ -123,8 +129,8 @@ namespace BeetleGame.Tests
         [MonitoredTest("Beetle - Should move up and left without hitting border"), Order(7)]
         public void _07_ShouldMoveUpAndLeftWithoutHittingBorder()
         {
-            SetPropertyValue(_beetleObject, "Right", false);
-            SetPropertyValue(_beetleObject, "Up", true);
+            BeetleHelper.SetRightProperty(_beetleObject, false);
+            BeetleHelper.SetUpProperty(_beetleObject, true);
             AssertAndInvokeChangePositionMethod(_beetleObject);
             // verify the beetle went in up and right direction
             AssertPropertyValue(_beetleObject, "X", _beetleX - 1);
@@ -135,8 +141,8 @@ namespace BeetleGame.Tests
         [MonitoredTest("Beetle - Should move down and right without hitting border"), Order(8)]
         public void _08_ShouldMoveDownAndLeftWithoutHittingBorder()
         {
-            SetPropertyValue(_beetleObject, "Right", false);
-            SetPropertyValue(_beetleObject, "Up", false);
+            BeetleHelper.SetRightProperty(_beetleObject, false);
+            BeetleHelper.SetUpProperty(_beetleObject, false);
             AssertAndInvokeChangePositionMethod(_beetleObject);
             // verify the beetle went in up and right direction
             AssertPropertyValue(_beetleObject, "X", _beetleX - 1);
@@ -147,8 +153,8 @@ namespace BeetleGame.Tests
         [MonitoredTest("Beetle - Should move up and left without hitting border"), Order(9)]
         public void _09_ShouldMoveDownAndRightWithoutHittingBorder()
         {
-            SetPropertyValue(_beetleObject, "Right", true);
-            SetPropertyValue(_beetleObject, "Up", false);
+            BeetleHelper.SetRightProperty(_beetleObject, true);
+            BeetleHelper.SetUpProperty(_beetleObject, false);
             AssertAndInvokeChangePositionMethod(_beetleObject);
             // verify the beetle went in up and right direction
             AssertPropertyValue(_beetleObject, "X", _beetleX + 1);
@@ -160,9 +166,9 @@ namespace BeetleGame.Tests
         public void _10_ShouldTurnDownWhenHittingUpperBoundOfCanvas()
         {
             _beetleY = _beetleSize / 2 + 1; // 1 pixel from top of canvas
-            SetPropertyValue(_beetleObject, "Y", _beetleY);
-            SetPropertyValue(_beetleObject, "Right", true);
-            SetPropertyValue(_beetleObject, "Up", true);      
+            BeetleHelper.SetYProperty(_beetleObject, _beetleY);
+            BeetleHelper.SetRightProperty(_beetleObject, true);
+            BeetleHelper.SetUpProperty(_beetleObject, true);      
             AssertAndInvokeChangePositionMethod(_beetleObject);
             AssertPropertyValue(_beetleObject, "X", _beetleX + 1); // should go right
             AssertPropertyValue(_beetleObject, "Y", _beetleY - 1); // should go up
@@ -174,9 +180,9 @@ namespace BeetleGame.Tests
         public void _11_ShouldTurnUpWhenHittingLowerBoundOfCanvas()
         {
             _beetleY = TestCanvasHeight - (_beetleSize / 2) - 1; // 1 pixel from bottom of canvas
-            SetPropertyValue(_beetleObject, "Y", _beetleY);
-            SetPropertyValue(_beetleObject, "Right", true);
-            SetPropertyValue(_beetleObject, "Up", false);
+            BeetleHelper.SetYProperty(_beetleObject, _beetleY);
+            BeetleHelper.SetRightProperty(_beetleObject, true);
+            BeetleHelper.SetUpProperty(_beetleObject, false);
             AssertAndInvokeChangePositionMethod(_beetleObject);
             AssertPropertyValue(_beetleObject, "X", _beetleX + 1); // should go right
             AssertPropertyValue(_beetleObject, "Y", _beetleY + 1); // should go down
@@ -188,9 +194,9 @@ namespace BeetleGame.Tests
         public void _12_ShouldTurnLeftWhenHittingRightSideOfCanvas()
         {
             _beetleX = TestCanvasWidth - (_beetleSize / 2) - 1; // 1 pixel from right side
-            SetPropertyValue(_beetleObject, "X", _beetleX);
-            SetPropertyValue(_beetleObject, "Right", true);
-            SetPropertyValue(_beetleObject, "Up", false);
+            BeetleHelper.SetXProperty(_beetleObject, _beetleX);
+            BeetleHelper.SetRightProperty(_beetleObject, true);
+            BeetleHelper.SetUpProperty(_beetleObject, false);
             AssertAndInvokeChangePositionMethod(_beetleObject);
             AssertPropertyValue(_beetleObject, "X", _beetleX + 1); // should go right
             AssertPropertyValue(_beetleObject, "Y", _beetleY + 1); // should go down
@@ -202,9 +208,9 @@ namespace BeetleGame.Tests
         public void _13_ShouldTurnRightWhenHittingLeftSideOfCanvas()
         {
             _beetleX = (_beetleSize / 2) + 1; // 1 pixel from left side
-            SetPropertyValue(_beetleObject, "X", _beetleX);
-            SetPropertyValue(_beetleObject, "Right", false);
-            SetPropertyValue(_beetleObject, "Up", false);
+            BeetleHelper.SetXProperty(_beetleObject, _beetleX);
+            BeetleHelper.SetRightProperty(_beetleObject, false);
+            BeetleHelper.SetUpProperty(_beetleObject, false);
             AssertAndInvokeChangePositionMethod(_beetleObject);
             AssertPropertyValue(_beetleObject, "X", _beetleX - 1); // should go left
             AssertPropertyValue(_beetleObject, "Y", _beetleY + 1); // should go down
@@ -216,7 +222,7 @@ namespace BeetleGame.Tests
         public void _14_ShouldNotMoveWhenSpeedIsZero()
         {
             _beetleSpeed = 0;
-            SetPropertyValue(_beetleObject, "Speed", _beetleSpeed);
+            BeetleHelper.SetSpeedPropertyValue(_beetleObject, _beetleSpeed);
             AssertAndInvokeChangePositionMethod(_beetleObject);
             AssertPropertyValue(_beetleObject, "X", _beetleX); // should not move
             AssertPropertyValue(_beetleObject, "Y", _beetleY); // should not move
@@ -248,12 +254,6 @@ namespace BeetleGame.Tests
             Assert.That(centerY, Is.EqualTo(expectedY), $"Center Y position of ellipse should be ({expectedY}, but found ({centerY})");
         }
 
-        private void SetPropertyValue(object obj, string propertyName, object newValue)
-        {
-            var property = obj.GetType().GetProperty(propertyName);
-            property.SetValue(obj, newValue);
-        }
-
         private MethodInfo AssertComputeDistanceMethod(object beetleObject)
         {
             var methodName = "ComputeDistance";
@@ -279,12 +279,6 @@ namespace BeetleGame.Tests
             method.Invoke(beetleObject, new object[] { });
         }
 
-        private object CreateBeetle(Canvas canvas, int x, int y, int size)
-        {
-            object[] parameters = new object[] { _testCanvas, _beetleX, _beetleY, _beetleSize };
-            return Activator.CreateInstance(_beetleType, parameters);
-        }
-
         private void AssertProperty(PropertyInfo[] properties, string expectedPropertyName,
                                     Type expectedPropertyType, string message)
         {
@@ -293,11 +287,11 @@ namespace BeetleGame.Tests
             Assert.That(property, Is.Not.Null, () => message);
         }
 
-        private void AssertPropertyValue(object obj, string propertyName, object expectedValue)
+        private void AssertPropertyValue(object beetleObject, string propertyName, object expectedValue)
         {
-            var property = obj.GetType().GetProperty(propertyName);
-            Assert.That(property.GetValue(obj), Is.EqualTo(expectedValue), 
-                $"Beetle property {propertyName} has value ({property.GetValue(obj)}) but expected ({expectedValue})");
+            object actualValue = BeetleHelper.GetPropertyValue(beetleObject, propertyName);
+            Assert.That(actualValue, Is.EqualTo(expectedValue), 
+                $"Beetle property {propertyName} has value ({actualValue}) but expected ({expectedValue})");
         }
 
         private ConstructorInfo GetConstructor()
