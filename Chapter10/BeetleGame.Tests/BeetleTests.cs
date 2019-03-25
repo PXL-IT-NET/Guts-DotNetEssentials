@@ -93,12 +93,12 @@ namespace BeetleGame.Tests
         public void _04_ShouldCreateValidBeetleWhenInvokingContructor()
         {
             Assert.That(_beetleObject, Is.Not.Null, $"Could not create an instance of class {BeetleHelper.BeetleTypeName}");
-            AssertPropertyValue(_beetleObject, "X", _beetleX);
-            AssertPropertyValue(_beetleObject, "Y", _beetleY);
-            AssertPropertyValue(_beetleObject, "Size", _beetleSize);
-            AssertPropertyValue(_beetleObject, "Up", true);
-            AssertPropertyValue(_beetleObject, "Right", true);
-            AssertPropertyValue(_beetleObject, "Speed", _beetleSpeed);
+            AssertPropertyValue(_beetleObject, BeetleHelper.XProperty, _beetleX);
+            AssertPropertyValue(_beetleObject, BeetleHelper.YProperty, _beetleY);
+            AssertPropertyValue(_beetleObject, BeetleHelper.SizeProperty, _beetleSize);
+            AssertPropertyValue(_beetleObject, BeetleHelper.UpProperty, true);
+            AssertPropertyValue(_beetleObject, BeetleHelper.RightProperty, true);
+            AssertPropertyValue(_beetleObject, BeetleHelper.SpeedProperty, _beetleSpeed);
 
         }
 
@@ -125,8 +125,8 @@ namespace BeetleGame.Tests
             BeetleHelper.SetUpProperty(_beetleObject, true);
             AssertAndInvokeChangePositionMethod(_beetleObject);
             // verify the beetle went in up and right direction
-            AssertPropertyValue(_beetleObject, "X", _beetleX + 1);
-            AssertPropertyValue(_beetleObject, "Y", _beetleY - 1);
+            AssertPropertyValue(_beetleObject, BeetleHelper.XProperty, _beetleX + 1);
+            AssertPropertyValue(_beetleObject, BeetleHelper.YProperty, _beetleY - 1);
             AssertEllipsePosition(_beetleX + 1, _beetleY - 1);
         }
 
@@ -137,8 +137,8 @@ namespace BeetleGame.Tests
             BeetleHelper.SetUpProperty(_beetleObject, true);
             AssertAndInvokeChangePositionMethod(_beetleObject);
             // verify the beetle went in up and right direction
-            AssertPropertyValue(_beetleObject, "X", _beetleX - 1);
-            AssertPropertyValue(_beetleObject, "Y", _beetleY - 1);
+            AssertPropertyValue(_beetleObject, BeetleHelper.XProperty, _beetleX - 1);
+            AssertPropertyValue(_beetleObject, BeetleHelper.YProperty, _beetleY - 1);
             AssertEllipsePosition(_beetleX - 1, _beetleY - 1);
         }
 
@@ -149,8 +149,8 @@ namespace BeetleGame.Tests
             BeetleHelper.SetUpProperty(_beetleObject, false);
             AssertAndInvokeChangePositionMethod(_beetleObject);
             // verify the beetle went in up and right direction
-            AssertPropertyValue(_beetleObject, "X", _beetleX - 1);
-            AssertPropertyValue(_beetleObject, "Y", _beetleY + 1);
+            AssertPropertyValue(_beetleObject, BeetleHelper.XProperty, _beetleX - 1);
+            AssertPropertyValue(_beetleObject, BeetleHelper.YProperty, _beetleY + 1);
             AssertEllipsePosition(_beetleX - 1, _beetleY + 1);
         }
 
@@ -161,8 +161,8 @@ namespace BeetleGame.Tests
             BeetleHelper.SetUpProperty(_beetleObject, false);
             AssertAndInvokeChangePositionMethod(_beetleObject);
             // verify the beetle went in up and right direction
-            AssertPropertyValue(_beetleObject, "X", _beetleX + 1);
-            AssertPropertyValue(_beetleObject, "Y", _beetleY + 1);
+            AssertPropertyValue(_beetleObject, BeetleHelper.XProperty, _beetleX + 1);
+            AssertPropertyValue(_beetleObject, BeetleHelper.YProperty, _beetleY + 1);
             AssertEllipsePosition(_beetleX + 1, _beetleY + 1);
         }
 
@@ -174,10 +174,10 @@ namespace BeetleGame.Tests
             BeetleHelper.SetRightProperty(_beetleObject, true);
             BeetleHelper.SetUpProperty(_beetleObject, true);      
             AssertAndInvokeChangePositionMethod(_beetleObject);
-            AssertPropertyValue(_beetleObject, "X", _beetleX + 1); // should go right
-            AssertPropertyValue(_beetleObject, "Y", _beetleY - 1); // should go up
-            AssertPropertyValue(_beetleObject, "Up", false); // should turn
-            AssertPropertyValue(_beetleObject, "Right", true);
+            AssertPropertyValue(_beetleObject, BeetleHelper.XProperty, _beetleX + 1); // should go right
+            AssertPropertyValue(_beetleObject, BeetleHelper.YProperty, _beetleY - 1); // should go up
+            AssertPropertyValue(_beetleObject, BeetleHelper.UpProperty, false); // should turn
+            AssertPropertyValue(_beetleObject, BeetleHelper.RightProperty, true);
         }
         
         [MonitoredTest("Beetle - Should turn up when hitting the lower bound of canvas"), Order(11)]
@@ -188,10 +188,10 @@ namespace BeetleGame.Tests
             BeetleHelper.SetRightProperty(_beetleObject, true);
             BeetleHelper.SetUpProperty(_beetleObject, false);
             AssertAndInvokeChangePositionMethod(_beetleObject);
-            AssertPropertyValue(_beetleObject, "X", _beetleX + 1); // should go right
-            AssertPropertyValue(_beetleObject, "Y", _beetleY + 1); // should go down
-            AssertPropertyValue(_beetleObject, "Up", true); // should turn
-            AssertPropertyValue(_beetleObject, "Right", true);
+            AssertPropertyValue(_beetleObject, BeetleHelper.XProperty, _beetleX + 1); // should go right
+            AssertPropertyValue(_beetleObject, BeetleHelper.YProperty, _beetleY + 1); // should go down
+            AssertPropertyValue(_beetleObject, BeetleHelper.UpProperty, true); // should turn
+            AssertPropertyValue(_beetleObject, BeetleHelper.RightProperty, true);
         }
 
         [MonitoredTest("Beetle - Should turn left when hitting right side of canvas"), Order(12)]
@@ -202,10 +202,10 @@ namespace BeetleGame.Tests
             BeetleHelper.SetRightProperty(_beetleObject, true);
             BeetleHelper.SetUpProperty(_beetleObject, false);
             AssertAndInvokeChangePositionMethod(_beetleObject);
-            AssertPropertyValue(_beetleObject, "X", _beetleX + 1); // should go right
-            AssertPropertyValue(_beetleObject, "Y", _beetleY + 1); // should go down
-            AssertPropertyValue(_beetleObject, "Right", false);
-            AssertPropertyValue(_beetleObject, "Up", false);
+            AssertPropertyValue(_beetleObject, BeetleHelper.XProperty, _beetleX + 1); // should go right
+            AssertPropertyValue(_beetleObject, BeetleHelper.YProperty, _beetleY + 1); // should go down
+            AssertPropertyValue(_beetleObject, BeetleHelper.RightProperty, false);
+            AssertPropertyValue(_beetleObject, BeetleHelper.UpProperty, false);
         }
 
         [MonitoredTest("Beetle - Should turn right when hitting left side of canvas"), Order(13)]
@@ -216,10 +216,10 @@ namespace BeetleGame.Tests
             BeetleHelper.SetRightProperty(_beetleObject, false);
             BeetleHelper.SetUpProperty(_beetleObject, false);
             AssertAndInvokeChangePositionMethod(_beetleObject);
-            AssertPropertyValue(_beetleObject, "X", _beetleX - 1); // should go left
-            AssertPropertyValue(_beetleObject, "Y", _beetleY + 1); // should go down
-            AssertPropertyValue(_beetleObject, "Right", true);
-            AssertPropertyValue(_beetleObject, "Up", false);
+            AssertPropertyValue(_beetleObject, BeetleHelper.XProperty, _beetleX - 1); // should go left
+            AssertPropertyValue(_beetleObject, BeetleHelper.YProperty, _beetleY + 1); // should go down
+            AssertPropertyValue(_beetleObject, BeetleHelper.RightProperty, true);
+            AssertPropertyValue(_beetleObject, BeetleHelper.UpProperty, false);
         }
 
         [MonitoredTest("Beetle - Should become invisible when IsVisible property is set"), Order(14)]
@@ -239,8 +239,8 @@ namespace BeetleGame.Tests
             _beetleSpeed = 0;
             BeetleHelper.SetSpeedPropertyValue(_beetleObject, _beetleSpeed);
             AssertAndInvokeChangePositionMethod(_beetleObject);
-            AssertPropertyValue(_beetleObject, "X", _beetleX); // should not move
-            AssertPropertyValue(_beetleObject, "Y", _beetleY); // should not move
+            AssertPropertyValue(_beetleObject, BeetleHelper.XProperty, _beetleX); // should not move
+            AssertPropertyValue(_beetleObject, BeetleHelper.YProperty, _beetleY); // should not move
         }
 
         [MonitoredTest("Beetle - Should compute distance based on current Speed"), Order(16)]

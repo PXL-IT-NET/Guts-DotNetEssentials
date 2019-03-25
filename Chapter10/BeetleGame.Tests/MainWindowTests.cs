@@ -28,6 +28,7 @@ namespace BeetleGame.Tests
         private Slider _sizeSlider;
         private Label _speedLabel;
         private Label _sizeLabel;
+        private Label _messageLabel;
         private Button _startButton, _resetButton;
         private Button _leftButton, _downButton, _upButton, _rightButton;
         private Canvas _paperCanvas;
@@ -54,6 +55,8 @@ namespace BeetleGame.Tests
                 (label) => label.Name.ToUpper().Contains("SPEED"));
             _sizeLabel = _testWindow.GetUIElements<Label>().FirstOrDefault(
                 (label) => label.Name.ToUpper().Contains("SIZE"));
+            _messageLabel = _testWindow.GetUIElements<Label>().FirstOrDefault(
+                (label) => label.Name.ToUpper().Contains("MESSAGE"));
         }
 
         [TearDown]
@@ -124,11 +127,12 @@ namespace BeetleGame.Tests
             Assert.That(_downButton, Is.Not.Null, @"MainWindow should contain a Button labeled <Down>");
         }
 
-        [MonitoredTest("MainWindow - Should have labels for size and speed values"), Order(7)]
+        [MonitoredTest("MainWindow - Should have labels for size, speed and distance values"), Order(7)]
         public void _M07_ShouldHaveLabelsForSizeAndSpeedValues()
         {
-            Assert.That(_speedLabel, Is.Not.Null, @"MainWindow should contain a Label named _speedLabel");
-            Assert.That(_sizeLabel, Is.Not.Null, @"MainWindow should contain a Label named _sizeLabel");
+            Assert.That(_speedLabel, Is.Not.Null, @"MainWindow should contain a Label named speedLabel");
+            Assert.That(_sizeLabel, Is.Not.Null, @"MainWindow should contain a Label named sizeLabel");
+            Assert.That(_messageLabel, Is.Not.Null, @"MainWindow should contain a Label named messageLabel");
         }
 
         [MonitoredTest("MainWindow - Hitting Start Button should change its content text to Stop (and back)"), Order(8)]
@@ -152,36 +156,45 @@ namespace BeetleGame.Tests
             Assert.That(_speedSlider.IsEnabled, Is.True, "Slider for speed should be enabled again when hitting <Stop>");
         }
 
-        [MonitoredTest("MainWindow - Hitting Left Button should set property on Beetle object"), Order(10)]
-        public void _M10_ShouldSetBeetleRightPropertyToFalseWhenHittingLeftButton()
+        [MonitoredTest("MainWindow - Hitting Stop Button should display distance in label"), Order(10)]
+        public void _M10_ShouldDisplayDistanceWhenHittingStop()
+        {
+            _startButton.FireClickEvent(); // start
+            _startButton.FireClickEvent(); // stop
+            Assert.That(_messageLabel.Content.ToString().Contains("total distance in meter"),
+                "messageLabel should provide a message with the total distance in meter, rounded with 2 digits");
+        }
+
+        [MonitoredTest("MainWindow - Hitting Left Button should set property on Beetle object"), Order(11)]
+        public void _M11_ShouldSetBeetleRightPropertyToFalseWhenHittingLeftButton()
         {
             _leftButton.FireClickEvent();
             Assert.That(BeetleHelper.GetRightProperty(_beetleObject), Is.False, "Hitting the <Left> button should change Right property on Beetle to false");
         }
 
-        [MonitoredTest("MainWindow - Hitting Right Button should set property on Beetle object"), Order(11)]
-        public void _M11_ShouldSetBeetleRightPropertyToTrueWhenHittingRightButton()
+        [MonitoredTest("MainWindow - Hitting Right Button should set property on Beetle object"), Order(12)]
+        public void _M12_ShouldSetBeetleRightPropertyToTrueWhenHittingRightButton()
         {
             _rightButton.FireClickEvent();
             Assert.That(BeetleHelper.GetRightProperty(_beetleObject), Is.True, "Hitting the <Right> button should change Right property on Beetle to true");
         }
 
-        [MonitoredTest("MainWindow - Hitting Up Button should set property on Beetle object"), Order(12)]
-        public void _M12_ShouldSetBeetleUpPropertyToTrueWhenHittingUpButton()
+        [MonitoredTest("MainWindow - Hitting Up Button should set property on Beetle object"), Order(13)]
+        public void _M14_ShouldSetBeetleUpPropertyToTrueWhenHittingUpButton()
         {
             _upButton.FireClickEvent();
             Assert.That(BeetleHelper.GetUpProperty(_beetleObject), Is.True, "Hitting the <Up> button should change Up property on Beetle to true");
         }
 
-        [MonitoredTest("MainWindow - Hitting Down Button should set property on Beetle object"), Order(13)]
-        public void _M13_ShouldSetBeetleUpPropertyToFalseWhenHittingDownButton()
+        [MonitoredTest("MainWindow - Hitting Down Button should set property on Beetle object"), Order(14)]
+        public void _M14_ShouldSetBeetleUpPropertyToFalseWhenHittingDownButton()
         {
             _downButton.FireClickEvent();
             Assert.That(BeetleHelper.GetUpProperty(_beetleObject), Is.False, "Hitting the <Down> button should change Up property on Beetle to false");
         }
 
-        [MonitoredTest("MainWindow - Hitting Reset Button should reset the application to its initial state"), Order(14)]
-        public void _M14_ShouldResetTheScreenWhenHittingResetButton()
+        [MonitoredTest("MainWindow - Hitting Reset Button should reset the application to its initial state"), Order(15)]
+        public void _M15_ShouldResetTheScreenWhenHittingResetButton()
         {
             _resetButton.FireClickEvent();
             Assert.That(_speedSlider.Value, Is.EqualTo(_speedSlider.Minimum),
@@ -200,15 +213,15 @@ namespace BeetleGame.Tests
                 "Hitting the <Reset> button should disable the timer");
         }
 
-        [MonitoredTest("MainWindow - timer interval in msec should be set with respect to beetle size and speed"), Order(15)]
-        public void _M15_ShouldHaveTimerIntervalWithRespectToBeetleSizeAndSpeed()
+        [MonitoredTest("MainWindow - timer interval in msec should be set with respect to beetle size and speed"), Order(16)]
+        public void _M16_ShouldHaveTimerIntervalWithRespectToBeetleSizeAndSpeed()
         {
             AssertHasDispatcherTimer();
             AssertDispatcherTimerIntervalWithRespectToBeetleSizeAndSpeed();
         }
 
-        [MonitoredTest("MainWindow - Changing size slider should set property on Beetle object and interval on timer"), Order(16)]
-        public void _M16_ShouldChangeTimerIntervalSizePropertyAndLabelWhenChangingSliderValue()
+        [MonitoredTest("MainWindow - Changing size slider should set property on Beetle object and interval on timer"), Order(17)]
+        public void _M17_ShouldChangeTimerIntervalSizePropertyAndLabelWhenChangingSliderValue()
         {
             AssertHasDispatcherTimer();
             AssertDispatcherTimerIntervalWithRespectToBeetleSizeAndSpeed();
@@ -222,8 +235,8 @@ namespace BeetleGame.Tests
                 $"Label for size expected to be the same as slider value ({_sizeSlider.Value}) but was ({_sizeLabel.Content})");
         }
 
-        [MonitoredTest("MainWindow - Changing speed slider should set property on Beetle object and interval on timer"), Order(17)]
-        public void _M17_ShouldChangeTimerIntervalSpeedPropertyAndLabelWhenChangingSliderValue()
+        [MonitoredTest("MainWindow - Changing speed slider should set property on Beetle object and interval on timer"), Order(18)]
+        public void _M18_ShouldChangeTimerIntervalSpeedPropertyAndLabelWhenChangingSliderValue()
         {
             AssertHasDispatcherTimer();
             AssertDispatcherTimerIntervalWithRespectToBeetleSizeAndSpeed();
@@ -237,8 +250,8 @@ namespace BeetleGame.Tests
                $"Label for speed expected to be the same as slider value ({_speedSlider.Value}) but was ({_speedLabel.Content})");
         }
 
-        [MonitoredTest("MainWindow - Should move the beetle after every Tick"), Order(18)]
-        public void _M18_ShouldMoveBeetleAfterEveryTick()
+        [MonitoredTest("MainWindow - Should move the beetle after every Tick"), Order(19)]
+        public void _M19_ShouldMoveBeetleAfterEveryTick()
         {
             var code = Solution.Current.GetFileContent(@"BeetleGame\MainWindow.xaml.cs");
             Assert.That(code, Is.Not.Null);
@@ -278,26 +291,6 @@ namespace BeetleGame.Tests
             TimeSpan expectedInterval = TimeSpan.FromMilliseconds(100 / _speedSlider.Value * _sizeSlider.Value / 10);
             Assert.That(_dispatcherTimer.Interval, Is.EqualTo(expectedInterval), 
                 "Timer Interval should be set to 100 / speedSlider.Value * sizeSlider.Value / 10 (in msec)");
-        }
-
-        private void SetPrivateField(Object targetObject, string fieldName, object newValue)
-        {
-            var field = targetObject.GetType().GetField(fieldName, System.Reflection.BindingFlags.NonPublic
-    |                       System.Reflection.BindingFlags.Instance);
-            field.SetValue(targetObject, newValue);
-        }
-
-        private void InvokeTickEvent()
-        {
-            if (_tickEventHandler == null) return;
-
-            var invocationList = _tickEventHandler.GetInvocationList();
-            Assert.That(invocationList.Length, Is.GreaterThan(0));
-
-            foreach (var handlerDelegate in invocationList)
-            {
-                handlerDelegate.Method.Invoke(handlerDelegate.Target, new Object[] {_dispatcherTimer, EventArgs.Empty});
-            }
         }
     }
 }
