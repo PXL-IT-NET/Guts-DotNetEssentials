@@ -56,6 +56,12 @@ namespace BeetleGame.Tests
         public static object GetSizeProperty(object beetleObject)
             => GetPropertyValue(beetleObject, SizeProperty);
 
+        public static object GetIsVisibleProperty(object beetleObject)
+            => GetPropertyValue(beetleObject, VisibleProperty);
+
+        public static void SetIsVisibleProperty(object beetleObject, bool newValue)
+            => SetPropertyValue(beetleObject, VisibleProperty, newValue);
+
         public static void SetPropertyValue(object beetleObject, string propertyName, object newValue)
         {
             var property = beetleObject.GetType().GetProperty(propertyName);

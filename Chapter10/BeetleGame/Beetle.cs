@@ -30,6 +30,7 @@ namespace BeetleGame
                     _body.Visibility = Visibility.Hidden;
                 }
             }
+            get => _body.Visibility == Visibility.Visible;
         }
 
         public int Size

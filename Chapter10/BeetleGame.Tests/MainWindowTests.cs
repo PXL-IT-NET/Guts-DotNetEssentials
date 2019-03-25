@@ -180,14 +180,24 @@ namespace BeetleGame.Tests
             Assert.That(BeetleHelper.GetUpProperty(_beetleObject), Is.False, "Hitting the <Down> button should change Up property on Beetle to false");
         }
 
-        [MonitoredTest("MainWindow - Hitting Down Button should set property on Beetle object"), Order(14)]
+        [MonitoredTest("MainWindow - Hitting Reset Button should reset the application to its initial state"), Order(14)]
         public void _M14_ShouldResetTheScreenWhenHittingResetButton()
         {
             _resetButton.FireClickEvent();
             Assert.That(_speedSlider.Value, Is.EqualTo(_speedSlider.Minimum),
                 "Hitting the <Reset> button should set the speed slider value to its minimum");
             Assert.That(_sizeSlider.Value, Is.EqualTo(_sizeSlider.Minimum), 
-                "Hitting the <Reset> button should set the size slider value to its minimum");   
+                "Hitting the <Reset> button should set the size slider value to its minimum");
+            Assert.That(_speedSlider.IsEnabled, Is.True,
+                "Hitting the <Reset> button should set the enable the speed slider");
+            Assert.That(_sizeSlider.IsEnabled, Is.True,
+                "Hitting the <Reset> button should set the enable the size slider");
+            Assert.That(_startButton.Content, Is.EqualTo("Start"),
+                "Hitting the <Reset> button should set the <Start> button content to Start");
+            Assert.That(BeetleHelper.GetIsVisibleProperty(_beetleObject), Is.False,
+                "Hitting the <Reset> button should set the IsVisible property of the beetle to false");
+            Assert.That(_dispatcherTimer.IsEnabled, Is.False,
+                "Hitting the <Reset> button should disable the timer");
         }
 
         [MonitoredTest("MainWindow - timer interval in msec should be set with respect to beetle size and speed"), Order(15)]

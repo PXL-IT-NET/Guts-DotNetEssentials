@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 
@@ -25,6 +26,7 @@ namespace BeetleGame.Tests
         private double _beetleSpeed;
 
         private Canvas _testCanvas;
+        private Ellipse _beetleEllipse;
         private const int TestCanvasWidth = 536; // mimic the same width as in the starter file
         private const int TestCanvasHeight = 356; // mimic the same height as in the starter file
 
@@ -42,6 +44,7 @@ namespace BeetleGame.Tests
             _beetleSpeed = 0.5;
             _beetleObject = BeetleHelper.CreateBeetle(_testCanvas, _beetleX, _beetleY, _beetleSize);
             BeetleHelper.SetSpeedPropertyValue(_beetleObject, _beetleSpeed);
+            _beetleEllipse = (_testCanvas.Children.Count > 0 ? _testCanvas.Children[0] as Ellipse : null);
         }
 
         [TearDown]
@@ -96,6 +99,7 @@ namespace BeetleGame.Tests
             AssertPropertyValue(_beetleObject, "Up", true);
             AssertPropertyValue(_beetleObject, "Right", true);
             AssertPropertyValue(_beetleObject, "Speed", _beetleSpeed);
+
         }
 
         [MonitoredTest("Beetle - Should create a Beetle object with ellipse on its canvas"), Order(5)]
@@ -104,12 +108,12 @@ namespace BeetleGame.Tests
             Assert.That(_beetleObject, Is.Not.Null, $"Could not create an instance of class {BeetleHelper.BeetleTypeName}");
             Assert.That(_testCanvas.Children.Count, Is.GreaterThan(0), $"Beetle should have a Canvas member with an ellipse");
             Assert.That(_testCanvas.Children[0], Is.TypeOf<Ellipse>(), $"Beetle should have a Canvas member with an ellipse");
+            Assert.That(_beetleEllipse, Is.Not.Null, $"Beetle should have a Canvas member with an ellipse");
 
             // Check correct size and location of ellipse
-            var beetleEllipse = (Ellipse)_testCanvas.Children[0];
-            Assert.That(beetleEllipse.Width, Is.EqualTo(_beetleSize), $"Ellipse on canvas should have Width ({_beetleSize})");
-            Assert.That(beetleEllipse.Height, Is.EqualTo(_beetleSize), $"Ellipse on canvas should have Height ({_beetleSize})");
-            var beetleMargin = beetleEllipse.Margin;
+            Assert.That(_beetleEllipse.Width, Is.EqualTo(_beetleSize), $"Ellipse on canvas should have Width ({_beetleSize})");
+            Assert.That(_beetleEllipse.Height, Is.EqualTo(_beetleSize), $"Ellipse on canvas should have Height ({_beetleSize})");
+            var beetleMargin = _beetleEllipse.Margin;
             Assert.That(beetleMargin.Left, Is.EqualTo(_beetleX - (_beetleSize / 2)), $"X-Coordinate of ellipse on canvas should be {_beetleX - (_beetleSize / 2)}");
             Assert.That(beetleMargin.Top, Is.EqualTo(_beetleY - (_beetleSize / 2)), $"Y-Coordinate of ellipse on canvas should be {_beetleY - (_beetleSize / 2)}");
         }
@@ -218,8 +222,19 @@ namespace BeetleGame.Tests
             AssertPropertyValue(_beetleObject, "Up", false);
         }
 
-        [MonitoredTest("Beetle - a beetle with Speed zero should not move"), Order(14)]
-        public void _14_ShouldNotMoveWhenSpeedIsZero()
+        [MonitoredTest("Beetle - Should become invisible when IsVisible property is set"), Order(14)]
+        public void _14_ShouldBecomeInvisibleWhenPropertyIsSet()
+        {
+            BeetleHelper.SetIsVisibleProperty(_beetleObject, true);
+            Assert.That(_beetleEllipse.Visibility, Is.EqualTo(Visibility.Visible),
+                "Setting IsVisible on Beetle to true should make the ellipse visible");
+            BeetleHelper.SetIsVisibleProperty(_beetleObject, false);
+            Assert.That(_beetleEllipse.Visibility, Is.EqualTo(Visibility.Hidden),
+                "Setting IsVisible on Beetle to false should hide the ellipse");    
+        }
+
+        [MonitoredTest("Beetle - a beetle with Speed zero should not move"), Order(15)]
+        public void _15_ShouldNotMoveWhenSpeedIsZero()
         {
             _beetleSpeed = 0;
             BeetleHelper.SetSpeedPropertyValue(_beetleObject, _beetleSpeed);
@@ -228,8 +243,8 @@ namespace BeetleGame.Tests
             AssertPropertyValue(_beetleObject, "Y", _beetleY); // should not move
         }
 
-        [MonitoredTest("Beetle - Should compute distance based on current Speed"), Order(15)]
-        public void _15_ShouldComputeDistanceBasedOnCurrentSpeed()
+        [MonitoredTest("Beetle - Should compute distance based on current Speed"), Order(16)]
+        public void _16_ShouldComputeDistanceBasedOnCurrentSpeed()
         {
             var computeDistanceMethod = AssertComputeDistanceMethod(_beetleObject);
             var startTime = DateTime.Now;
