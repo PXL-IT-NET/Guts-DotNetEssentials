@@ -24,9 +24,17 @@ namespace BeetleGame.Tests
         
         public static object CreateBeetle(Canvas canvas, int x, int y, int size)
         {
-            Assert.That(BeetleType, Is.Not.Null, $"There should be a class named {BeetleTypeName}");
+            Assert.That(BeetleType, Is.Not.Null, $"There should be a class named {BeetleTypeName}, did you remove it accidentally?");
             object[] parameters = new object[] { canvas, x, y, size };
-            return Activator.CreateInstance(BeetleType, parameters);
+            object beetle = null;
+            try
+            {
+                beetle = Activator.CreateInstance(BeetleType, parameters);
+            }
+            catch (Exception)
+            { }; // swallow exception if beetle can't be instantiated
+
+            return beetle;
         }
 
         public static object GetRightProperty(object beetleObject)

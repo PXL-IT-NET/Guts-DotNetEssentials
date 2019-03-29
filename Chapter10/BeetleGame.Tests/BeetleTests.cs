@@ -43,7 +43,10 @@ namespace BeetleGame.Tests
             _beetleY = 35;
             _beetleSpeed = 0.5;
             _beetleObject = BeetleHelper.CreateBeetle(_testCanvas, _beetleX, _beetleY, _beetleSize);
-            BeetleHelper.SetSpeedPropertyValue(_beetleObject, _beetleSpeed);
+            if (_beetleObject != null)
+            {
+                BeetleHelper.SetSpeedPropertyValue(_beetleObject, _beetleSpeed);
+            }
             _beetleEllipse = (_testCanvas.Children.Count > 0 ? _testCanvas.Children[0] as Ellipse : null);
         }
 
@@ -60,8 +63,7 @@ namespace BeetleGame.Tests
         [MonitoredTest("Beetle - Beetle class should have a parameterized constructor"), Order(2)]
         public void _02_ShouldHaveParameterizedConstructor()
         {
-            var constructor = GetConstructor();
-            Assert.That(constructor, Is.Not.Null,
+            Assert.That(_beetleObject, Is.Not.Null,
                     () => $"{BeetleHelper.BeetleTypeName} should have a constructor with parameters (Canvas canvas, int x, int y, int size)");
         }
 
@@ -307,17 +309,6 @@ namespace BeetleGame.Tests
             object actualValue = BeetleHelper.GetPropertyValue(beetleObject, propertyName);
             Assert.That(actualValue, Is.EqualTo(expectedValue), 
                 $"Beetle property {propertyName} has value ({actualValue}) but expected ({expectedValue})");
-        }
-
-        private ConstructorInfo GetConstructor()
-        {
-            return _beetleObject.GetType().GetConstructor(new Type[]
-                                {
-                                    typeof(Canvas),
-                                    typeof(int),
-                                    typeof(int),
-                                    typeof(int)
-                                });
         }
     }
 }
