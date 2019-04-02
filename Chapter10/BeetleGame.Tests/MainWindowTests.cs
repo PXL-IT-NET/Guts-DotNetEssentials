@@ -161,7 +161,7 @@ namespace BeetleGame.Tests
         {
             _startButton.FireClickEvent(); // start
             _startButton.FireClickEvent(); // stop
-            Assert.That(_messageLabel.Content.ToString().Contains("total distance in meter"),
+            Assert.That(_messageLabel.Content.ToString().ToLower().Contains("total distance in meter"),
                 "messageLabel should provide a message with the total distance in meter, rounded with 2 digits");
         }
 
