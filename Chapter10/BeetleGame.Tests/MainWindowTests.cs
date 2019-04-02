@@ -16,7 +16,7 @@ using System.Windows.Threading;
 
 namespace BeetleGame.Tests
 {
-    [ExerciseTestFixture("dotNet1", "H10", "BeetleGame", @"BeetleGame\MainWindow.xaml;BeetleGame\MainWindow.xaml.cs"),
+    [ExerciseTestFixture("dotNet1", "H10", "BeetleGame", @"BeetleGame\MainWindow.xaml;BeetleGame\MainWindow.xaml.cs;BeetleGame\Beetle.cs"),
      Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {
@@ -38,7 +38,7 @@ namespace BeetleGame.Tests
         {
             _testWindow = new TestWindow<MainWindow>();
             _paperCanvas = _testWindow.GetPrivateField<Canvas>(field => field.Name.Contains("Canvas"));
-            _beetleObject = _testWindow.Window.GetPrivateFieldValueByName<Beetle>("_beetle");
+            _beetleObject = _testWindow.GetPrivateField<Beetle>(field => field.Name.ToLower().Contains("_beetle"));
             _dispatcherTimer = _testWindow.GetPrivateField<DispatcherTimer>();
             _tickEventHandler = _dispatcherTimer?.GetPrivateFieldValueByName<EventHandler>(nameof(DispatcherTimer.Tick));
             _speedSlider = _testWindow.GetUIElements<Slider>().FirstOrDefault(

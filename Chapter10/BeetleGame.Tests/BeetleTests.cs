@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 
 namespace BeetleGame.Tests
 {
-    [ExerciseTestFixture("dotNet1", "H10", "BeetleGame", @"BeetleGame\Beetle.cs"),
+    [ExerciseTestFixture("dotNet1", "H10", "BeetleGame", @"BeetleGame\MainWindow.xaml;BeetleGame\MainWindow.xaml.cs;BeetleGame\Beetle.cs"),
      Apartment(ApartmentState.STA)]
     public class BeetleTests
     {
@@ -144,7 +144,7 @@ namespace BeetleGame.Tests
             AssertEllipsePosition(_beetleX - 1, _beetleY - 1);
         }
 
-        [MonitoredTest("Beetle - Should move down and right without hitting border"), Order(8)]
+        [MonitoredTest("Beetle - Should move down and left without hitting border"), Order(8)]
         public void _08_ShouldMoveDownAndLeftWithoutHittingBorder()
         {
             BeetleHelper.SetRightProperty(_beetleObject, false);
@@ -156,7 +156,7 @@ namespace BeetleGame.Tests
             AssertEllipsePosition(_beetleX - 1, _beetleY + 1);
         }
 
-        [MonitoredTest("Beetle - Should move up and left without hitting border"), Order(9)]
+        [MonitoredTest("Beetle - Should move down and right without hitting border"), Order(9)]
         public void _09_ShouldMoveDownAndRightWithoutHittingBorder()
         {
             BeetleHelper.SetRightProperty(_beetleObject, true);
