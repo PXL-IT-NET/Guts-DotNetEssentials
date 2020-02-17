@@ -1,10 +1,12 @@
 # Guts-DotNetEssentials
-In this repository you can find (visual studio) start solutions for the exercises of the **.NET Essentials** course of **PXL-IT**.
+
+In this repository you can find (Visual Studio) starter solutions for the exercises of the **.NET Essentials** course of **PXL-Digital**.
 
 ![alt text][img_book]
 
-The exercises are grouped by chapter. There is a (visual studio) solution for each chapter.
+The exercises are grouped by chapter. There is a (Visual Studio) solution for each chapter.
 A chapter solution contains multiple projects:
+
 - A WPF project for each exercise. E.g. *Exercise01*
 - A test project for each WPF project. E.g. *Exercise01.Tests*
 
@@ -14,51 +16,35 @@ The WPF solutions are empty and waiting for you to complete them.
 The matching test projects contain **automated tests** that can be run to check if your solution is correct.
 
 ## Getting Started
+
 First you need to clone the files in this repository on your local machine.
 You will use the Visual Studio **git** functionalities to accomplish this.
 
-#### Install GitHub extension for Visual Studio
+### Clone the repository
 
-- Click on the windows button, type "Visual Studio Installer" and start the program.
-- Click on "Modify"
-- Go to the "Individual components" tab and check "GitHub extension for Visual Studio"
-- Click on "Modify"
-
-![alt text][img_github_extension]
-
-#### Connect to GitHub
-
-- Go to the *Team Explorer* window in Visual Studio (*View -> Team Explorer*)
-- Click on the *Manage Connections* button (The green power plug)
-- Under *Hosted Service Providers* click on the GitHub *Connect* link
-- Fill in your GitHub credentials
-- Click on *Sign in*
-
-![alt text][img_github_connect]
-
-#### Clone the repository
-
-Now you are ready to make a local copy of the files in this repository (clone).
+Start Visual Studio and select "Clone or check out code".
 
 - Click on the *Clone or Download* button in the upper right corner of this webpage
 - Copy the url of this repository
 
 ![alt text][img_clone_url]
 
-- Go to the *Team Explorer* window in Visual Studio and click on the *Clone* link
-- Click on the *Url* tab
-- Paste the url you copied earlier
-- Choose a local folder where the files will be cloned to
-- Click on *Clone*
+- Paste the url you copied earlier into the field "Repository Location"
+- Choose a local path, this is a local folder where the files will be copied to
+- Click on the *Clone* button
 
-![alt text][img_clone]
+![alt text][img_clone_vs]
 
 Now you have a local copy of the online repository in which you can complete your exercises.
-You can double click on one of the solution files to load the exercises of a chapter.
 
 ![alt text][img_cloned_repo_overview]
 
-#### Register on [guts-web.pxl.be](https://guts-web.pxl.be)
+By clicking the icon "Switch Views", you can select the solution that contains the chapter exercises you want to work on.
+
+![alt text][img_switch_views]
+
+### Register on [guts-web.pxl.be](https://guts-web.pxl.be)
+
 To be able to send your tests results to the Guts servers you need to register via [guts-web.pxl.be](https://guts-web.pxl.be/register).
 After registration you will have the credentials you need to succesfully run automated tests for an exercise.
 
@@ -145,19 +131,16 @@ Follow the steps below to get the new version of the code:
 - Under *Incoming Commits*, click on *Pull*. This will merge your saved commit with the online commit in your local repository.
 
 [img_book]:Images/book.jpg "Handboek 'Programmeren in C#'"
-[img_github_extension]:Images/install_github_extension.png "Install the GitHub extension in Visual Studio"
 [img_projects]:Images/projects.png "Solution for chapter five with its projects"
-[img_github_connect]:Images/github_connect.png "Connect to GitHub"
+[img_clone_vs]:Images/clone_vs.png "Clone a project in Visual Studio"
 [img_clone_url]:Images/clone_url.png "Copy repository url"
-[img_clone]:Images/clone.png "Clone repository"
 [img_cloned_repo_overview]:Images/cloned_repo_overview.png "Cloned repository overview"
 [img_open_solution]:Images/open_solution.png "Open solution"
 [img_startup_project]:Images/startup_project.png "Choose startup project"
+[img_switch_views]:Images/switch_views.png "Choose solution to work on"
 [img_group_tests]:Images/group_tests.png "Group tests by project"
 [img_test_detail]:Images/test_detail.png "Details of a test result"
 [img_login_vs]:Images/login_vs.png "Visual studio login"
 [img_chapter_contents]:Images/chaptercontents.png "Chapter contents"
 [img_team_explorer_goto_changes]:Images/team_explorer_goto_changes.png "Team Explorer - go to Changes"
 [img_team_explorer_changes]:Images/team_explorer_changes.png "Team Explorer - Changes"
-
-
