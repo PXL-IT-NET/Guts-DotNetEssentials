@@ -12,13 +12,13 @@ A chapter solution contains multiple projects:
 
 ![alt text][img_projects]
 
-The WPF solutions are empty and waiting for you to complete them.
+The WPF projects are (mostly) empty and waiting for you to complete them.
 The matching test projects contain **automated tests** that can be run to check if your solution is correct.
 
 ## Getting Started
 
 First you need to clone the files in this repository on your local machine.
-You will use the Visual Studio **git** functionalities to accomplish this.
+You will use the Visual Studio **git** capabilities to accomplish this.
 
 ### Clone the repository
 
@@ -39,7 +39,7 @@ Now you have a local copy of the online repository in which you can complete you
 
 ![alt text][img_cloned_repo_overview]
 
-By clicking the icon "Switch Views", you can select the solution that contains the chapter exercises you want to work on.
+By clicking the icon "Switch Views", you can select the solution that contains the chapter exercises you want to work on. Alternatively, you can just doubleclick a solution file (.sln) from an explorer window to start up Visual Studio with the solution opened up.
 
 ![alt text][img_switch_views]
 
@@ -49,12 +49,14 @@ To be able to send your tests results to the Guts servers you need to register v
 After registration you will have the credentials you need to succesfully run automated tests for an exercise.
 
 #### Start working on an exercise
+
 Let's assume you want to make exercise 5 of chapter 5.
-1. Open the solution in the folder "Chapter 5". You can do this by doubleclicking on the **.sln** file or by opening visual studio, clicking on *File -> Open -> Project/Solution...* and selecting the **.sln** file. Alternatively you can double click on the solution in the *Team Explorer* window.
+
+1. Open the solution in the folder "Chapter 5". You can do this by doubleclicking on the **.sln** file or by opening visual studio, clicking on *File &rightarrow; Open &rightarrow; Project/Solution...* and selecting the **.sln** file. Alternatively you can double click on the solution in the *Team Explorer* window.
 
 ![alt text][img_open_solution]
 
-2. **Build the solution** (Menu: Build -> Build Solution or Ctrl+Shift+B)
+2. **Build the solution** (Menu: Build &rightarrow; Build Solution or Ctrl+Shift+B)
 3. Locate the project "Exercise 5" and set it as your startup project
 
 ![alt text][img_startup_project]
@@ -62,32 +64,36 @@ Let's assume you want to make exercise 5 of chapter 5.
 4. Write the code you need to write
 
 #### Run the automated tests
+
 Let's assume you are working on exercise 5 of chapter 5.
-1. Open the *Test Explorer* window (Menu: Test -> Windows -> Test Explorer)
-2. In the top left corner, right click on the down arrow of the *group by* button and group the automated tests by project. (If you don't see any tests appearing, you probably should (re)build your solution)
+
+1. Open the *Test Explorer* window (Menu: Test &rightarrow; Test Explorer)
+2. In the top right corner, click on the *group by* button and make sure the automated tests are grouped by project (see the picture below). If you don't see any tests appearing, you probably should (re)build your solution.
 
 ![alt text][img_group_tests]
 
-3. Right click on the project that matches your exercise and click on *Run selected tests*
-4. The first time you run a test a popup may appear thats asks you to log in. You should fill in your credentials from [guts-web.pxl.be](https://guts-web.pxl.be).
+3. Right click on the project that matches your exercise and click on *Run* to execute the tests.
+4. The first time you run a test a popup may appear asking you to log in. You should fill in your credentials from [guts-web.pxl.be](https://guts-web.pxl.be).
 
 ![alt text][img_login_vs]
 
-###### FAQ 
+##### FAQ
+
 **Why won't my tests run?**
 
 The first time it can happen that you see the tests in the *Test Explorer* but if you run the tests, nothing happens. 
-Try to clean your solution (**Build -> Clean Solution**) and then to rebuild your solution (**Build -> Rebuild solution**).
+Try to clean your solution (**Build &rightarrow; Clean Solution**) and then to rebuild your solution (**Build &rightarrow; Rebuild solution**).
 
-**Why can't I see my testresults on the Guts website? Locally all my tests are green.**
+**Why can't I see my test results on the Guts website? Locally all my tests are green.**
 
-After the tests are runned, the testrunner will try to send your results to the server. In the *Output Window* you can see a log of the steps that are taken. 
+After the tests are run, the testrunner will try to send your results to the server. In the *Output Window* you can see a log of the steps that are taken.
 If anything goes wrong, you should be able to find more info in the *Output Window*.
 
-The test results will only be send to the server when you run all te tests of an exercise at once. If you run the tests one by one the results will not be sent to the servers.
+The test results will only be sent to the server when you run all te tests of an exercise at once. If you run the tests one by one the results will not be sent to the servers.
 
 #### Inspect the test results
-Tests that pass will be green. Tests that don't pass will be red. 
+
+Tests that pass will be green. Tests that don't pass will be red.
 
 The *name of the test* gives an indication of what is tested in the automated test.
 If you click on a test you can also read more detailed messages that may help you to find out what is going wrong.
@@ -97,6 +103,7 @@ If you click on a test you can also read more detailed messages that may help yo
 Although it is not a guarantee, having all tests green is a good indication that you completed the exercise correctly.
 
 #### Check your results online
+
 Test results of all students are sent to the Guts servers.
 You can check your progress and compare with the averages of other students via [guts-web.pxl.be](https://guts-web.pxl.be).
 Login, go to ".NET Essentials" in the navigation bar and select the chapter you want to view.
@@ -104,10 +111,11 @@ Login, go to ".NET Essentials" in the navigation bar and select the chapter you 
 ![alt text][img_chapter_contents]
 
 #### Save (commit) your work
-It could happen that the code in the online repository changes and that you need to pull (download) a new version of the start code in your local repository. 
+
+It could happen that the code in the online repository changes and that you need to pull (download) a new version of the start code in your local repository.
 The online repository does not contain your solutions. Pulling a new version of the code could result in you losing your work.
 
-To avoid this you should regularly commit (save) your work in your local git database. If you have commited your work an you pull a new version, git will be able to automatically merge your work with the online changes. 
+To avoid this you should regularly commit (save) your work in your local git database. If you have commited your work an you pull a new version, git will be able to automatically merge your work with the online changes.
 It is recommended to **do a git commit every time you complete an exercise**.
 
 - Go to *Team Explorer*
@@ -122,7 +130,8 @@ It is recommended to **do a git commit every time you complete an exercise**.
 - By clicking on the home icon you go back to the main view for this local repository
 
 #### Get a new version of the start code
-It could happen that the lectors fix bugs in the automated tests of the startcode or add new exercises and/or tests. 
+
+It could happen that the lecturers fix bugs in the automated tests of the startcode or add new exercises and/or tests.
 Follow the steps below to get the new version of the code:
 
 - Commit your work locally (see previous section)
