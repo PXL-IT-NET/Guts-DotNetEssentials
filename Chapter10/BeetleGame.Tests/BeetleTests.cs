@@ -2,19 +2,16 @@
 using Guts.Client.Shared;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 
 namespace BeetleGame.Tests
 {
-    [ExerciseTestFixture("dotNet1", "H10", "BeetleGame", @"BeetleGame\MainWindow.xaml;BeetleGame\MainWindow.xaml.cs;BeetleGame\Beetle.cs"),
+    [ExerciseTestFixture("dotNet1", "H10", "BeetleGame", @"BeetleGame\Beetle.cs"),
      Apartment(ApartmentState.STA)]
     public class BeetleTests
     {
