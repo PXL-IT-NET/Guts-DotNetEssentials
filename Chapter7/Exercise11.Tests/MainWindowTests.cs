@@ -8,8 +8,10 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Threading;
 using System.Windows.Controls;
+using Label = System.Windows.Controls.Label;
 
 namespace Exercise11.Tests
 {
