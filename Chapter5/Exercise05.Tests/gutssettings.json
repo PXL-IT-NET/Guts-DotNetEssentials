@@ -1,0 +1,6 @@
+{
+  "Guts": {
+    "apiBaseUrl": "https://guts-api.pxl.be/",
+    "webAppBaseUrl": "https://guts-web.pxl.be/"
+  }
+}
