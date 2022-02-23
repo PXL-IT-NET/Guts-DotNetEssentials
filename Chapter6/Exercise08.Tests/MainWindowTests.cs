@@ -1,8 +1,8 @@
 ﻿using System.Threading;
 using System.Windows.Controls;
-using Guts.Client.Classic;
-using Guts.Client.Classic.TestTools.WPF;
-using Guts.Client.Shared;
+using Guts.Client.Core;
+using Guts.Client.Core.TestTools;
+using Guts.Client.WPF.TestTools;
 using NUnit.Framework;
 
 namespace Exercise08.Tests

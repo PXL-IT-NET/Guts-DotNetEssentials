@@ -3,10 +3,9 @@ using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using Guts.Client.Classic;
-using Guts.Client.Classic.TestTools.WPF;
-using Guts.Client.Shared;
-using Guts.Client.Shared.TestTools;
+using Guts.Client.Core;
+using Guts.Client.Core.TestTools;
+using Guts.Client.WPF.TestTools;
 using NUnit.Framework;
 
 namespace Exercise06.Tests
