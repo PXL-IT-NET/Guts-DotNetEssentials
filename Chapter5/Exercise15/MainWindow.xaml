@@ -5,15 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Exercise15"
         mc:Ignorable="d"
-        Title="Oef 5.15 Seconden naar UMS" Height="132" Width="243">
+        Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="20,20,0,0"
-    		Text="Seconden:" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="83,19,0,0"
-    		x:Name="secondsTextBox" VerticalAlignment="Top" Width="120"/>
-        <Button Content="U:M:S" HorizontalAlignment="Left" Margin="83,64,0,0"
-    		VerticalAlignment="Top" Width="120"
-    		x:Name="convertButton" />
 
     </Grid>
 </Window>

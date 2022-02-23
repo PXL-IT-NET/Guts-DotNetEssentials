@@ -21,13 +21,13 @@ namespace Exercise15.Tests
             var windowType = typeof(MainWindow);
             _convertSecondsToHoursMinutesSecondsMethod = windowType.GetMethods(BindingFlags.NonPublic |
                                                                                BindingFlags.Public |
-                                                                               BindingFlags.Instance | 
+                                                                               BindingFlags.Instance |
                                                                                BindingFlags.DeclaredOnly).FirstOrDefault(m =>
-            {
-                var parameters = m.GetParameters();
-                if (parameters.Length != 4) return false;
-                return true;
-            });
+                                                                               {
+                                                                                   var parameters = m.GetParameters();
+                                                                                   if (parameters.Length != 4) return false;
+                                                                                   return true;
+                                                                               });
         }
 
         [TearDown]
@@ -94,7 +94,7 @@ namespace Exercise15.Tests
             object[] parameters = new object[] { inputSeconds, null, null, null };
 
 
-            _convertSecondsToHoursMinutesSecondsMethod.Invoke(_window, parameters );
+            _convertSecondsToHoursMinutesSecondsMethod.Invoke(_window, parameters);
 
             int outHours = (int)parameters[1];
             int outMinutes = (int)parameters[2];

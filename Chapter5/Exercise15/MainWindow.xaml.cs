@@ -24,14 +24,5 @@ namespace Exercise15
         {
             InitializeComponent();
         }
-
-        private void convertButton_Click(object sender, RoutedEventArgs e)
-        {
-            // TODO: read input from secondsTextBox
-
-            // TODO: convert with one method
-
-            // TODO: show output in messagebox
-        }
     }
 }
