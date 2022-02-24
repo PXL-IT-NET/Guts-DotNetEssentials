@@ -1,14 +1,12 @@
-﻿using Guts.Client.Classic;
-using Guts.Client.Classic.TestTools.WPF;
-using Guts.Client.Shared;
-using Guts.Client.Shared.TestTools;
+﻿using Guts.Client.Core;
+using Guts.Client.Core.TestTools;
+using Guts.Client.WPF.TestTools;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Threading;
 using System.Windows.Controls;
 using Label = System.Windows.Controls.Label;
