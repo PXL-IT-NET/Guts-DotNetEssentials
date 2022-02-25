@@ -1,5 +1,4 @@
-﻿using Guts.Client.Classic;
-using Guts.Client.Shared;
+﻿using Guts.Client.Core;
 using NUnit.Framework;
 using System;
 using System.Linq;

@@ -1,7 +1,6 @@
-﻿using Guts.Client.Classic;
-using Guts.Client.Classic.TestTools.WPF;
-using Guts.Client.Shared;
-using Guts.Client.Shared.TestTools;
+﻿using Guts.Client.Core;
+using Guts.Client.Core.TestTools;
+using Guts.Client.WPF.TestTools;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;

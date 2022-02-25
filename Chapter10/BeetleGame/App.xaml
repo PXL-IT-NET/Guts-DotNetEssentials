@@ -1,7 +1,7 @@
-﻿<Application x:Class="ExerciseBeetle.App"
+﻿<Application x:Class="BeetleGame.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:ExerciseBeetle"
+             xmlns:local="clr-namespace:BeetleGame"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          
