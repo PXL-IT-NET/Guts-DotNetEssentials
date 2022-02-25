@@ -1,14 +1,9 @@
-﻿using Guts.Client.Classic;
-using Guts.Client.Classic.TestTools.WPF;
-using Guts.Client.Shared;
+﻿using Guts.Client.Core;
+using Guts.Client.WPF.TestTools;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace Exercise08.Tests
