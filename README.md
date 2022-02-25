@@ -39,9 +39,7 @@ Now you have a local copy of the online repository in which you can complete you
 
 ![alt text][img_cloned_repo_overview]
 
-By clicking the icon "Switch Views", you can select the solution that contains the chapter exercises you want to work on. Alternatively, you can just doubleclick a solution file (.sln) from an explorer window to start up Visual Studio with the solution opened up.
-
-![alt text][img_switch_views]
+Double click the solution that contains the chapter exercises you want to work on. Alternatively, you can just double click a solution file (.sln) from an explorer window to start up Visual Studio with the solution opened up.
 
 ### Register on [guts-web.pxl.be](https://guts-web.pxl.be)
 
@@ -52,9 +50,7 @@ After registration you will have the credentials you need to succesfully run aut
 
 Let's assume you want to make exercise 5 of chapter 5.
 
-1. Open the solution in the folder "Chapter 5". You can do this by doubleclicking on the **.sln** file or by opening visual studio, clicking on *File &rightarrow; Open &rightarrow; Project/Solution...* and selecting the **.sln** file. Alternatively you can double click on the solution in the *Team Explorer* window.
-
-![alt text][img_open_solution]
+1. Open the solution in the folder "Chapter 5". You can do this by doubleclicking on the **.sln** file from an explorer window or by opening visual studio, clicking on *File &rightarrow; Open a project or solution* and selecting the **.sln** file.
 
 2. **Build the solution** (Menu: Build &rightarrow; Build Solution or Ctrl+Shift+B)
 3. Locate the project "Exercise 5" and set it as your startup project
@@ -73,7 +69,7 @@ Let's assume you are working on exercise 5 of chapter 5.
 ![alt text][img_group_tests]
 
 3. Right click on the project that matches your exercise and click on *Run* to execute the tests.
-4. The first time you run a test a popup may appear asking you to log in. You should fill in your credentials from [guts-web.pxl.be](https://guts-web.pxl.be).
+4. The first time you run a test a browser window will appear asking you to log in. You should fill in your credentials from [guts-web.pxl.be](https://guts-web.pxl.be).
 
 ![alt text][img_login_vs]
 
@@ -118,16 +114,15 @@ The online repository does not contain your solutions. Pulling a new version of 
 To avoid this you should regularly commit (save) your work in your local git database. If you have commited your work an you pull a new version, git will be able to automatically merge your work with the online changes.
 It is recommended to **do a git commit every time you complete an exercise**.
 
-- Go to *Team Explorer*
-- Go to *Changes*
+- Go to *Git Changes* 
 
-![alt text][img_team_explorer_goto_changes]
+![alt text][img_git_changes]
 
-- In the *Changes* screen you get an overview of the changes you made locally. Fill in a commit message (describing what you did) and click on the *Commit All* button. Your changes are now saved in your local git database.
+- In the *Git Changes* screen you get an overview of the changes you made locally. Fill in a commit message (describing what you did) and click on the *Commit All* button. Your changes are now saved in your local git database.
 
-![alt text][img_team_explorer_changes]
+![alt text][img_commit_your_work]
 
-- By clicking on the home icon you go back to the main view for this local repository
+- By clicking on the *Solution Explorer* tab you go back to the main view for this local repository
 
 #### Get a new version of the start code
 
@@ -135,21 +130,19 @@ It could happen that the lecturers fix bugs in the automated tests of the startc
 Follow the steps below to get the new version of the code:
 
 - Commit your work locally (see previous section)
-- Go to *Team Explorer - Home*
-- Click on *Sync*
-- Under *Incoming Commits*, click on *Pull*. This will merge your saved commit with the online commit in your local repository.
+- Go to *Git Changes*
+- In the upper right corner, click the three dots *...*
+- Select *Pull from* &rightarrow; origin. This will merge your saved commit with the online commit in your local repository.
 
-[img_book]:Images/book.jpg "Handboek 'Programmeren in C#'"
+[img_book]:Images/book.png "Handboek 'Programmeren in C#'"
 [img_projects]:Images/projects.png "Solution for chapter five with its projects"
 [img_clone_vs]:Images/clone_vs.png "Clone a project in Visual Studio"
 [img_clone_url]:Images/clone_url.png "Copy repository url"
 [img_cloned_repo_overview]:Images/cloned_repo_overview.png "Cloned repository overview"
-[img_open_solution]:Images/open_solution.png "Open solution"
 [img_startup_project]:Images/startup_project.png "Choose startup project"
-[img_switch_views]:Images/switch_views.png "Choose solution to work on"
 [img_group_tests]:Images/group_tests.png "Group tests by project"
 [img_test_detail]:Images/test_detail.png "Details of a test result"
 [img_login_vs]:Images/login_vs.png "Visual studio login"
 [img_chapter_contents]:Images/chaptercontents.png "Chapter contents"
-[img_team_explorer_goto_changes]:Images/team_explorer_goto_changes.png "Team Explorer - go to Changes"
-[img_team_explorer_changes]:Images/team_explorer_changes.png "Team Explorer - Changes"
+[img_commit_your_work]:Images/commit_your_work.png "Commit your work"
+[img_git_changes]:Images/git_changes.png "Git Changes"
