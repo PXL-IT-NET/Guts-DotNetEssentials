@@ -1,0 +1,67 @@
+﻿<Window x:Class="PixelPass.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PixelPass"
+        mc:Ignorable="d"
+        Height="305" Width="643"
+        Background="Aquamarine" Title="PixelPass - Your password manager">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="_Open" Name="openItem" />
+                <MenuItem Header="_Save" Name="saveItem" IsEnabled="False"/>
+                <Separator />
+                <MenuItem Header="E_xit" Name="exitItem"  />
+            </MenuItem>
+        </Menu>
+        <Grid DockPanel.Dock="Bottom">
+            <TextBlock HorizontalAlignment="Left" Margin="38,18,0,0" Text="Accounts:" VerticalAlignment="Top"/>
+            <ListBox HorizontalAlignment="Left" Height="157" Margin="38,39,0,0"
+                      VerticalAlignment="Top" Width="170"
+                      Name="accountInfoListBox">
+
+            </ListBox>
+            <Button HorizontalAlignment="Left" IsEnabled="False"
+                    Margin="178,201,0,0" VerticalAlignment="Top"
+                    Width="30" Height="30"
+                    FontSize="24" Padding="0"
+                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                    Name="newAccountInfoButton">
+                <TextBlock Text="+" Margin="0,-7,0,0"/>
+            </Button>
+            <Canvas HorizontalAlignment="Left" Height="158" Margin="254,38,0,0"
+                    VerticalAlignment="Top" Width="350"
+                    Background="White"
+                    Name="detailsCanvas">
+            </Canvas>
+
+            <TextBlock HorizontalAlignment="Left" Margin="261,40,0,0" Text="Title:" VerticalAlignment="Top"/>
+            <TextBlock HorizontalAlignment="Left" Margin="261,75,0,0" Text="Username:" VerticalAlignment="Top"/>
+            <TextBlock HorizontalAlignment="Left" Margin="261,110,0,0" Text="Password:" VerticalAlignment="Top"/>
+            <TextBlock HorizontalAlignment="Left" Margin="261,145,0,0" Text="Notes:" VerticalAlignment="Top"/>
+            <TextBlock HorizontalAlignment="Left" Margin="261,180,0,0" Text="Expiration date:" VerticalAlignment="Top"/>
+
+            <TextBlock HorizontalAlignment="Left" Margin="370,40,0,0"
+                       Name="titleTextBlock" VerticalAlignment="Top" Text="(Title)"/>
+            <TextBlock HorizontalAlignment="Left" Margin="370,75,0,0"
+                       Name="usernameTextBlock" VerticalAlignment="Top" Text="(username)"/>
+            
+            <Button Content="Copy" HorizontalAlignment="Left" Margin="370,106,0,0"
+                    VerticalAlignment="Top" Width="75" Name="copyButton"
+                    IsEnabled="False"/>
+
+            <TextBlock HorizontalAlignment="Left" Margin="370,145,0,0"
+                       Name="notesTextBlock" VerticalAlignment="Top" Text="(notes)" Width="184" Height="34"
+                       TextWrapping="Wrap"/>
+            <TextBlock HorizontalAlignment="Left" Margin="370,180,0,0"
+                       Name="expirationTextBlock" VerticalAlignment="Top" Text="(expiration)"/>
+            <ProgressBar HorizontalAlignment="Left" Height="10" Margin="454,116,0,0"
+                         VerticalAlignment="Top" Width="100"
+                         Name="expirationProgressBar" Maximum="5"/>
+
+
+        </Grid>
+    </DockPanel>
+</Window>
