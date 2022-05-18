@@ -245,7 +245,7 @@ public class MainWindowTests
         Assert.That(_accountInfoListBox, Is.Not.Null, "There should be a ListBox on the MainWindow, did you remove it?");
         Assert.That(_copyButton, Is.Not.Null, "There should be a copy Button on the MainWindow, did you remove it?");
         Assert.That(_expirationProgressBar, Is.Not.Null, "There should be a progressbar on the MainWindow, did you remove it?");
-        Assert.That(_copyTimer, Is.Not.Null, "There should be a private member variabele of type DispacterTimer for limiting copying time?");
+        Assert.That(_copyTimer, Is.Not.Null, "There should be a private member variabele of type DispatcherTimer for limiting copying time?");
         Assert.That(_copyTimer.Interval, Is.EqualTo(TimeSpan.FromSeconds(1)), "The dispatchertimer interval should be set to 1 sec");
         List<AccountInfo> testList = AccountInfoCollectionHelper.CreateTestListWithAccountInfo();
         _accountInfoListBox.ItemsSource = testList;
@@ -271,7 +271,7 @@ public class MainWindowTests
         Assert.That(_accountInfoListBox, Is.Not.Null, "There should be a ListBox on the MainWindow, did you remove it?");
         Assert.That(_copyButton, Is.Not.Null, "There should be a copy Button on the MainWindow, did you remove it?");
         Assert.That(_expirationProgressBar, Is.Not.Null, "There should be a progressbar on the MainWindow, did you remove it?");
-        Assert.That(_copyTimer, Is.Not.Null, "There should be a private member variabele of type DispacterTimer for limiting copying time?");
+        Assert.That(_copyTimer, Is.Not.Null, "There should be a private member variabele of type DispatcherTimer for limiting copying time?");
         Assert.That(_copyTimer.Interval, Is.EqualTo(TimeSpan.FromSeconds(1)), "The dispatchertimer interval should be set to 1 sec");
         List<AccountInfo> testList = AccountInfoCollectionHelper.CreateTestListWithAccountInfo();
         AccountInfo testAccount = testList[1];
