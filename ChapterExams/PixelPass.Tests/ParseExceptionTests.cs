@@ -13,6 +13,6 @@ public class ParseExceptionTests
     public void _01_Class_ShouldInheritFrom_ParseException()
     {
         Assert.That(ParseExceptionHelper.ClassExistsAndInheritsFromParseException(),
-                    "ParseException should exist and should inherit from ParseException");
+                    "ParseException should exist and should inherit from Exception");
     }
 }
