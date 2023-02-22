@@ -2,20 +2,21 @@
 using System.Threading;
 using System.Windows.Controls;
 using Guts.Client.Core;
+using Guts.Client.Core.TestTools;
 using Guts.Client.WPF.TestTools;
 using NUnit.Framework;
 
 namespace Exercise03.Tests
 {
-    [ExerciseTestFixture("dotNet1", "H06", "Exercise03", @"Exercise03\MainWindow.xaml;Exercise03\MainWindow.xaml.cs"),
-     Apartment(ApartmentState.STA)]
+    [ExerciseTestFixture("dotNet1", "H06", "Exercise03", @"Exercise03\MainWindow.xaml;Exercise03\MainWindow.xaml.cs")]
+    [Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {
         private const string RandomTextBoxName = "randomTextBox";
         private const string SumTextBoxName = "sumTextBox";
         private const string AverageTextBoxName = "averageTextBox";
 
-        private TestWindow<MainWindow> _testWindow;
+        private MainWindow _testWindow;
         private Button _theButton;
         private TextBox _randomTextBox;
         private TextBox _sumTextBox;
@@ -24,18 +25,18 @@ namespace Exercise03.Tests
         [SetUp]
         public void Setup()
         {
-            _testWindow = new TestWindow<MainWindow>();
+            _testWindow = new MainWindow();
 
-            _theButton = _testWindow.GetUIElements<Button>().FirstOrDefault();
-            _randomTextBox = _testWindow.GetPrivateField<TextBox>(field => field.Name.ToLower().Contains("random"));
-            _sumTextBox = _testWindow.GetPrivateField<TextBox>(field => field.Name.ToLower().Contains("sum"));
-            _averageTextBox = _testWindow.GetPrivateField<TextBox>(field => field.Name.ToLower().Contains("average"));
+            _theButton = _testWindow.GetPrivateFieldValue<Button>();
+            _randomTextBox = _testWindow.GetAllPrivateFieldValues<TextBox>().Where(field => field.Name.ToLower().Contains("random")).First();
+            _sumTextBox = _testWindow.GetAllPrivateFieldValues<TextBox>().Where(field => field.Name.ToLower().Contains("sum")).First();
+            _averageTextBox = _testWindow.GetAllPrivateFieldValues<TextBox>().Where(field => field.Name.ToLower().Contains("average")).First();
         }
 
         [TearDown]
         public void TearDown()
         {
-            _testWindow.Dispose();
+            _testWindow.Close();
         }
 
         [MonitoredTest("Should have 3 disabled TextBoxes and a button"), Order(1)]

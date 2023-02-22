@@ -2,15 +2,15 @@
 using System.Windows.Controls;
 using Guts.Client.Core;
 using Guts.Client.Core.TestTools;
-using Guts.Client.WPF.TestTools;
 using NUnit.Framework;
 
 namespace Exercise08.Tests
 {
-    [ExerciseTestFixture("dotNet1", "H06", "Exercise08", @"Exercise08\MainWindow.xaml"), Apartment(ApartmentState.STA)]
+    [ExerciseTestFixture("dotNet1", "H06", "Exercise08", @"Exercise08\MainWindow.xaml")]
+    [Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {
-        private TestWindow<MainWindow> _testWindow;
+        private MainWindow _testWindow;
 
         private bool _hasNameLabel;
         private bool _hasPasswordLabel;
@@ -22,19 +22,19 @@ namespace Exercise08.Tests
         [OneTimeSetUp]
         public void Setup()
         {
-            _testWindow = new TestWindow<MainWindow>();
-            _hasNameLabel = _testWindow.GetContentControlByPartialContentText<Label>("naam") != null;
-            _hasPasswordLabel = _testWindow.GetContentControlByPartialContentText<Label>("paswoord") != null;
-            _hasNameTextBox = _testWindow.GetPrivateField<TextBox>() != null;
-            _hasPasswordBox = _testWindow.GetPrivateField<PasswordBox>() != null;
-            _hasOkButton = _testWindow.GetContentControlByPartialContentText<Button>("ok") != null;          
-            _hasCancelButton = _testWindow.GetContentControlByPartialContentText<Button>("cancel") != null;
+            _testWindow = new MainWindow();
+            _hasNameLabel = _testWindow.GetPrivateFieldValueByName<Label>("nameLabel") != null;
+            _hasPasswordLabel = _testWindow.GetPrivateFieldValueByName<Label>("passwordLabel") != null;
+            _hasNameTextBox = _testWindow.GetPrivateFieldValue<TextBox>() != null;
+            _hasPasswordBox = _testWindow.GetPrivateFieldValue<PasswordBox>() != null;
+            _hasOkButton = _testWindow.GetPrivateFieldValueByName<Button>("okButton") != null;          
+            _hasCancelButton = _testWindow.GetPrivateFieldValueByName<Button>("cancelButton") != null;
         }
 
         [OneTimeTearDown]
         public void TearDown()
         {
-            _testWindow.Dispose();
+            _testWindow?.Close();
         }
 
         [MonitoredTest("Should have labels")]

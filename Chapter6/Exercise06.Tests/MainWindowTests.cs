@@ -1,33 +1,34 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using Guts.Client.Core;
 using Guts.Client.Core.TestTools;
-using Guts.Client.WPF.TestTools;
 using NUnit.Framework;
 
 namespace Exercise06.Tests
 {
-    [ExerciseTestFixture("dotNet1", "H06", "Exercise06", @"Exercise06\MainWindow.xaml;Exercise06\MainWindow.xaml.cs"), Apartment(ApartmentState.STA)]
+    [ExerciseTestFixture("dotNet1", "H06", "Exercise06", @"Exercise06\MainWindow.xaml;Exercise06\MainWindow.xaml.cs")]
+    [Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {
         private Rectangle _minutesRectangle;
         private Rectangle _secondsRectangle;
         private DispatcherTimer _dispatcherTimer;
         private EventHandler _tickEventHandler;
-        private TestWindow<MainWindow> _window;
+        private MainWindow _window;
 
         [SetUp]
         public void Setup()
         {
-            _window = new TestWindow<MainWindow>();
+            _window = new MainWindow();
 
-            _minutesRectangle = _window.GetPrivateField<Rectangle>(field => field.Name.ToLower().Contains("minu"));
-            _secondsRectangle = _window.GetPrivateField<Rectangle>(field => field.Name.ToLower().Contains("sec"));
+            _minutesRectangle = _window.GetAllPrivateFieldValues<Rectangle>().Where(field => field.Name.ToLower().Contains("minu")).First();
+            _secondsRectangle = _window.GetAllPrivateFieldValues<Rectangle>().Where(field => field.Name.ToLower().Contains("sec")).First();
 
-            _dispatcherTimer = _window.GetPrivateField<DispatcherTimer>();
+            _dispatcherTimer = _window.GetPrivateFieldValue<DispatcherTimer>();
             if (_dispatcherTimer != null)
             {
                 _tickEventHandler = _dispatcherTimer.GetPrivateFieldValueByName<EventHandler>(nameof(DispatcherTimer.Tick));
@@ -37,7 +38,7 @@ namespace Exercise06.Tests
         [TearDown]
         public void Teardown()
         {
-            _window?.Dispose();
+            _window?.Close();
         }
 
         [MonitoredTest("Should have 2 rectangles in a canvas"), Order(1)]
