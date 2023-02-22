@@ -17,7 +17,7 @@ namespace Exercise11.Tests
     [Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {
-        private TestWindow<MainWindow> _window;
+        private MainWindow _window;
 
         private IList<Button> _buttons;
         private IList<Label> _labels;
@@ -27,18 +27,18 @@ namespace Exercise11.Tests
         [SetUp]
         public void SetUp()
         {
-            _window = new TestWindow<MainWindow>();
+            _window = new MainWindow();
 
-            _buttons = _window.GetUIElements<Button>();
-            _labels = _window.GetUIElements<Label>();
-            _textBlocks = _window.GetUIElements<TextBlock>().Where(tb => !string.IsNullOrEmpty(tb.Name)).ToList(); //where needed because the templates of the buttons also contain a textblock
-            _randomFields = _window.GetPrivateFields<Random>();
+            _buttons = _window.GetAllPrivateFieldValues<Button>().ToList();
+            _labels = _window.GetAllPrivateFieldValues<Label>().ToList();
+            _textBlocks = _window.GetAllPrivateFieldValues<TextBlock>().Where(tb => !string.IsNullOrEmpty(tb.Name)).ToList(); //where needed because the templates of the buttons also contain a textblock
+            _randomFields = _window.GetAllPrivateFieldValues<Random>().ToList();
         }
 
         [TearDown]
         public void TearDown()
         {
-            _window?.Dispose();
+            _window?.Close();
         }
 
         [MonitoredTest("Should have all controls"), Order(1)]

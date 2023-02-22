@@ -2,7 +2,9 @@
 using System.Text;
 using System.Threading;
 using System.Windows.Controls;
+using System.Windows.Media.Media3D;
 using Guts.Client.Core;
+using Guts.Client.Core.TestTools;
 using Guts.Client.WPF.TestTools;
 using NUnit.Framework;
 
@@ -12,7 +14,7 @@ namespace Exercise07.Tests
     [Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {
-        private TestWindow<MainWindow> _window;
+        private MainWindow _window;
 
         private Button[] _numberButtons;
         private Button _plusOperatorButton;
@@ -24,27 +26,27 @@ namespace Exercise07.Tests
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _window = new TestWindow<MainWindow>();
+            _window = new MainWindow();
 
             _numberButtons = new Button[10];
             for (int digit = 0; digit <= 9; digit++)
             {
-                _numberButtons[digit] = _window.GetContentControlByPartialContentText<Button>(digit.ToString());
+                _numberButtons[digit] = _window.GetAllPrivateFieldValues<Button>().Where(button => button.Content.ToString() == digit.ToString()).First();
             }
-            _plusOperatorButton = _window.GetContentControlByPartialContentText<Button>("+");
-            _minusOperatorButton = _window.GetContentControlByPartialContentText<Button>("-");
-            _evaluateOperatorButton = _window.GetContentControlByPartialContentText<Button>("=");
+            _plusOperatorButton = _window.GetAllPrivateFieldValues<Button>().Where(button => button.Content.ToString() == "+").First();
+            _minusOperatorButton = _window.GetAllPrivateFieldValues<Button>().Where(button => button.Content.ToString() == "-").First();
+            _evaluateOperatorButton = _window.GetAllPrivateFieldValues<Button>().Where(button => button.Content.ToString() == "=").First();
 
-            _clearButton = _window.GetContentControlByPartialContentText<Button>("clear");
+            _clearButton = _window.GetAllPrivateFieldValues<Button>().Where(button => button.Content.ToString().ToLower() == "clear").First();
 
-            _displayTextBlock = _window.GetUIElements<TextBlock>()
+            _displayTextBlock = _window.GetAllPrivateFieldValues<TextBlock>()
                 .FirstOrDefault(textBlock => !string.IsNullOrEmpty(textBlock.Name)); //filter on name property because the buttons internally also contain TextBlocks
         }
 
         [OneTimeTearDown]
         public void OneTimeTearDown()
         {
-            _window?.Dispose();
+            _window?.Close();
         }
 
         [MonitoredTest("Should have all controls"), Order(1)]

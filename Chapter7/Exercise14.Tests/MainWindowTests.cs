@@ -12,7 +12,7 @@ namespace Exercise14.Tests
     [Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {
-        private TestWindow<MainWindow> _window;
+        private MainWindow _window;
 
         private GroupBox _genderGroupBox;
 
@@ -23,9 +23,9 @@ namespace Exercise14.Tests
         [SetUp]
         public void SetUp()
         {
-            _window = new TestWindow<MainWindow>();
+            _window = new MainWindow();
 
-            var allGroupBoxes = _window.GetUIElements<GroupBox>();
+            var allGroupBoxes = _window.GetAllPrivateFieldValues<GroupBox>();
 
             _genderGroupBox =
                 allGroupBoxes.FirstOrDefault(groupBox => ((string) groupBox.Header).ToLower().Contains("geslacht"));
@@ -33,22 +33,22 @@ namespace Exercise14.Tests
             _ageGroupBox =
                 allGroupBoxes.FirstOrDefault(groupBox => ((string)groupBox.Header).ToLower().Contains("leeftijd"));
 
-            _button = _window.GetUIElements<Button>().FirstOrDefault();
+            _button = _window.GetPrivateFieldValue<Button>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            _window?.Dispose();
+            _window?.Close();
         }
 
         [MonitoredTest("Should have name and firstname controls"), Order(1)]
         public void _1_ShouldHaveNameAndFirstNameControls()
         {
-            var lastnameLabel = _window.GetContentControlByPartialContentText<Label>("naam:");
-            var firstnameLabel = _window.GetContentControlByPartialContentText<Label>("voornaam:");
+            var lastnameLabel = _window.GetPrivateFieldValueByName<Label>("lastnameLabel");
+            var firstnameLabel = _window.GetPrivateFieldValueByName<Label>("firstnameLabel");
 
-            var allTextBoxes = _window.GetUIElements<TextBox>();
+            var allTextBoxes = _window.GetAllPrivateFieldValues<TextBox>();
 
             var lastnameTextBox = allTextBoxes.ElementAt(0);
             var firstnameTextBox = allTextBoxes.ElementAt(1);

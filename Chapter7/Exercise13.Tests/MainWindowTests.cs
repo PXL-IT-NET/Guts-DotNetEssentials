@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Windows.Controls;
 using Guts.Client.Core;
+using Guts.Client.Core.TestTools;
 using Guts.Client.WPF.TestTools;
 using NUnit.Framework;
 
@@ -12,7 +13,7 @@ namespace Exercise13.Tests
     [SetCulture("nl-BE")]
     public class MainWindowTests
     {
-        private TestWindow<MainWindow> _window;
+        private MainWindow _window;
 
         private Label _priceLabel;
         private TextBox _priceTextBox;
@@ -30,13 +31,13 @@ namespace Exercise13.Tests
         [SetUp]
         public void SetUp()
         {
-            _window = new TestWindow<MainWindow>();
+            _window = new MainWindow();
 
-            _priceLabel = _window.GetContentControlByPartialContentText<Label>("prijs");
-            _btwLabel = _window.GetContentControlByPartialContentText<Label>("btw");
-            _totalLabel = _window.GetContentControlByPartialContentText<Label>("totaal");
+            _priceLabel = _window.GetPrivateFieldValueByName<Label>("priceLabel");
+            _btwLabel = _window.GetPrivateFieldValueByName<Label>("btwLabel");
+            _totalLabel = _window.GetPrivateFieldValueByName<Label>("totalLabel");
 
-            var allTextBoxes = _window.GetUIElements<TextBox>();
+            var allTextBoxes = _window.GetAllPrivateFieldValues<TextBox>();
 
             _priceTextBox = allTextBoxes.FirstOrDefault(textBox =>
                 textBox.Name.ToLower().Contains("price") || textBox.Name.ToLower().Contains("prijs"));
@@ -45,15 +46,15 @@ namespace Exercise13.Tests
 
             _totalTextBox = allTextBoxes.FirstOrDefault(textBox => textBox.Name.ToLower().Contains("tot"));
 
-            _checkBox = _window.GetUIElements<CheckBox>().FirstOrDefault();
+            _checkBox = _window.GetPrivateFieldValue<CheckBox>();
 
-            _button = _window.GetUIElements<Button>().FirstOrDefault();
+            _button = _window.GetPrivateFieldValue<Button>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            _window?.Dispose();
+            _window?.Close();
         }
 
         [MonitoredTest("Should have price controls"), Order(1)]
