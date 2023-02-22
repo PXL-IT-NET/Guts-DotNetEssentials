@@ -4,6 +4,7 @@ using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 using Guts.Client.Core;
+using Guts.Client.Core.TestTools;
 using Guts.Client.WPF.TestTools;
 using NUnit.Framework;
 
@@ -13,7 +14,7 @@ namespace Exercise06.Tests
     [ExerciseTestFixture("dotNet1", "H05", "Exercise06", @"Exercise06\MainWindow.xaml.cs"), Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {
-        private TestWindow<MainWindow> _testWindow;
+        private MainWindow _testWindow;
         private Canvas _canvas;
         private Button _button;
         private MethodInfo _drawStreetMethod;
@@ -21,9 +22,9 @@ namespace Exercise06.Tests
         [SetUp]
         public void Setup()
         {
-            _testWindow = new TestWindow<MainWindow>();
-            _canvas = _testWindow.GetUIElements<Canvas>().FirstOrDefault();
-            _button = _testWindow.GetUIElements<Button>().FirstOrDefault();
+            _testWindow = new MainWindow();
+            _canvas = _testWindow.GetPrivateFieldValue<Canvas>();
+            _button = _testWindow.GetPrivateFieldValue<Button>();
 
             var windowType = typeof(MainWindow);
             _drawStreetMethod = windowType.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).FirstOrDefault(m => m.Name.ToLower() == "drawstreet");
@@ -32,7 +33,7 @@ namespace Exercise06.Tests
         [TearDown]
         public void TearDown()
         {
-            _testWindow?.Dispose();
+            _testWindow?.Close();
         }
 
         [MonitoredTest("Should have an empty canvas and a draw button"), Order(1)]

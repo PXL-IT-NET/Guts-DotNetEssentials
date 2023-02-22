@@ -9,25 +9,26 @@ using NUnit.Framework;
 
 namespace Exercise05.Tests
 {
-    [ExerciseTestFixture("dotNet1", "H05", "Exercise05", @"Exercise05\MainWindow.xaml.cs"), Apartment(ApartmentState.STA)]
+    [ExerciseTestFixture("dotNet1", "H05", "Exercise05", @"Exercise05\MainWindow.xaml.cs")]
+    [Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {
-        private TestWindow<MainWindow> _testWindow;
+        private MainWindow _testWindow;
         private Canvas _canvas;
         private Button _button;
 
         [SetUp]
         public void Setup()
         {
-            _testWindow = new TestWindow<MainWindow>();
-            _canvas = _testWindow.GetUIElements<Canvas>().FirstOrDefault();
-            _button = _testWindow.GetUIElements<Button>().FirstOrDefault();
+            _testWindow = new MainWindow();
+            _canvas = _testWindow.GetPrivateFieldValue<Canvas>();
+            _button = _testWindow.GetPrivateFieldValue<Button>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            _testWindow?.Dispose();
+            _testWindow?.Close();
         }
 
         [MonitoredTest("Should have an empty canvas and a draw button"), Order(1)]
