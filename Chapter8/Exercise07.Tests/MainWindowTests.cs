@@ -9,29 +9,29 @@ using Guts.Client.WPF.TestTools;
 
 namespace Exercise07.Tests
 {
-    [ExerciseTestFixture("dotNet1", "H08", "Exercise07", @"Exercise07\MainWindow.xaml;Exercise07\MainWindow.xaml.cs"),
-     Apartment(ApartmentState.STA)]
+    [ExerciseTestFixture("dotNet1", "H08", "Exercise07", @"Exercise07\MainWindow.xaml;Exercise07\MainWindow.xaml.cs")]
+    [Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {
-        private TestWindow<MainWindow> _testWindow;
+        private MainWindow _testWindow;
 
-        private TextBox _textBox;
-        private Button _button;
-        private TextBlock _textBlock;
+        private TextBox _sizeTextBox;
+        private Button _drawButton;
+        private TextBlock _tableTextBlock;
 
         [SetUp]
         public void Setup()
         {
-            _testWindow = new TestWindow<MainWindow>();
-            _textBox = _testWindow.GetUIElements<TextBox>().FirstOrDefault();
-            _button = _testWindow.GetContentControlByPartialContentText<Button>("Teken");
-            _textBlock = _testWindow.GetUIElements<TextBlock>().FirstOrDefault(tb => tb.Parent is Grid);
+            _testWindow = new MainWindow();
+            _sizeTextBox = _testWindow.GetPrivateFieldValue<TextBox>();
+            _drawButton = _testWindow.GetPrivateFieldValueByName<Button>("drawButton");
+            _tableTextBlock = _testWindow.GetPrivateFieldValue<TextBlock>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            _testWindow?.Dispose();
+            _testWindow?.Close();
         }
 
         [MonitoredTest("Should have a TextBox, Button and TextBlock"), Order(1)]
@@ -51,12 +51,12 @@ namespace Exercise07.Tests
         {
             ValidateControls();
             
-            _textBox.Text = multiplicationNumber.ToString(); 
+            _sizeTextBox.Text = multiplicationNumber.ToString(); 
 
-            _button.FireClickEvent();
+            _drawButton.FireClickEvent();
 
             var expectedLines = expectedResult.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            var actualLines = _textBlock.Text.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            var actualLines = _tableTextBlock.Text.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
             Assert.That(expectedLines.Length, Is.EqualTo(actualLines.Length),
                 () =>
@@ -78,11 +78,11 @@ namespace Exercise07.Tests
 
         private void ValidateControls()
         {
-            Assert.That(_textBox, Is.Not.Null,
-                () => "Could not find a TextBox control.");
-            Assert.That(_button, Is.Not.Null,
-                () => "Could not find a Button control with the text 'Teken'.");
-            Assert.That(_textBlock, Is.Not.Null,
+            Assert.That(_sizeTextBox, Is.Not.Null,
+                () => "Could not find a TextBox control for entering the size of the multiplication table.");
+            Assert.That(_drawButton, Is.Not.Null,
+                () => "Could not find a Button control called sizeButton.");
+            Assert.That(_tableTextBlock, Is.Not.Null,
                 () => "Could not find a TextBlock control in the 'Grid' to display the results.");
         }
     }

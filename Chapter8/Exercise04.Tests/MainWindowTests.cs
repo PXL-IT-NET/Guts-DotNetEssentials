@@ -9,10 +9,11 @@ using Guts.Client.WPF.TestTools;
 
 namespace Exercise04.Tests
 {
-    [ExerciseTestFixture("dotNet1", "H08", "Exercise04", @"Exercise04\MainWindow.xaml;Exercise04\MainWindow.xaml.cs"), Apartment(ApartmentState.STA)]
+    [ExerciseTestFixture("dotNet1", "H08", "Exercise04", @"Exercise04\MainWindow.xaml;Exercise04\MainWindow.xaml.cs")]
+    [Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {
-        private TestWindow<MainWindow> _testWindow;
+        private MainWindow _testWindow;
         private Canvas _canvas;
 
         private string _mainWindowSourceCode;
@@ -20,18 +21,18 @@ namespace Exercise04.Tests
         [SetUp]
         public void Setup()
         {
-            _testWindow = new TestWindow<MainWindow>();
+            _testWindow = new MainWindow();
 
             _mainWindowSourceCode = Solution.Current.GetFileContent(@"Exercise04\MainWindow.xaml.cs");
             _mainWindowSourceCode = CodeCleaner.StripComments(_mainWindowSourceCode);
-            _canvas = _testWindow.GetPrivateField<Canvas>();
+            _canvas = _testWindow.GetPrivateFieldValue<Canvas>();
             
         }
 
         [TearDown]
         public void TearDown()
         {
-            _testWindow?.Dispose();
+            _testWindow?.Close();
         }
 
         [MonitoredTest("Should have a canvas"), Order(1)]
@@ -45,7 +46,7 @@ namespace Exercise04.Tests
         [MonitoredTest("Should have a private method DrawRectangle"), Order(2)]
         public void _2_ShouldHaveAPrivateMethodDrawRectangle()
         {
-            bool hasDrawRectangeleMethod  =_testWindow.Window.HasPrivateMethod(method =>
+            bool hasDrawRectangeleMethod  = _testWindow.HasPrivateMethod(method =>
                 method.Name.ToLower().Contains("drawrectangle") && method.ReturnType == typeof(void));
 
             Assert.That(hasDrawRectangeleMethod, Is.True,
