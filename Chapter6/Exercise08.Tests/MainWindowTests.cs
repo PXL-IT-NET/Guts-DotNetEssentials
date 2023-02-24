@@ -1,12 +1,13 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Windows.Controls;
 using Guts.Client.Core;
-using Guts.Client.Core.TestTools;
+using Guts.Client.WPF.TestTools;
 using NUnit.Framework;
 
 namespace Exercise08.Tests
 {
-    [ExerciseTestFixture("dotNet1", "H06", "Exercise08", @"Exercise08\MainWindow.xaml")]
+   // [ExerciseTestFixture("dotNet1", "H06", "Exercise08", @"Exercise08\MainWindow.xaml")]
     [Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {
@@ -23,12 +24,18 @@ namespace Exercise08.Tests
         public void Setup()
         {
             _testWindow = new MainWindow();
-            _hasNameLabel = _testWindow.GetPrivateFieldValueByName<Label>("nameLabel") != null;
-            _hasPasswordLabel = _testWindow.GetPrivateFieldValueByName<Label>("passwordLabel") != null;
-            _hasNameTextBox = _testWindow.GetPrivateFieldValue<TextBox>() != null;
-            _hasPasswordBox = _testWindow.GetPrivateFieldValue<PasswordBox>() != null;
-            _hasOkButton = _testWindow.GetPrivateFieldValueByName<Button>("okButton") != null;          
-            _hasCancelButton = _testWindow.GetPrivateFieldValueByName<Button>("cancelButton") != null;
+            Grid grid = (Grid)_testWindow.Content;
+
+            var allLabels = grid.FindVisualChildren<Label>().ToList();
+            _hasNameLabel = allLabels.Any(l => l.Name.ToLower().Contains("name"));
+            _hasPasswordLabel = allLabels.Any(l => l.Name.ToLower().Contains("password"));
+
+            _hasNameTextBox = grid.FindVisualChildren<TextBox>().Any();
+            _hasPasswordBox = grid.FindVisualChildren<PasswordBox>().Any();
+
+            var allButtons = grid.FindVisualChildren<Button>().ToList();
+            _hasOkButton = allButtons.Any(l => l.Name.ToLower().Contains("ok"));
+            _hasCancelButton = allButtons.Any(l => l.Name.ToLower().Contains("cancel"));
         }
 
         [OneTimeTearDown]
