@@ -4,7 +4,6 @@ using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 using Guts.Client.Core;
-using Guts.Client.Core.TestTools;
 using Guts.Client.WPF.TestTools;
 using NUnit.Framework;
 
