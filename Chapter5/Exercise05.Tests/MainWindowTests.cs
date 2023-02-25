@@ -21,8 +21,10 @@ namespace Exercise05.Tests
         public void Setup()
         {
             _testWindow = new MainWindow();
-            _canvas = _testWindow.GetPrivateFieldValue<Canvas>();
-            _button = _testWindow.GetPrivateFieldValue<Button>();
+            Grid grid = (Grid)_testWindow.Content;
+
+            _canvas = grid.FindVisualChildren<Canvas>().ToList().FirstOrDefault();
+            _button = grid.FindVisualChildren<Button>().ToList().FirstOrDefault();
         }
 
         [TearDown]

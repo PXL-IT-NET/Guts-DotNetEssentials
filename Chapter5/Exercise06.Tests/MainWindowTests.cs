@@ -11,7 +11,8 @@ using NUnit.Framework;
 
 namespace Exercise06.Tests
 {
-    [ExerciseTestFixture("dotNet1", "H05", "Exercise06", @"Exercise06\MainWindow.xaml.cs"), Apartment(ApartmentState.STA)]
+    [ExerciseTestFixture("dotNet1", "H05", "Exercise06", @"Exercise06\MainWindow.xaml.cs")]
+    [Apartment(ApartmentState.STA)]
     public class MainWindowTests
     {
         private MainWindow _testWindow;
@@ -23,8 +24,10 @@ namespace Exercise06.Tests
         public void Setup()
         {
             _testWindow = new MainWindow();
-            _canvas = _testWindow.GetPrivateFieldValue<Canvas>();
-            _button = _testWindow.GetPrivateFieldValue<Button>();
+            Grid grid = (Grid)_testWindow.Content;
+
+            _canvas = grid.FindVisualChildren<Canvas>().ToList().FirstOrDefault();
+            _button = grid.FindVisualChildren<Button>().ToList().FirstOrDefault();
 
             var windowType = typeof(MainWindow);
             _drawStreetMethod = windowType.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).FirstOrDefault(m => m.Name.ToLower() == "drawstreet");
