@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using Guts.Client.Core;
 using Guts.Client.Core.TestTools;
+using Guts.Client.WPF.TestTools;
 using NUnit.Framework;
 
 namespace Exercise10.Tests
@@ -19,6 +21,7 @@ namespace Exercise10.Tests
         private bool _hasNameTextBox;
         private bool _hasPasswordBox;
         private Button _okButton;
+        private bool _hasOkButton;
         private bool _hasCancelButton;
         private ProgressBar _progressBar;
         private DispatcherTimer _dispatcherTimer;
@@ -28,13 +31,25 @@ namespace Exercise10.Tests
         public void Setup()
         {
             _testWindow = new MainWindow();
-            _hasNameLabel = _testWindow.GetPrivateFieldValueByName<Label>("nameLabel") != null;
-            _hasPasswordLabel = _testWindow.GetPrivateFieldValueByName<Label>("passwordLabel") != null;
-            _hasNameTextBox = _testWindow.GetPrivateFieldValue<TextBox>() != null;
-            _hasPasswordBox = _testWindow.GetPrivateFieldValue<PasswordBox>() != null;
-            _okButton = _testWindow.GetPrivateFieldValueByName<Button>("okButton");
-            _hasCancelButton = _testWindow.GetPrivateFieldValueByName<Button>("cancelButton") != null;
-            _progressBar = _testWindow.GetPrivateFieldValue<ProgressBar>();
+            Grid grid = (Grid)_testWindow.Content;
+
+            var allLabels = grid.FindVisualChildren<Label>().ToList();
+            _hasNameLabel = allLabels.Any(l => l.Name.ToLower().Contains("name"));
+            _hasPasswordLabel = allLabels.Any(l => l.Name.ToLower().Contains("password"));
+
+
+            _hasNameTextBox = grid.FindVisualChildren<TextBox>().Any();
+            _hasPasswordBox = grid.FindVisualChildren<PasswordBox>().Any();
+
+            var allButtons = grid.FindVisualChildren<Button>().ToList();
+            _hasOkButton = allButtons.Any(l => l.Name.ToLower().Contains("ok"));
+            _hasCancelButton = allButtons.Any(l => l.Name.ToLower().Contains("cancel"));
+            if (_hasOkButton)
+            {
+                _okButton = allButtons.Find(b => b.Name.ToLower().Contains("ok"));
+            }
+            
+            _progressBar = grid.FindVisualChildren<ProgressBar>().ToList().FirstOrDefault();
 
             _dispatcherTimer = _testWindow.GetPrivateFieldValue<DispatcherTimer>();
             _tickEventHandler = _dispatcherTimer?.GetPrivateFieldValueByName<EventHandler>(nameof(DispatcherTimer.Tick));
@@ -68,7 +83,7 @@ namespace Exercise10.Tests
         [MonitoredTest("Should have buttons"), Order(4)]
         public void _4_ShouldHaveButtons()
         {
-            Assert.That(_okButton, Is.Not.Null, () => "No private Button field found with a name that contains 'ok'. Create a Button with a name like 'okButton'");
+            Assert.That(_hasOkButton, Is.True, () => "No private Button field found with a name that contains 'ok'. Create a Button with a name like 'okButton'");
             Assert.That(_hasCancelButton, Is.True, () => "No private Button field found with a name that contains 'cancel'. Create a Button with a name like 'cancelButton'");
         }
 

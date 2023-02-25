@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Windows.Controls;
 using Guts.Client.Core;
-using Guts.Client.Core.TestTools;
 using Guts.Client.WPF.TestTools;
 using NUnit.Framework;
 
@@ -26,17 +25,20 @@ namespace Exercise03.Tests
         public void Setup()
         {
             _testWindow = new MainWindow();
+            Grid grid = (Grid)_testWindow.Content;
 
-            _theButton = _testWindow.GetPrivateFieldValue<Button>();
-            _randomTextBox = _testWindow.GetAllPrivateFieldValues<TextBox>().Where(field => field.Name.ToLower().Contains("random")).First();
-            _sumTextBox = _testWindow.GetAllPrivateFieldValues<TextBox>().Where(field => field.Name.ToLower().Contains("sum")).First();
-            _averageTextBox = _testWindow.GetAllPrivateFieldValues<TextBox>().Where(field => field.Name.ToLower().Contains("average")).First();
+            _theButton = grid.FindVisualChildren<Button>().ToList().FirstOrDefault();
+
+            var allTextBoxes = grid.FindVisualChildren<TextBox>().ToList();
+            _randomTextBox = allTextBoxes.Where(field => field.Name.ToLower().Contains("random")).FirstOrDefault();
+            _sumTextBox = allTextBoxes.Where(field => field.Name.ToLower().Contains("sum")).FirstOrDefault();
+            _averageTextBox = allTextBoxes.Where(field => field.Name.ToLower().Contains("average")).FirstOrDefault();
         }
 
         [TearDown]
         public void TearDown()
         {
-            _testWindow.Close();
+            _testWindow?.Close();
         }
 
         [MonitoredTest("Should have 3 disabled TextBoxes and a button"), Order(1)]
