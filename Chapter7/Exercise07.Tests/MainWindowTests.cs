@@ -2,9 +2,7 @@
 using System.Text;
 using System.Threading;
 using System.Windows.Controls;
-using System.Windows.Media.Media3D;
 using Guts.Client.Core;
-using Guts.Client.Core.TestTools;
 using Guts.Client.WPF.TestTools;
 using NUnit.Framework;
 
@@ -27,19 +25,21 @@ namespace Exercise07.Tests
         public void OneTimeSetUp()
         {
             _window = new MainWindow();
+            Grid grid = (Grid)_window.Content;
 
+            var allButtons = grid.FindVisualChildren<Button>().ToList();
             _numberButtons = new Button[10];
             for (int digit = 0; digit <= 9; digit++)
             {
-                _numberButtons[digit] = _window.GetAllPrivateFieldValues<Button>().Where(button => button.Content.ToString() == digit.ToString()).First();
+                _numberButtons[digit] = allButtons.Find(button => button.Content.ToString() == digit.ToString());
             }
-            _plusOperatorButton = _window.GetAllPrivateFieldValues<Button>().Where(button => button.Content.ToString() == "+").First();
-            _minusOperatorButton = _window.GetAllPrivateFieldValues<Button>().Where(button => button.Content.ToString() == "-").First();
-            _evaluateOperatorButton = _window.GetAllPrivateFieldValues<Button>().Where(button => button.Content.ToString() == "=").First();
+            _plusOperatorButton = allButtons.Find(button => button.Content.ToString() == "+");
+            _minusOperatorButton = allButtons.Find(button => button.Content.ToString() == "-");
+            _evaluateOperatorButton = allButtons.Find(button => button.Content.ToString() == "=");
 
-            _clearButton = _window.GetAllPrivateFieldValues<Button>().Where(button => button.Content.ToString().ToLower() == "clear").First();
+            _clearButton = allButtons.Find(button => button.Content.ToString().ToLower() == "clear");
 
-            _displayTextBlock = _window.GetAllPrivateFieldValues<TextBlock>()
+            _displayTextBlock = grid.FindVisualChildren<TextBlock>()
                 .FirstOrDefault(textBlock => !string.IsNullOrEmpty(textBlock.Name)); //filter on name property because the buttons internally also contain TextBlocks
         }
 

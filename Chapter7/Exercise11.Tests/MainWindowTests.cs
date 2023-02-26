@@ -28,10 +28,11 @@ namespace Exercise11.Tests
         public void SetUp()
         {
             _window = new MainWindow();
+            Grid grid = (Grid)_window.Content;
 
-            _buttons = _window.GetAllPrivateFieldValues<Button>().ToList();
-            _labels = _window.GetAllPrivateFieldValues<Label>().ToList();
-            _textBlocks = _window.GetAllPrivateFieldValues<TextBlock>().Where(tb => !string.IsNullOrEmpty(tb.Name)).ToList(); //where needed because the templates of the buttons also contain a textblock
+            _buttons = grid.FindVisualChildren<Button>().ToList();
+            _labels = grid.FindVisualChildren<Label>().ToList();
+            _textBlocks = grid.FindVisualChildren<TextBlock>().Where(tb => !string.IsNullOrEmpty(tb.Name)).ToList(); //where needed because the templates of the buttons also contain a textblock
             _randomFields = _window.GetAllPrivateFieldValues<Random>().ToList();
         }
 

@@ -13,6 +13,7 @@ namespace Exercise14.Tests
     public class MainWindowTests
     {
         private MainWindow _window;
+        private Grid _grid;
 
         private GroupBox _genderGroupBox;
 
@@ -24,8 +25,9 @@ namespace Exercise14.Tests
         public void SetUp()
         {
             _window = new MainWindow();
+            _grid = (Grid)_window.Content;
 
-            var allGroupBoxes = _window.GetAllPrivateFieldValues<GroupBox>();
+            var allGroupBoxes = _grid.FindVisualChildren<GroupBox>().ToList();
 
             _genderGroupBox =
                 allGroupBoxes.FirstOrDefault(groupBox => ((string) groupBox.Header).ToLower().Contains("geslacht"));
@@ -33,7 +35,7 @@ namespace Exercise14.Tests
             _ageGroupBox =
                 allGroupBoxes.FirstOrDefault(groupBox => ((string)groupBox.Header).ToLower().Contains("leeftijd"));
 
-            _button = _window.GetPrivateFieldValue<Button>();
+            _button = _grid.FindVisualChildren<Button>().ToList().FirstOrDefault();
         }
 
         [TearDown]
@@ -45,13 +47,13 @@ namespace Exercise14.Tests
         [MonitoredTest("Should have name and firstname controls"), Order(1)]
         public void _1_ShouldHaveNameAndFirstNameControls()
         {
-            var lastnameLabel = _window.GetPrivateFieldValueByName<Label>("lastnameLabel");
-            var firstnameLabel = _window.GetPrivateFieldValueByName<Label>("firstnameLabel");
+            var allLabels = _grid.FindVisualChildren<Label>().ToList();
+            var lastnameLabel = allLabels.Find(l => l.Content.ToString().ToLower().Contains("naam"));
+            var firstnameLabel = allLabels.Find(l => l.Content.ToString().ToLower().Contains("voornaam"));
 
-            var allTextBoxes = _window.GetAllPrivateFieldValues<TextBox>();
-
-            var lastnameTextBox = allTextBoxes.ElementAt(0);
-            var firstnameTextBox = allTextBoxes.ElementAt(1);
+            var allTextBoxes = _grid.FindVisualChildren<TextBox>().ToList();
+            var lastnameTextBox = allTextBoxes.Find(tb => tb.Name.ToLower().Contains("lastname"));
+            var firstnameTextBox = allTextBoxes.Find(tb => tb.Name.ToLower().Contains("firstname"));
 
             Assert.That(lastnameLabel, Is.Not.Null, () => "Could not find a Label control with content 'Naam:'");
             Assert.That(firstnameLabel, Is.Not.Null, () => "Could not find a Label control with content 'Voornaam:'");

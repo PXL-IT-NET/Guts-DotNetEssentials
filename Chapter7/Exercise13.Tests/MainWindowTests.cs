@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Windows.Controls;
 using Guts.Client.Core;
-using Guts.Client.Core.TestTools;
 using Guts.Client.WPF.TestTools;
 using NUnit.Framework;
 
@@ -32,13 +31,14 @@ namespace Exercise13.Tests
         public void SetUp()
         {
             _window = new MainWindow();
+            Grid grid = (Grid)_window.Content;
 
-            _priceLabel = _window.GetPrivateFieldValueByName<Label>("priceLabel");
-            _btwLabel = _window.GetPrivateFieldValueByName<Label>("btwLabel");
-            _totalLabel = _window.GetPrivateFieldValueByName<Label>("totalLabel");
+            var allLabels = grid.FindVisualChildren<Label>().ToList();
+            _priceLabel = allLabels.Find(l => l.Name.ToLower().Contains("price"));
+            _btwLabel = allLabels.Find(l => l.Name.ToLower().Contains("btw"));
+            _totalLabel = allLabels.Find(l => l.Name.ToLower().Contains("total"));
 
-            var allTextBoxes = _window.GetAllPrivateFieldValues<TextBox>();
-
+            var allTextBoxes = grid.FindVisualChildren<TextBox>().ToList();
             _priceTextBox = allTextBoxes.FirstOrDefault(textBox =>
                 textBox.Name.ToLower().Contains("price") || textBox.Name.ToLower().Contains("prijs"));
 
@@ -46,9 +46,8 @@ namespace Exercise13.Tests
 
             _totalTextBox = allTextBoxes.FirstOrDefault(textBox => textBox.Name.ToLower().Contains("tot"));
 
-            _checkBox = _window.GetPrivateFieldValue<CheckBox>();
-
-            _button = _window.GetPrivateFieldValue<Button>();
+            _checkBox = grid.FindVisualChildren<CheckBox>().ToList().FirstOrDefault();
+            _button = grid.FindVisualChildren<Button>().ToList().FirstOrDefault();
         }
 
         [TearDown]
