@@ -22,10 +22,11 @@ namespace Exercise04.Tests
         public void Setup()
         {
             _testWindow = new MainWindow();
+            Grid grid = (Grid)_testWindow.Content;
 
             _mainWindowSourceCode = Solution.Current.GetFileContent(@"Exercise04\MainWindow.xaml.cs");
             _mainWindowSourceCode = CodeCleaner.StripComments(_mainWindowSourceCode);
-            _canvas = _testWindow.GetPrivateFieldValue<Canvas>();
+            _canvas = grid.FindVisualChildren<Canvas>().ToList().FirstOrDefault();
             
         }
 

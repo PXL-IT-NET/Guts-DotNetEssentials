@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Controls;
 using Guts.Client.Core;
-using Guts.Client.Core.TestTools;
 using Guts.Client.WPF.TestTools;
 
 namespace Exercise07.Tests
@@ -23,9 +22,11 @@ namespace Exercise07.Tests
         public void Setup()
         {
             _testWindow = new MainWindow();
-            _sizeTextBox = _testWindow.GetPrivateFieldValue<TextBox>();
-            _drawButton = _testWindow.GetPrivateFieldValueByName<Button>("drawButton");
-            _tableTextBlock = _testWindow.GetPrivateFieldValue<TextBlock>();
+            Grid grid = (Grid)_testWindow.Content;
+
+            _sizeTextBox = grid.FindVisualChildren<TextBox>().ToList().FirstOrDefault();
+            _drawButton = grid.FindVisualChildren<Button>().ToList().FirstOrDefault();
+            _tableTextBlock = grid.FindVisualChildren<TextBlock>().ToList().FirstOrDefault();
         }
 
         [TearDown]
