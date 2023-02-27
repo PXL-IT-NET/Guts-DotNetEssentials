@@ -6,6 +6,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using Guts.Client.Core;
 using Guts.Client.Core.TestTools;
+using Guts.Client.WPF.TestTools;
 using NUnit.Framework;
 
 namespace Exercise06.Tests
@@ -24,11 +25,13 @@ namespace Exercise06.Tests
         public void Setup()
         {
             _window = new MainWindow();
+            Grid grid = (Grid)_window.Content;
 
-            _minutesRectangle = _window.GetAllPrivateFieldValues<Rectangle>().Where(field => field.Name.ToLower().Contains("minu")).First();
-            _secondsRectangle = _window.GetAllPrivateFieldValues<Rectangle>().Where(field => field.Name.ToLower().Contains("sec")).First();
+            var allRectangles = grid.FindVisualChildren<Rectangle>().ToList();
+            _minutesRectangle = allRectangles.Where(field => field.Name.ToLower().Contains("minu")).FirstOrDefault();
+            _secondsRectangle = allRectangles.Where(field => field.Name.ToLower().Contains("sec")).FirstOrDefault();
 
-            _dispatcherTimer = _window.GetPrivateFieldValue<DispatcherTimer>();
+            _dispatcherTimer = _window.GetAllPrivateFieldValues<DispatcherTimer>().ToList().FirstOrDefault();
             if (_dispatcherTimer != null)
             {
                 _tickEventHandler = _dispatcherTimer.GetPrivateFieldValueByName<EventHandler>(nameof(DispatcherTimer.Tick));
