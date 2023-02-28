@@ -34,15 +34,16 @@ namespace Exercise13.Tests
             Grid grid = (Grid)_window.Content;
 
             var allLabels = grid.FindVisualChildren<Label>().ToList();
-            _priceLabel = allLabels.Find(l => l.Name.ToLower().Contains("price"));
-            _btwLabel = allLabels.Find(l => l.Name.ToLower().Contains("btw"));
-            _totalLabel = allLabels.Find(l => l.Name.ToLower().Contains("total"));
+            _priceLabel = allLabels.Find(l => l.Content.ToString().ToLower().Contains("prijs"));
+            _btwLabel = allLabels.Find(l => l.Content.ToString().ToLower().Contains("btw"));
+            _totalLabel = allLabels.Find(l => l.Content.ToString().ToLower().Contains("totaal"));
 
             var allTextBoxes = grid.FindVisualChildren<TextBox>().ToList();
             _priceTextBox = allTextBoxes.FirstOrDefault(textBox =>
                 textBox.Name.ToLower().Contains("price") || textBox.Name.ToLower().Contains("prijs"));
 
-            _btwTextBox = allTextBoxes.FirstOrDefault(textBox => textBox.Name.ToLower().Contains("btw"));
+            _btwTextBox = allTextBoxes.FirstOrDefault(textBox => textBox.Name.ToLower().Contains("btw")
+                                                                 || textBox.Name.ToLower().Contains("vat"));
 
             _totalTextBox = allTextBoxes.FirstOrDefault(textBox => textBox.Name.ToLower().Contains("tot"));
 
@@ -73,7 +74,7 @@ namespace Exercise13.Tests
         [MonitoredTest("Should have BTW controls"), Order(3)]
         public void _3_ShouldHaveBtwControls()
         {
-            Assert.That(_btwLabel, Is.Not.Null, () => "Could not find a Label control with content 'BTW:'");
+            Assert.That(_btwLabel, Is.Not.Null, () => "Could not find a Label control with name 'btwLabel' or 'vatLabel'");
             Assert.That(_btwTextBox, Is.Not.Null, () => "Could not find a TextBox control that has the text 'btw' in its name. Consider using 'btwTextBox' as value for the 'Name' property");
         }
 
@@ -96,8 +97,8 @@ namespace Exercise13.Tests
         {
             AssertAllControlsArePresent();
 
-            Assert.That(_btwTextBox.IsEnabled, Is.False, () => "The BTW TextBox is not readonly. Tip: 'IsEnabled' property.");
-            Assert.That(_totalTextBox.IsEnabled, Is.False, () => "The total TextBox is not readonly. Tip: 'IsEnabled' property.");
+            Assert.That(!_btwTextBox.IsEnabled || _btwTextBox.IsReadOnly, Is.True, () => "The BTW TextBox is not readonly. Tip: 'IsEnabled' or 'IsReadOnly' property.");
+            Assert.That(!_totalTextBox.IsEnabled || _totalTextBox.IsReadOnly, Is.True, () => "The total TextBox is not readonly. Tip: 'IsEnabled' or 'IsReadOnly' property.");
         }
 
         [MonitoredTest("Should calculate Btw at 21% when checkbox is unchecked"), Order(7)]
