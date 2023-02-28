@@ -6,7 +6,6 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using Guts.Client.Core;
 using Guts.Client.Core.TestTools;
-using Guts.Client.WPF.TestTools;
 using NUnit.Framework;
 
 namespace Exercise06.Tests
@@ -27,9 +26,23 @@ namespace Exercise06.Tests
             _window = new MainWindow();
             Grid grid = (Grid)_window.Content;
 
-            var allRectangles = grid.FindVisualChildren<Rectangle>().ToList();
-            _minutesRectangle = allRectangles.Where(field => field.Name.ToLower().Contains("minu")).FirstOrDefault();
-            _secondsRectangle = allRectangles.Where(field => field.Name.ToLower().Contains("sec")).FirstOrDefault();
+            var allRectangles = _window.GetAllPrivateFieldValues<Rectangle>()
+                .OrderBy(r => r.Margin.Top).ToList();
+            // _minutesRectangle is located at the top,
+            // _secondsRectangle at the bottom
+            // of the canvas
+            if (allRectangles.Count() > 0)
+            {
+                _minutesRectangle = allRectangles[0];
+                if (allRectangles.Count() > 1)
+                {
+                    _secondsRectangle = allRectangles[1];
+                }
+            }
+
+            //var allRectangles = grid.FindVisualChildren<Rectangle>().ToList();
+            //_minutesRectangle = allRectangles.Where(field => field.Name.ToLower().Contains("minu")).FirstOrDefault();
+            //_secondsRectangle = allRectangles.Where(field => field.Name.ToLower().Contains("sec")).FirstOrDefault();
 
             _dispatcherTimer = _window.GetAllPrivateFieldValues<DispatcherTimer>().ToList().FirstOrDefault();
             if (_dispatcherTimer != null)
