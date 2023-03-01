@@ -66,8 +66,11 @@ namespace Exercise14.Tests
         public void _2_ShouldHaveAGenderGroupBox()
         {
             Assert.That(_genderGroupBox, Is.Not.Null, () => "Could not find a GroupBox control with header 'Geslacht'");
+            
+            Grid grid = _genderGroupBox.Content as Grid;
+            Assert.That(grid, Is.Not.Null, () => "GroupBox control 'Geslacht' should have a Grid element as its child element");            
 
-            var radioButtons = _genderGroupBox.FindVisualChildren<RadioButton>().ToList();
+            var radioButtons = grid.FindVisualChildren<RadioButton>().ToList();
             Assert.That(radioButtons.Count, Is.EqualTo(2), () => "Could not find 2 RadioButtons within the gender groupbox");
         }
 
@@ -76,7 +79,10 @@ namespace Exercise14.Tests
         {
             Assert.That(_ageGroupBox, Is.Not.Null, () => "Could not find a GroupBox control with header 'Leeftijd'");
 
-            var radioButtons = _ageGroupBox.FindVisualChildren<RadioButton>().ToList();
+            Grid grid = _ageGroupBox.Content as Grid;
+            Assert.That(grid, Is.Not.Null, () => "GroupBox control 'Leeftijd' should have a Grid element as its child element");
+
+            var radioButtons = grid.FindVisualChildren<RadioButton>().ToList();
             Assert.That(radioButtons.Count, Is.EqualTo(4), () => "Could not find 4 RadioButtons within the age groupbox");
         }
 
