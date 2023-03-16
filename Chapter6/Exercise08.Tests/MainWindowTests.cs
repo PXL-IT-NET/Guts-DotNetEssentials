@@ -27,8 +27,8 @@ namespace Exercise08.Tests
             Grid grid = (Grid)_testWindow.Content;
 
             var allLabels = grid.FindVisualChildren<Label>().ToList();
-            _hasNameLabel = allLabels.Any(l => l.Name.ToLower().Contains("name"));
-            _hasPasswordLabel = allLabels.Any(l => l.Name.ToLower().Contains("password"));
+            _hasNameLabel = allLabels.Any(l => l.Content.ToString().ToLower().Contains("name"));
+            _hasPasswordLabel = allLabels.Any(l => l.Content.ToString().ToLower().Contains("password"));
 
             _hasNameTextBox = grid.FindVisualChildren<TextBox>().Any();
             _hasPasswordBox = grid.FindVisualChildren<PasswordBox>().Any();
