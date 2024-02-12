@@ -45,16 +45,16 @@ public class MainWindowTests
     [MonitoredTest("Should have 3 disabled TextBoxes and a button"), Order(1)]
     public void _1_ShouldHave3DisabledTextBoxesAndAButton()
     {
-        Assert.IsNotNull(_randomTextBox, $"Could not find a TextBox with a name like '{RandomTextBoxName}'");
+        Assert.That(_randomTextBox, Is.Not.Null, $"Could not find a TextBox with a name like '{RandomTextBoxName}'");
         Assert.That(_randomTextBox.IsEnabled, Is.False, () => "The random TextBox is enabled. Please set the 'IsEnabled' property to 'False'");
 
-        Assert.IsNotNull(_sumTextBox, $"Could not find a TextBox with the name like '{SumTextBoxName}'");
+        Assert.That(_sumTextBox, Is.Not.Null, $"Could not find a TextBox with the name like '{SumTextBoxName}'");
         Assert.That(_sumTextBox.IsEnabled, Is.False, () => "The sum TextBox is enabled. Please set the 'IsEnabled' property to 'False'");
 
-        Assert.IsNotNull(_averageTextBox, $"Could not find a TextBox with the name like '{AverageTextBoxName}'");
+        Assert.That(_averageTextBox, Is.Not.Null, $"Could not find a TextBox with the name like '{AverageTextBoxName}'");
         Assert.That(_averageTextBox.IsEnabled, Is.False, () => "The average TextBox is enabled. Please set the 'IsEnabled' property to 'False'");
 
-        Assert.IsNotNull(_theButton, "Could not find a Button");
+        Assert.That(_theButton, Is.Not.Null, "Could not find a Button");
     }
 
     [MonitoredTest("Should start with empty TextBoxes"), Order(2)]
