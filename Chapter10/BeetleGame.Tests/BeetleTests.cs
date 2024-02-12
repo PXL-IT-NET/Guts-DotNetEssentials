@@ -10,8 +10,8 @@ using System.Windows.Shapes;
 
 namespace BeetleGame.Tests
 {
-    [ExerciseTestFixture("dotNet1", "H10", "BeetleGame", @"BeetleGame\Beetle.cs"),
-     Apartment(ApartmentState.STA)]
+    [ExerciseTestFixture("dotNet1", "H10", "BeetleGame", @"BeetleGame\Beetle.cs")]
+    [Apartment(ApartmentState.STA)]
     public class BeetleTests
     {
         private object _beetleObject = null;

@@ -12,11 +12,11 @@ using System.Windows.Threading;
 
 namespace BeetleGame.Tests;
 
-[ExerciseTestFixture("dotNet1", "H10", "BeetleGame", @"BeetleGame\MainWindow.xaml;BeetleGame\MainWindow.xaml.cs"),
- Apartment(ApartmentState.STA)]
+[ExerciseTestFixture("dotNet1", "H10", "BeetleGame", @"BeetleGame\MainWindow.xaml;BeetleGame\MainWindow.xaml.cs")]
+[Apartment(ApartmentState.STA)]
 public class MainWindowTests
 {
-    private TestWindow<MainWindow> _testWindow;
+    private MainWindow _testWindow;
     private object _beetleObject;
     private DispatcherTimer _dispatcherTimer;
     private EventHandler _tickEventHandler;
@@ -32,33 +32,42 @@ public class MainWindowTests
     [SetUp]
     public void Setup()
     {
-        _testWindow = new TestWindow<MainWindow>();
-        _paperCanvas = _testWindow.GetPrivateField<Canvas>(field => field.Name.Contains("Canvas"));
-        _beetleObject = _testWindow.GetPrivateField<Beetle>(field => field.Name.ToLower().Contains("_beetle"));
-        _dispatcherTimer = _testWindow.GetPrivateField<DispatcherTimer>();
+        _testWindow = new MainWindow();
+        Grid grid = (Grid)_testWindow.Content;
+
+        _paperCanvas = grid.FindVisualChildren<Canvas>().ToList().Find(c => c.Name.Contains("Canvas"));
+        
+        _beetleObject = _testWindow.GetPrivateFieldValue<Beetle>();
+        _dispatcherTimer = _testWindow.GetPrivateFieldValue<DispatcherTimer>();
         _tickEventHandler = _dispatcherTimer?.GetPrivateFieldValueByName<EventHandler>(nameof(DispatcherTimer.Tick));
-        _speedSlider = _testWindow.GetUIElements<Slider>().FirstOrDefault(
+        _speedSlider = grid.FindVisualChildren<Slider>().FirstOrDefault(
             (slider) => slider.Name.ToUpper().Contains("SPEED"));
-        _sizeSlider = _testWindow.GetUIElements<Slider>().FirstOrDefault(
+        _sizeSlider = grid.FindVisualChildren<Slider>().FirstOrDefault(
             (slider) => slider.Name.ToUpper().Contains("SIZE"));
-        _startButton = _testWindow.GetContentControlByPartialContentText<Button>("Start");
-        _resetButton = _testWindow.GetContentControlByPartialContentText<Button>("Reset");
-        _leftButton = _testWindow.GetContentControlByPartialContentText<Button>("Left");
-        _rightButton = _testWindow.GetContentControlByPartialContentText<Button>("Right");
-        _downButton = _testWindow.GetContentControlByPartialContentText<Button>("Down");
-        _upButton = _testWindow.GetContentControlByPartialContentText<Button>("Up");
-        _speedLabel = _testWindow.GetUIElements<Label>().FirstOrDefault(
+        _startButton = grid.FindVisualChildren<Button>().ToList()
+                         .Find(b => b.Content.ToString().ToUpper().Contains("START"));
+        _resetButton = grid.FindVisualChildren<Button>().ToList()
+                         .Find(b => b.Content.ToString().ToUpper().Contains("RESET"));
+        _leftButton = grid.FindVisualChildren<Button>().ToList()
+                         .Find(b => b.Content.ToString().ToUpper().Contains("LEFT"));
+        _rightButton = grid.FindVisualChildren<Button>().ToList()
+                         .Find(b => b.Content.ToString().ToUpper().Contains("RIGHT"));
+        _downButton = grid.FindVisualChildren<Button>().ToList()
+                         .Find(b => b.Content.ToString().ToUpper().Contains("DOWN"));
+        _upButton = grid.FindVisualChildren<Button>().ToList()
+                         .Find(b => b.Content.ToString().ToUpper().Contains("UP"));
+        _speedLabel = grid.FindVisualChildren<Label>().FirstOrDefault(
             (label) => label.Name.ToUpper().Contains("SPEED"));
-        _sizeLabel = _testWindow.GetUIElements<Label>().FirstOrDefault(
+        _sizeLabel = grid.FindVisualChildren<Label>().FirstOrDefault(
             (label) => label.Name.ToUpper().Contains("SIZE"));
-        _messageLabel = _testWindow.GetUIElements<Label>().FirstOrDefault(
+        _messageLabel = grid.FindVisualChildren<Label>().FirstOrDefault(
             (label) => label.Name.ToUpper().Contains("MESSAGE"));
     }
 
     [TearDown]
     public void TearDown()
     {
-        _testWindow?.Dispose();
+        _testWindow?.Close();
     }
 
     [MonitoredTest("MainWindow - Should have a private member of class Beetle"), Order(1)]
