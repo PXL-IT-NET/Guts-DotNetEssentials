@@ -8,11 +8,11 @@ using System.Windows.Controls;
 
 namespace Exercise08.Tests;
 
-[ExerciseTestFixture("dotNet1", "H12", "Exercise08", @"Exercise08\MainWindow.xaml;Exercise08\MainWindow.xaml.cs"),
- Apartment(ApartmentState.STA)]
+[ExerciseTestFixture("dotNet1", "H12", "Exercise08", @"Exercise08\MainWindow.xaml;Exercise08\MainWindow.xaml.cs")]
+[Apartment(ApartmentState.STA)]
 public class MainWindowTests
 {
-    private TestWindow<MainWindow> _mainWindow;
+    private MainWindow _mainWindow;
     private TextBlock _errorTextBlock;
     private readonly string _errorTextBlockName = "errorTextBlock";
     private TextBlock _areaTextBlock;
@@ -25,11 +25,13 @@ public class MainWindowTests
     [SetUp]
     public void SetUp()
     {
-        _mainWindow = new TestWindow<MainWindow>();
-        _errorTextBlock = _mainWindow.GetUIElements<TextBlock>().FirstOrDefault((tb) => tb.Name == _errorTextBlockName);
-        _areaTextBlock = _mainWindow.GetUIElements<TextBlock>().FirstOrDefault((tb) => tb.Name == _areaTextBlockName);
-        _sideTextBoxes = _mainWindow.GetUIElements<TextBox>().ToArray();
-        _calculateButton = _mainWindow.GetUIElements<Button>().FirstOrDefault();
+        _mainWindow = new MainWindow();
+        Grid grid = _mainWindow.Content as Grid;
+
+        _errorTextBlock = grid.FindVisualChildren<TextBlock>().FirstOrDefault((tb) => tb.Name == _errorTextBlockName);
+        _areaTextBlock = grid.FindVisualChildren<TextBlock>().FirstOrDefault((tb) => tb.Name == _areaTextBlockName);
+        _sideTextBoxes = grid.FindVisualChildren<TextBox>().ToArray();
+        _calculateButton = grid.FindVisualChildren<Button>().FirstOrDefault();
 
         var windowType = typeof(MainWindow);
         _maxFunction = windowType.GetMethods(BindingFlags.NonPublic |
@@ -47,7 +49,7 @@ public class MainWindowTests
     [TearDown]
     public void TearDown()
     {
-        _mainWindow?.Dispose();
+        _mainWindow?.Close();
     }
 
     [MonitoredTest("Should have two TextBlocks for area and error"), Order(1)]
@@ -154,7 +156,7 @@ public class MainWindowTests
     private void AssertMaxInvoke(int expected, int a, int b, int c)
     {
         object[] parameters = new object[] { a, b, c };
-        object result = _maxFunction.Invoke(_mainWindow.Window, parameters);
+        object result = _maxFunction.Invoke(_mainWindow, parameters);
         Assert.That(result, Is.Not.Null, 
             () => $"Invoking {_maxFunctionName}({a},{b},{c}) gives {result} but expected {expected}");
         Assert.That((int)result, Is.EqualTo(expected),
