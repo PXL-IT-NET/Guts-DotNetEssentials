@@ -36,9 +36,15 @@ public class MainWindowTests
         Grid grid = (Grid)_testWindow.Content;
 
         _paperCanvas = grid.FindVisualChildren<Canvas>().ToList().Find(c => c.Name.Contains("Canvas"));
-        
-        _beetleObject = _testWindow.GetPrivateFieldValue<Beetle>();
-        _dispatcherTimer = _testWindow.GetPrivateFieldValue<DispatcherTimer>();
+
+        if (_testWindow.HasPrivateField<Beetle>())
+        {
+            _beetleObject = _testWindow.GetPrivateFieldValue<Beetle>();
+        }
+        if (_testWindow.HasPrivateField<DispatcherTimer>())
+        {
+            _dispatcherTimer = _testWindow.GetPrivateFieldValue<DispatcherTimer>();
+        }
         _tickEventHandler = _dispatcherTimer?.GetPrivateFieldValueByName<EventHandler>(nameof(DispatcherTimer.Tick));
         _speedSlider = grid.FindVisualChildren<Slider>().FirstOrDefault(
             (slider) => slider.Name.ToUpper().Contains("SPEED"));
