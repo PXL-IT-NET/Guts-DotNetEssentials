@@ -52,7 +52,10 @@ public class MainWindowTests
         
         _progressBar = grid.FindVisualChildren<ProgressBar>().ToList().FirstOrDefault();
 
-        _dispatcherTimer = _testWindow.GetPrivateFieldValue<DispatcherTimer>();
+        if (_testWindow.HasPrivateField<DispatcherTimer>())
+        {
+            _dispatcherTimer = _testWindow.GetPrivateFieldValue<DispatcherTimer>();
+        }
         _tickEventHandler = _dispatcherTimer?.GetPrivateFieldValueByName<EventHandler>(nameof(DispatcherTimer.Tick));
     }
 
