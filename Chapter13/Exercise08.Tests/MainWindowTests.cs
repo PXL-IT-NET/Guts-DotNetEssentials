@@ -13,34 +13,36 @@ using NUnit.Framework;
 
 namespace Exercise08.Tests;
 
-[ExerciseTestFixture("dotNet1", "H13", "Exercise08", @"Exercise08\MainWindow.xaml;Exercise08\MainWindow.xaml.cs"), 
- Apartment(ApartmentState.STA)]
+[ExerciseTestFixture("dotNet1", "H13", "Exercise08", @"Exercise08\MainWindow.xaml;Exercise08\MainWindow.xaml.cs")]
+[Apartment(ApartmentState.STA)]
 public class MainWindowTests
 {
     private TypeInfo _personTypeInfo;
-    private TestWindow<MainWindow> _window;
+    private MainWindow _window;
+    
     private ListBox _theListBox;
-    private TypeInfo _personWindowType;
+    private TypeInfo _detailsWindowType;
 
     [SetUp]
     public void Setup()
     {
         var testedAssembly = typeof(MainWindow).Assembly;
-        _personTypeInfo = testedAssembly.DefinedTypes.FirstOrDefault(t => t.Name == "Persoon" || t.Name == "Person");
-        _personWindowType =
+        _personTypeInfo = testedAssembly.DefinedTypes.FirstOrDefault(t => t.Name == "Person");
+        _detailsWindowType =
             testedAssembly.DefinedTypes.FirstOrDefault(t =>
-                typeof(Window).IsAssignableFrom(t) && t.Name != "MainWindow");
+                typeof(Window).IsAssignableFrom(t) && t.Name == "DetailsWindow");
 
-        _window = new TestWindow<MainWindow>();
-
-        _theListBox = _window.GetUIElements<ListBox>().FirstOrDefault();
+        _window = new MainWindow();
+        var grid = _window.Content as Grid;
+        
+        _theListBox = grid.FindVisualChildren<ListBox>().FirstOrDefault();
 
     }
 
     [TearDown]
     public void TearDown()
     {
-        _window.Dispose();
+        _window?.Close();
     }
 
     [MonitoredTest("Should have a public Person class"), Order(1)]
@@ -97,30 +99,26 @@ public class MainWindowTests
         Assert.That(_theListBox.Items.Count, Is.EqualTo(listOfPersons.Count), () => "ListBox should have as many items as there are persons");
     }
 
-    //TODO: expect a click on a 'Details' button instead of a double click (see book)
-    [MonitoredTest("Should open a Person detail window on double click"), Order(6)]
-    public void _6_ShouldOpenAPersonDetailWindowOnDoubleClick()
+    [MonitoredTest("Should open a Person detail window on click of 'Details' button"), Order(6)]
+    public void _6_ShouldOpenAPersonDetailWindowWhenClickingDetailsButton()
     {
         AssertListBoxPresent();
 
         var xamlCode = Solution.Current.GetFileContent(@"Exercise08\MainWindow.xaml");
-        Assert.That(xamlCode, Contains.Substring("MouseDoubleClick=\""), () => "No MouseDoubleClick event handler defined on the ListBox");
 
-        Assert.That(_personWindowType, Is.Not.Null, () => "No class found that can be used to display person details");
+        Assert.That(_detailsWindowType, Is.Not.Null, () => "No class found that can be used to display person details");
 
-        var hasConstructorThatAcceptsAPersonInstance = _personWindowType.DeclaredConstructors.Any(c =>
+        var hasConstructorThatAcceptsAPersonInstance = _detailsWindowType.DeclaredConstructors.Any(c =>
             c.GetParameters().Any(p => p.ParameterType.Name == _personTypeInfo.Name));
 
-        var hasPersonProperty = _personWindowType.DeclaredProperties.Any(p => p.PropertyType.Name == _personTypeInfo.Name);
-
-        Assert.That(hasConstructorThatAcceptsAPersonInstance || hasPersonProperty, Is.True, 
+        Assert.That(hasConstructorThatAcceptsAPersonInstance, Is.True, 
             () => "The window that will display person details should have a constructor that accepts a person instance");
 
         var csCode = Solution.Current.GetFileContent(@"Exercise08\MainWindow.xaml.cs");
         csCode = CodeCleaner.StripComments(csCode);
 
-        Assert.That(csCode, Contains.Substring(".SelectedIndex"),
-            () => "No code found where the index of the selected person is retrieved.");
+        Assert.That(csCode, Contains.Substring(".SelectedIndex").Or.Contains(".SelectedItem"),
+            () => "No code found where the selected person is retrieved.");
 
         Assert.That(csCode, Contains.Substring(".Show()").Or.Contains(".ShowDialog()"), 
             () => "No code found where a person window is showed. Use the 'Show' method a window to achieve this.");
@@ -131,7 +129,19 @@ public class MainWindowTests
     {
         var genericListType = typeof(List<>);
         var personListType = genericListType.MakeGenericType(_personTypeInfo.UnderlyingSystemType);
-        return _window.GetPrivateField(personListType) as IList;
+
+
+        Type mainWindowType = _window.GetType();
+
+        // Get all private fields
+        var privateFields = new List<FieldInfo>(mainWindowType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic));
+        var peopleListField = privateFields.Find(field => field.FieldType == personListType);
+
+        if (peopleListField is null)
+        {
+            return null; // there is no IList<Person> field
+        }
+        return peopleListField.GetValue(_window) as IList;
     }
 
     private void AssertListBoxPresent()

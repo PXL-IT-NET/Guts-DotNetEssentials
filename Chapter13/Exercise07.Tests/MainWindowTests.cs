@@ -1,18 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows.Controls;
 using Guts.Client.Core;
+using Guts.Client.Core.TestTools;
 using Guts.Client.WPF.TestTools;
 using NUnit.Framework;
 
 namespace Exercise07.Tests;
 
-[ExerciseTestFixture("dotNet1", "H13", "Exercise07", @"Exercise07\MainWindow.xaml;Exercise07\MainWindow.xaml.cs"), 
- Apartment(ApartmentState.STA)]
+[ExerciseTestFixture("dotNet1", "H13", "Exercise07", @"Exercise07\MainWindow.xaml;Exercise07\MainWindow.xaml.cs")]
+[Apartment(ApartmentState.STA)]
 public class MainWindowTests
 {
-    private TestWindow<MainWindow> _window;
+    private MainWindow _window;
     private TextBox _monthNumberTextBox;
     private TextBox _monthNameTextBox;
     private Button _lookupButton;
@@ -21,19 +23,20 @@ public class MainWindowTests
     [SetUp]
     public void Setup()
     {
-        _window = new TestWindow<MainWindow>();
-        var allTextBoxes = _window.GetPrivateFields<TextBox>();
+        _window = new MainWindow();
+        var grid = _window.Content as Grid;
+        var allTextBoxes = grid.FindVisualChildren<TextBox>().ToList();
         _monthNumberTextBox = allTextBoxes.FirstOrDefault(textBox => textBox.Name == "monthNumberTextBox");
         _monthNameTextBox = allTextBoxes.FirstOrDefault(textBox => textBox.Name == "monthNameTextBox");
-        _lookupButton = _window.GetPrivateField<Button>(field => field.Name == "lookupButton");
+        _lookupButton = grid.FindVisualChildren<Button>().FirstOrDefault(b => b.Name == "lookupButton");
 
-        _listOfMonths = _window.GetPrivateField<List<string>>() ?? _window.GetPrivateField<IList<string>>();
+        _listOfMonths = RetrieveListOrIList();
     }
 
     [TearDown]
     public void TearDown()
     {
-        _window.Dispose();
+        _window?.Close();
     }
 
     [MonitoredTest("Should have 2 TextBoxes and a Button"), Order(1)]
@@ -45,8 +48,7 @@ public class MainWindowTests
     [MonitoredTest("Should not have a ListBox"), Order(2)]
     public void _2_ShouldNotHaveAListBox()
     {
-        var listBox = _window.GetPrivateField<ListBox>();
-        Assert.That(listBox, Is.Null);
+        Assert.That(() => _window.GetPrivateFieldValue<ListBox>(), Throws.TypeOf<FieldAccessException>());
     }
 
     [MonitoredTest("Should use a generic List"), Order(3)]
@@ -92,4 +94,27 @@ public class MainWindowTests
         Assert.That(_monthNameTextBox, Is.Not.Null, () => "No TextBox with the name 'monthNameTextBox' can be found.");
         Assert.That(_lookupButton, Is.Not.Null, () => "No Button with the name 'lookupButton' can be found.");
     }
+
+    private IList<string> RetrieveListOrIList()
+    {
+        IList<string> foundList = null;
+        try
+        {
+            foundList = _window.GetPrivateFieldValue<IList<string>>();
+        }
+        catch(FieldAccessException)
+        {
+            // it wasn't an IList, try a List
+            try
+            {
+                foundList = _window.GetPrivateFieldValue<List<string>>();
+            }
+            catch (FieldAccessException)
+            { 
+                // swallow it and return null
+            }
+        }
+        return foundList;
+    }
+
 }

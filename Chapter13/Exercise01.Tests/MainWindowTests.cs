@@ -7,22 +7,22 @@ using NUnit.Framework;
 
 namespace Exercise01.Tests;
 
-[ExerciseTestFixture("dotNet1", "H13", "Exercise01", @"Exercise01\MainWindow.xaml;Exercise01\MainWindow.xaml.cs"),
- Apartment(ApartmentState.STA)]
+[ExerciseTestFixture("dotNet1", "H13", "Exercise01", @"Exercise01\MainWindow.xaml;Exercise01\MainWindow.xaml.cs")]
+[Apartment(ApartmentState.STA)]
 public class MainWindowTests
 {
-    private TestWindow<MainWindow> _window;
+    private MainWindow _window;
 
     [SetUp]
     public void Setup()
     {
-        _window = new TestWindow<MainWindow>();
+        _window = new MainWindow();
     }
 
     [TearDown]
     public void TearDown()
     {
-        _window.Dispose();
+        _window?.Close();
     }
 
     [MonitoredTest("Should have a ListBox"), Order(1)]
@@ -61,7 +61,8 @@ public class MainWindowTests
 
     private ListBox GetTheListBox()
     {
-        ListBox theListBox = _window.GetUIElements<ListBox>().FirstOrDefault();
+        Grid grid = _window.Content as Grid;
+        ListBox theListBox = grid.FindVisualChildren<ListBox>().FirstOrDefault();
         Assert.That(theListBox, Is.Not.Null, () => "Could not find a ListBox control.");
         return theListBox;
     }

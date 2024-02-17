@@ -8,27 +8,28 @@ using NUnit.Framework;
 
 namespace Exercise09.Tests;
 
-[ExerciseTestFixture("dotNet1", "H13", "Exercise09", @"Exercise09\MainWindow.xaml;Exercise09\MainWindow.xaml.cs"), 
- Apartment(ApartmentState.STA)]
+[ExerciseTestFixture("dotNet1", "H13", "Exercise09", @"Exercise09\MainWindow.xaml;Exercise09\MainWindow.xaml.cs")]
+[Apartment(ApartmentState.STA)]
 public class MainWindowTests
 {
-    private TestWindow<MainWindow> _window;
+    private MainWindow _window;
     private ComboBox _colorComboBox;
     private Label _colorLabel;
 
     [SetUp]
     public void Setup()
     {
-        _window = new TestWindow<MainWindow>();
+        _window = new MainWindow();
+        var grid = _window.Content as Grid;
 
-        _colorComboBox = _window.GetUIElements<ComboBox>().FirstOrDefault();
-        _colorLabel = _window.GetUIElements<Label>().FirstOrDefault();
+        _colorComboBox = grid.FindVisualChildren<ComboBox>().FirstOrDefault();
+        _colorLabel = grid.FindVisualChildren<Label>().FirstOrDefault();
     }
 
     [TearDown]
     public void TearDown()
     {
-        _window.Dispose();
+        _window?.Close();
     }
 
     [MonitoredTest("Should all controls"), Order(1)]
