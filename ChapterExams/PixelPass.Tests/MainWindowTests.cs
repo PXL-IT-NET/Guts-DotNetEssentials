@@ -254,6 +254,7 @@ public class MainWindowTests
         // Act
         _copyButton.FireClickEvent();
 
+        _currentAccountInfo = _testWindow.GetPrivateFieldValueByName<AccountInfo>("_currentAccountInfo");
         Assert.That(Clipboard.GetText(), Is.EqualTo(_currentAccountInfo.Password),
             "The clipboard should contain the password of the _currentAccountInfo object");
         Assert.That(_copyButton.IsEnabled, Is.False,
